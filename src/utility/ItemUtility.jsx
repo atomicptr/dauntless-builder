@@ -62,4 +62,38 @@ export default class ItemUtility {
 
         return weaponType.toLowerCase().replace(" ", "");
     }
+
+    static tr(collection, itemName) {
+        const data = DataUtility.data();
+
+        if(!itemName || !(collection in data)) {
+            return null;
+        }
+
+        const langData = DataUtility.langGameData();
+
+        if (!(itemName in langData[collection])) {
+            return data[collection][itemName];
+        }
+
+        return ItemUtility.mergeTranslation(data[collection][itemName], langData[collection][itemName]);
+    }
+
+    static mergeTranslation(item, langItem) {
+        if ("name" in langItem) {
+            item.name = langItem["name"];
+        }
+
+        if ("description" in langItem) {
+            item.description = langItem.description;
+        }
+
+        // TODO: handle unique_effects and lanternAbilities
+
+        return item;
+    }
+
+    static trWeapon(itemName) {
+        return ItemUtility.tr("weapons", itemName);
+    }
 }

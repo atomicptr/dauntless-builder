@@ -27,10 +27,11 @@ import DarkModeToggle from "../components/DarkModeToggle";
 import WeaponPartSelectModal from "../components/WeaponPartSelectModal";
 import WeaponPart from "../components/WeaponPart";
 import BondSelectModal from "../components/BondSelectModal";
+import { injectIntl } from "react-intl";
 
 const DAUNTLESS_BUILD_COLLECTION_BASEURL = "https://www.dauntless-build-collection.com/#/maintenance/create?hash=";
 
-export default class BuildRoute extends React.Component {
+class BuildRoute extends React.Component {
 
     constructor(props, context) {
         super(props, context);
@@ -80,6 +81,10 @@ export default class BuildRoute extends React.Component {
         this.setState({
             buildData
         });
+    }
+
+    tr(id, ...args) {
+        return this.props.intl.formatMessage({id}, ...args);
     }
 
     dummyData() {
@@ -291,7 +296,7 @@ export default class BuildRoute extends React.Component {
             FavoriteBuildsModel.delete(buildData);
         } else {
             // TODO replace prompt with popper
-            FavoriteBuildsModel.add(buildData, prompt("Build name"));
+            FavoriteBuildsModel.add(buildData, prompt(this.tr("ui.buildName")));
         }
 
         this.setState({});
@@ -357,7 +362,8 @@ export default class BuildRoute extends React.Component {
             parent={this}
             onItemClicked={this.onItemClicked.bind(this)}
             onCellClicked={this.onCellClicked.bind(this)}
-            title="Weapon" defaultType="Weapon"
+            title={this.tr("builder.weapon")}
+            defaultType="Weapon"
             item={weapon}
             level={this.state.build.weapon_level}
             cells={[
@@ -385,7 +391,7 @@ export default class BuildRoute extends React.Component {
             const part = BuildModel.findPart(weapon.type, "specials", this.state.build[slot]);
 
             parts.push(
-                <WeaponPart key={weapon.type + "_special"} part={part} partType="specials" onClicked={
+                <WeaponPart key={weapon.type + "_special"} part={part} title={this.tr("builder.special")} partType="specials" onClicked={
                     () => this.openWeaponPartSelectModal(weapon.type, "specials", slot)
                 } />
             );
@@ -401,7 +407,7 @@ export default class BuildRoute extends React.Component {
             const part = BuildModel.findPart(weapon.type, "mods", this.state.build[slot]);
 
             parts.push(
-                <WeaponPart key={weapon.type + "_mod"} part={part} partType="mods" onClicked={
+                <WeaponPart key={weapon.type + "_mod"} part={part} title={this.tr("builder.mod")} partType="mods" onClicked={
                     () => this.openWeaponPartSelectModal(weapon.type, "mods", slot)
                 } />
             );
@@ -423,7 +429,7 @@ export default class BuildRoute extends React.Component {
         return <Item
             parent={this}
             onItemClicked={openBondItemModal}
-            title="Bond Weapon" defaultType="Weapon"
+            title={this.tr("builder.bondWeapon")} defaultType="Weapon"
             item={BuildModel.findWeapon(this.state.build.bond_weapon_name)}
             level={this.state.build.weapon_level}
             titlePrefix="Bond"
@@ -491,6 +497,8 @@ export default class BuildRoute extends React.Component {
             return <div>...</div>;
         }
 
+        const tr = this.tr.bind(this);
+
         return <React.Fragment>
             <Helmet>
                 <title>{this.getMetaTitle()}</title>
@@ -506,44 +514,44 @@ export default class BuildRoute extends React.Component {
                 <div className="qa-left">
                     <Link to="/b/new">
                         <button className="button is-light" onClick={() => this.loadBuild("new")}>
-                            <i className="fas fa-plus"></i>&nbsp;New
+                            <i className="fas fa-plus"></i>&nbsp;{tr("ui.new")}
                         </button>
                     </Link>
                     <Link to="/favorites">
                         <button className="button is-light">
-                            <i className="fas fa-folder-open"></i>&nbsp;My builds
+                            <i className="fas fa-folder-open"></i>&nbsp;{tr("ui.myBuilds")}
                         </button>
                     </Link>
                 </div>
                 <div className="qa-right">
                     <CopyToClipboard text={window.location.origin + "/b/" + this.state.buildData} refs="copyButton"  onCopy={() => this.onCopyToClipboard()}>
-                        <button className="button is-light" data-tip="Copy to clipboard">
-                            <i className="fas fa-copy"></i><span className="only-on-very-small">&nbsp;Copy to clipboard</span>
+                        <button className="button is-light" data-tip={tr("ui.copyToClipboard")}>
+                            <i className="fas fa-copy"></i><span className="only-on-very-small">&nbsp;{tr("ui.copyToClipboard")}</span>
                             <ReactTooltip globalEventOff="click" place="top" type="dark" effect="solid" />
                         </button>
                     </CopyToClipboard>
                     <button className="button is-light"
-                        data-tip={FavoriteBuildsModel.isFavorite(this.state.buildData) ? "Unfavorite build" : "Favorite build"}
+                        data-tip={FavoriteBuildsModel.isFavorite(this.state.buildData) ? tr("ui.unfavoriteBuild") : tr("ui.favoriteBuild")}
                         onClick={() => this.toggleFavorite()}>
 
                         <i className={(FavoriteBuildsModel.isFavorite(this.state.buildData) ? "fas" : "far") + " fa-heart"}></i>
-                        <span className="only-on-very-small">&nbsp;Save to favorites</span>
+                        <span className="only-on-very-small">&nbsp;{tr("ui.saveToFavorites")}</span>
                     </button>
                     <MenuDropdown label={
                         <React.Fragment>
                             <i className="fas fa-ellipsis-v" style={{margin: "0px 5px"}}></i>
-                            <span className="only-on-very-small">&nbsp;More</span>
+                            <span className="only-on-very-small">&nbsp;{tr("ui.more")}</span>
                         </React.Fragment>
                     }>
                         <DarkModeToggle />
                         <a className="dropdown-item"
                             target="_blank" rel="noopener noreferrer"
                             href={DAUNTLESS_BUILD_COLLECTION_BASEURL + this.state.buildData}>
-                            <i className="fas fa-file-export"></i> Export to Dauntless Build Collection...
+                            <i className="fas fa-file-export"></i> {tr("ui.exportToDauntlessBuildCollection")}
                         </a>
                         <hr className="dropdown-divider" />
                         <a className="dropdown-item disabled">
-                            <i className="fas fa-cog"></i> Settings
+                            <i className="fas fa-cog"></i> {tr("ui.settings")}
                         </a>
                     </MenuDropdown>
                 </div>
@@ -558,7 +566,8 @@ export default class BuildRoute extends React.Component {
                         parent={this}
                         onItemClicked={this.onItemClicked.bind(this)}
                         onCellClicked={this.onCellClicked.bind(this)}
-                        title="Head Armour" defaultType="Head"
+                        title={this.tr("builder.headArmour")}
+                        defaultType="Head"
                         item={BuildModel.findArmour(this.state.build.head_name)}
                         level={this.state.build.head_level}
                         cells={[
@@ -569,7 +578,8 @@ export default class BuildRoute extends React.Component {
                         parent={this}
                         onItemClicked={this.onItemClicked.bind(this)}
                         onCellClicked={this.onCellClicked.bind(this)}
-                        title="Torso Armour" defaultType="Torso"
+                        title={this.tr("builder.torsoArmour")}
+                        defaultType="Torso"
                         item={BuildModel.findArmour(this.state.build.torso_name)}
                         level={this.state.build.torso_level}
                         cells={[
@@ -580,7 +590,8 @@ export default class BuildRoute extends React.Component {
                         parent={this}
                         onItemClicked={this.onItemClicked.bind(this)}
                         onCellClicked={this.onCellClicked.bind(this)}
-                        title="Arms Armour" defaultType="Arms"
+                        title={this.tr("builder.armsArmour")}
+                        defaultType="Arms"
                         item={BuildModel.findArmour(this.state.build.arms_name)}
                         level={this.state.build.arms_level}
                         cells={[
@@ -591,7 +602,8 @@ export default class BuildRoute extends React.Component {
                         parent={this}
                         onItemClicked={this.onItemClicked.bind(this)}
                         onCellClicked={this.onCellClicked.bind(this)}
-                        title="Legs Armour" defaultType="Legs"
+                        title={this.tr("builder.legsArmour")}
+                        defaultType="Legs"
                         item={BuildModel.findArmour(this.state.build.legs_name)}
                         level={this.state.build.legs_level}
                         cells={[
@@ -602,7 +614,8 @@ export default class BuildRoute extends React.Component {
                         parent={this}
                         onItemClicked={this.onItemClicked.bind(this)}
                         onCellClicked={this.onCellClicked.bind(this)}
-                        title="Lantern" defaultType="Lantern"
+                        title={this.tr("builder.lantern")}
+                        defaultType="Lantern"
                         item={BuildModel.findLantern(this.state.build.lantern_name)}
                         cells={[
                             [this.state.build.lantern_cell, BuildModel.findCellByVariantName(this.state.build.lantern_cell)]
@@ -652,5 +665,10 @@ BuildRoute.propTypes = {
         params: PropTypes.shape({
             buildData: PropTypes.string,
         }),
+    }).isRequired,
+    intl: PropTypes.shape({
+        formatMessage: PropTypes.func.isRequired
     }).isRequired
 };
+
+export default injectIntl(BuildRoute);

@@ -3,8 +3,9 @@ import PropTypes from "prop-types";
 
 import ModalItemListItem from "./ModalItemListItem";
 import BuildModel from "../models/BuildModel";
+import { injectIntl } from "react-intl";
 
-export default class BondSelectModal extends React.Component {
+class BondSelectModal extends React.Component {
 
     constructor(props, context) {
         super(props, context);
@@ -80,7 +81,7 @@ export default class BondSelectModal extends React.Component {
 
         bondFilter = Object.assign(bondFilter, weapon.bond);
 
-        return BuildModel.findItemsByMatchingFilter("Weapon", bondFilter)
+        return BuildModel.findItemsByMatchingFilter("weapon", bondFilter)
             .filter(item => item.name !== this.props.weaponName)
             .filter(item => item.rarity !== "exotic");
     }
@@ -139,3 +140,6 @@ BondSelectModal.propTypes = {
         weapons: PropTypes.object
     })
 };
+
+export default injectIntl(BondSelectModal);
+

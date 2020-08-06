@@ -1,0 +1,86 @@
+{
+    "ui": {
+        "makeANewBuild": "Créer un nouveau build",
+        "sourceCode": "Code Source",
+        "myBuilds": "Mes Builds",
+        "new": "Nouveau",
+        "copyToClipboard": "Copier dans le presse-papier",
+        "favoriteBuild": "Ajouter aux favoris",
+        "unfavoriteBuild": "Returer des favoris",
+        "saveToFavorites": "Sauver dans les favoris",
+        "more": "Plus",
+        "enableDarkMode": "Activer le Mode &quot;Sombre&quot;",
+        "enableLightMode": "Activer le Mode &quot;Clair&quot;",
+        "exportToDauntlessBuildCollection": "Exporter dans Dauntless Build Collection...",
+        "settings": "Parametres",
+        "buildName": "Nom du build",
+        "noSavedBuildYet": "Vous n'avez pas encore sauvé de build."
+    },
+    "builder": {
+        "weapon": "Arme",
+        "bondWeapon": "Lien",
+        "headArmour": "Casque",
+        "torsoArmour": "Torse",
+        "armsArmour": "Gants",
+        "legsArmour": "Grèves",
+        "lantern": "Lanterne",
+        "special": "Spécial",
+        "cell": "Cellule",
+        "armour": "Armure",
+        "mod": "Mod",
+        "barrel": "Canon",
+        "chamber": "Chambre",
+        "grip": "Poignée",
+        "prism": "Prisme",
+        "perks": "Effets",
+        "noItemSelected": "Pas de <strong>{title}</strong> selectionné.",
+        "selectNoItem": "Pas de <strong>{title}</strong>.",
+        "clickToSelect": "Cliquez ici pour en sélectionner un(e).",
+        "uniqueEffect": "effet unique: ",
+        "hold": "Maintenu: ",
+        "instant": "Instantané: ",
+        "noPerksAvailable": "Aucun effet disponible.",
+        "rarity": {
+            "uncommon": "Commun",
+            "rare": "Rare",
+            "epic": "Epique"
+        },
+        "element": {
+            "frost": "Givrant",
+            "radiant": "Radiant",
+            "blaze": "Incandescant",
+            "shock": "Foudroyant",
+            "terra": "Tellurique",
+            "umbral": "Obscur"
+        },
+        "stats": {
+            "power": "Puissance: ",
+            "resistance": "Resistance: ",
+            "perks": "Effet: "
+        },
+        "modal": {
+            "search": "Chercher...",
+            "weaponType": "Filtrer par type d'arme...",
+            "perk": "Filtrer par effet...",
+            "cellSlot": "Filtrer par slot de cellule...",
+            "rarity": "Filtrer par rareté..."
+        },
+        "weaponType": {
+            "aetherStrikers": "Cestes aethériques",
+            "axe": "Hache",
+            "chainBlades": "Chaînes-lames",
+            "hammer": "Marteau",
+            "repeater": "Répéteurs",
+            "sword": "Épée",
+            "warPike": "Aéthérolance"
+        },
+        "cellSlot": {
+            "defence": "Défense",
+            "mobility": "Mobilité",
+            "power": "Puissance",
+            "technique": "Technique",
+            "utility": "Utilitaire",
+            "prismatic": "Prismatique"
+        }
+    }
+}

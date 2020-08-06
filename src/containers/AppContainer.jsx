@@ -16,6 +16,8 @@ import Footer from "../components/Footer";
 
 import "styles/main.scss";
 import SettingsUtility from "../utility/SettingsUtility";
+import I18NSelector from "../components/I18NSelector";
+import { I18NProvider } from "../components/I18NProvider";
 
 export default class AppContainer extends React.Component {
 
@@ -52,49 +54,53 @@ export default class AppContainer extends React.Component {
             return <LoadingIndicator />;
         }
 
-        return <React.Fragment>
-            <Helmet>
-                <title>Dauntless Builder</title>
-                <meta name="description" content="Create and share Dauntless builds with your friends!" />
+        return <I18NProvider>
+            <React.Fragment>
+                <Helmet>
+                    <title>Dauntless Builder</title>
+                    <meta name="description" content="Create and share Dauntless builds with your friends!" />
 
-                <meta property="og:site_name" content="Dauntless Builder" />
-                <meta property="og:title" content="Dauntless Builder" />
-                <meta property="og:description" content="Create and share Dauntless builds with your friends!" />
-                <meta property="og:url" content="https://www.dauntless-builder.com" />
-                <meta property="og:image" content="https://www.dauntless-builder.com/assets/icon.png" />
+                    <meta property="og:site_name" content="Dauntless Builder" />
+                    <meta property="og:title" content="Dauntless Builder" />
+                    <meta property="og:description" content="Create and share Dauntless builds with your friends!" />
+                    <meta property="og:url" content="https://www.dauntless-builder.com" />
+                    <meta property="og:image" content="https://www.dauntless-builder.com/assets/icon.png" />
 
-                <script type='application/ld+json'>{`
-                    {
-                        "@context": "http://www.schema.org",
-                        "@type": "WebSite",
-                        "name": "Dauntless Builder",
-                        "description": "Create and share Dauntless builds with your friends!",
-                        "image": "https://www.dauntless-builder.com/assets/icon.png",
-                        "url": "https://www.dauntless-builder.com"
-                    }
-                `}</script>
-            </Helmet>
-            <Router>
-                <React.Fragment>
-                    <div className={"primary-container container " + this.getExtraClasses()}>
-                        <Link to="/">
-                            <img className="logo" src="/assets/logo.png" />
-                        </Link>
+                    <script type='application/ld+json'>{`
+                        {
+                            "@context": "http://www.schema.org",
+                            "@type": "WebSite",
+                            "name": "Dauntless Builder",
+                            "description": "Create and share Dauntless builds with your friends!",
+                            "image": "https://www.dauntless-builder.com/assets/icon.png",
+                            "url": "https://www.dauntless-builder.com"
+                        }
+                    `}</script>
+                </Helmet>
+                <Router>
+                    <React.Fragment>
+                        <div className={"primary-container container " + this.getExtraClasses()}>
+                            <I18NSelector />
 
-                        <div className="card">
-                            <Switch>
-                                <Route exact path="/" component={IndexRoute} />
-                                <Route path="/b/:buildData" component={BuildRoute} />
-                                <Route path="/favorites" component={FavoritesRoute} />
-                                <Route path="/privacy" component={PrivacyRoute} />
-                                <Redirect to="/" />
-                            </Switch>
+                            <Link to="/">
+                                <img className="logo" src="/assets/logo.png" />
+                            </Link>
+
+                            <div className="card">
+                                <Switch>
+                                    <Route exact path="/" component={IndexRoute} />
+                                    <Route path="/b/:buildData" component={BuildRoute} />
+                                    <Route path="/favorites" component={FavoritesRoute} />
+                                    <Route path="/privacy" component={PrivacyRoute} />
+                                    <Redirect to="/" />
+                                </Switch>
+                            </div>
+
+                            <Footer />
                         </div>
-
-                        <Footer />
-                    </div>
-                </React.Fragment>
-            </Router>
-        </React.Fragment>;
+                    </React.Fragment>
+                </Router>
+            </React.Fragment>
+        </I18NProvider>;
     }
 }

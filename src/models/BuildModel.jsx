@@ -1,4 +1,5 @@
 import Hashids from "hashids";
+import Case from "case";
 import DataUtility from "../utility/DataUtility";
 import ItemUtility from "../utility/ItemUtility";
 
@@ -33,7 +34,7 @@ export default class BuildModel {
         this.lantern_name = "";
         this.lantern_cell = "";
 
-        for(let key of Object.keys(data)) {
+        for (let key of Object.keys(data)) {
             this[key] = data[key];
         }
     }
@@ -99,37 +100,39 @@ export default class BuildModel {
 
         const version = numbers[idcounter++];
 
-        const weaponName = getString("Weapons", idcounter++);
+        const weaponName = getString("weapons", idcounter++);
         const weapon = BuildModel.findWeapon(weaponName);
-        const partsType = weapon ? `Parts:${ItemUtility.formatWeaponTypeForParts(weapon.type).capitalize()}` : null;
+        const partsType = weapon
+            ? `parts:${Case.camel(weapon.type).toLowerCase()}`
+            : null;
 
         let data = {
             __version: version,
             weapon_name: weaponName,
             weapon_level: numbers[idcounter++],
-            weapon_cell0: getString("Cells", idcounter++),
-            weapon_cell1: getString("Cells", idcounter++),
+            weapon_cell0: getString("cells", idcounter++),
+            weapon_cell1: getString("cells", idcounter++),
             weapon_part1_name: getString(partsType, idcounter++),
             weapon_part2_name: getString(partsType, idcounter++),
             weapon_part3_name: getString(partsType, idcounter++),
             weapon_part4_name: getString(partsType, idcounter++),
             // part 5 was unused and is now used for bond weapons
-            bond_weapon_name: getString("Weapons", idcounter++),
+            bond_weapon_name: getString("weapons", idcounter++),
             weapon_part6_name: getString(partsType, idcounter++),
-            head_name: getString("Armours", idcounter++),
+            head_name: getString("armours", idcounter++),
             head_level: numbers[idcounter++],
-            head_cell: getString("Cells", idcounter++),
-            torso_name: getString("Armours", idcounter++),
+            head_cell: getString("cells", idcounter++),
+            torso_name: getString("armours", idcounter++),
             torso_level: numbers[idcounter++],
-            torso_cell: getString("Cells", idcounter++),
-            arms_name: getString("Armours", idcounter++),
+            torso_cell: getString("cells", idcounter++),
+            arms_name: getString("armours", idcounter++),
             arms_level: numbers[idcounter++],
-            arms_cell: getString("Cells", idcounter++),
-            legs_name: getString("Armours", idcounter++),
+            arms_cell: getString("cells", idcounter++),
+            legs_name: getString("armours", idcounter++),
             legs_level: numbers[idcounter++],
-            legs_cell: getString("Cells", idcounter++),
-            lantern_name: getString("Lanterns", idcounter++),
-            lantern_cell: getString("Cells", idcounter++)
+            legs_cell: getString("cells", idcounter++),
+            lantern_name: getString("lanterns", idcounter++),
+            lantern_cell: getString("cells", idcounter++)
         };
 
         return new BuildModel(data);
@@ -179,8 +182,14 @@ export default class BuildModel {
 
     get weaponCells() {
         return [
-            [this.weapon_cell0, BuildModel.findCellByVariantName(this.weapon_cell0)],
-            [this.weapon_cell1, BuildModel.findCellByVariantName(this.weapon_cell1)],
+            [
+                this.weapon_cell0,
+                BuildModel.findCellByVariantName(this.weapon_cell0)
+            ],
+            [
+                this.weapon_cell1,
+                BuildModel.findCellByVariantName(this.weapon_cell1)
+            ]
         ];
     }
 
@@ -189,16 +198,28 @@ export default class BuildModel {
             head: BuildModel.findArmour(this.head_name),
             torso: BuildModel.findArmour(this.torso_name),
             arms: BuildModel.findArmour(this.arms_name),
-            legs: BuildModel.findArmour(this.legs_name),
+            legs: BuildModel.findArmour(this.legs_name)
         };
     }
 
     get armourCells() {
         return {
-            head: [this.head_cell, BuildModel.findCellByVariantName(this.head_cell)],
-            torso: [this.torso_cell, BuildModel.findCellByVariantName(this.torso_cell)],
-            arms: [this.arms_cell, BuildModel.findCellByVariantName(this.arms_cell)],
-            legs: [this.legs_cell, BuildModel.findCellByVariantName(this.legs_cell)]
+            head: [
+                this.head_cell,
+                BuildModel.findCellByVariantName(this.head_cell)
+            ],
+            torso: [
+                this.torso_cell,
+                BuildModel.findCellByVariantName(this.torso_cell)
+            ],
+            arms: [
+                this.arms_cell,
+                BuildModel.findCellByVariantName(this.arms_cell)
+            ],
+            legs: [
+                this.legs_cell,
+                BuildModel.findCellByVariantName(this.legs_cell)
+            ]
         };
     }
 
@@ -210,7 +231,7 @@ export default class BuildModel {
         let perks = {};
 
         let insertPerk = (perkName, perkValue) => {
-            if(!(perkName in perks)) {
+            if (!(perkName in perks)) {
                 perks[perkName] = perkValue;
             } else {
                 perks[perkName] += perkValue;
@@ -218,35 +239,48 @@ export default class BuildModel {
         };
 
         let insertCellPerks = cells => {
-            for(let [variantName, cell] of cells) {
-
-                if(!variantName || !cell) {
+            for (let [variantName, cell] of cells) {
+                if (!variantName || !cell) {
                     continue;
                 }
 
-                for(let perk in cell.variants[variantName].perks) {
+                for (let perk in cell.variants[variantName].perks) {
                     insertPerk(perk, cell.variants[variantName].perks[perk]);
                 }
             }
         };
 
-        let insertItemPerks = (itemName, itemType, specificItemType, itemLevel) => {
+        let insertItemPerks = (
+            itemName,
+            itemType,
+            specificItemType,
+            itemLevel
+        ) => {
             const item = BuildModel["find" + itemType](itemName);
 
-            if(item) {
-                let itemPerks = BuildModel.getAvailablePerksByLevel(itemName, itemType, itemLevel);
+            if (item) {
+                let itemPerks = BuildModel.getAvailablePerksByLevel(
+                    itemName,
+                    itemType,
+                    itemLevel
+                );
 
-                for(let perk of itemPerks) {
+                for (let perk of itemPerks) {
                     insertPerk(perk.name, perk.value);
                 }
 
-                if(itemType === "Weapon") {
+                if (itemType === "Weapon") {
                     insertCellPerks(this.weaponCells);
                 } else {
                     const name = (specificItemType || itemType).toLowerCase();
 
                     insertCellPerks([
-                        [this[name + "_cell"], BuildModel.findCellByVariantName(this[name + "_cell"])]
+                        [
+                            this[name + "_cell"],
+                            BuildModel.findCellByVariantName(
+                                this[name + "_cell"]
+                            )
+                        ]
                     ]);
                 }
             }
@@ -255,10 +289,14 @@ export default class BuildModel {
         let insertBondItemPerks = (itemName, itemLevel) => {
             const item = BuildModel.findWeapon(itemName);
 
-            if(item) {
-                let itemPerks = BuildModel.getAvailablePerksByLevel(itemName, "Weapon", itemLevel);
+            if (item) {
+                let itemPerks = BuildModel.getAvailablePerksByLevel(
+                    itemName,
+                    "weapon",
+                    itemLevel
+                );
 
-                for(let perk of itemPerks) {
+                for (let perk of itemPerks) {
                     insertPerk(perk.name, perk.value);
                 }
             }
@@ -276,7 +314,7 @@ export default class BuildModel {
     }
 
     static findWeapon(name) {
-        if(name in DataUtility.data().weapons) {
+        if (name in DataUtility.data().weapons) {
             return DataUtility.data().weapons[name];
         }
 
@@ -284,7 +322,7 @@ export default class BuildModel {
     }
 
     static findArmour(name) {
-        if(name in DataUtility.data().armours) {
+        if (name in DataUtility.data().armours) {
             return DataUtility.data().armours[name];
         }
 
@@ -292,7 +330,7 @@ export default class BuildModel {
     }
 
     static findLantern(name) {
-        if(name in DataUtility.data().lanterns) {
+        if (name in DataUtility.data().lanterns) {
             return DataUtility.data().lanterns[name];
         }
 
@@ -300,18 +338,25 @@ export default class BuildModel {
     }
 
     static findPart(weaponType, partType, partName) {
-        if(partName in DataUtility.data().parts[ItemUtility.formatWeaponTypeForParts(weaponType)][partType]) {
-            return DataUtility.data().parts[ItemUtility.formatWeaponTypeForParts(weaponType)][partType][partName];
+        if (
+            partName in
+            DataUtility.data().parts[
+                ItemUtility.formatWeaponTypeForParts(weaponType)
+            ][partType]
+        ) {
+            return DataUtility.data().parts[
+                ItemUtility.formatWeaponTypeForParts(weaponType)
+            ][partType][partName];
         }
 
         return null;
     }
 
     static findCellByVariantName(variantName) {
-        for(let cellKey in DataUtility.data().cells) {
+        for (let cellKey in DataUtility.data().cells) {
             let cell = DataUtility.data().cells[cellKey];
 
-            if(variantName in cell.variants) {
+            if (variantName in cell.variants) {
                 return cell;
             }
         }
@@ -320,8 +365,8 @@ export default class BuildModel {
     }
 
     static findPerkByName(perkName) {
-        for(let perk in DataUtility.data().perks) {
-            if(perk === perkName) {
+        for (let perk in DataUtility.data().perks) {
+            if (perk === perkName) {
                 return DataUtility.data().perks[perkName];
             }
         }
@@ -360,13 +405,15 @@ export default class BuildModel {
             return true;
         };
 
-        return Object.values(items).filter(item => isFilterMatching(item, filter));
+        return Object.values(items).filter(item =>
+            isFilterMatching(item, filter)
+        );
     }
 
     static getUniqueEffects(itemName, itemType) {
         const item = DataUtility.data()[itemType.toLowerCase() + "s"][itemName];
 
-        if(!item.unique_effects) {
+        if (!item.unique_effects) {
             return [];
         }
 
@@ -376,7 +423,7 @@ export default class BuildModel {
     static getAvailablePerksByLevel(itemName, itemType, level) {
         const item = DataUtility.data()[itemType.toLowerCase() + "s"][itemName];
 
-        if(!item.perks) {
+        if (!item.perks) {
             return [];
         }
 
@@ -385,28 +432,34 @@ export default class BuildModel {
         return item.perks.filter(
             perk =>
                 !("from" in perk && "to" in perk) ||
-                    (level >= perk.from && level <= perk.to)
+                (level >= perk.from && level <= perk.to)
         );
     }
 
     static getAvailableUniqueEffectsByLevel(itemName, itemType, level) {
         const item = DataUtility.data()[itemType.toLowerCase() + "s"][itemName];
 
-        if(!item.unique_effects) {
+        if (!item.unique_effects) {
             return [];
         }
 
         level = Number(level);
 
-        return item.unique_effects.filter(
-            uniqueEffect =>
-                !("from" in uniqueEffect && "to" in uniqueEffect) ||
+        return item.unique_effects
+            .filter(
+                uniqueEffect =>
+                    !("from" in uniqueEffect && "to" in uniqueEffect) ||
                     (level >= uniqueEffect.from && level <= uniqueEffect.to)
-        );
+            )
+            .map(it =>
+                Object.assign(it, {
+                    title: it.title ? `${it.title.toLowerCase()}` : null
+                })
+            );
     }
 
     static tryDeserialize(str) {
-        if(BuildModel.isValid(str)) {
+        if (BuildModel.isValid(str)) {
             return BuildModel.deserialize(str);
         }
 
@@ -439,7 +492,7 @@ export default class BuildModel {
             head_level: 0,
             head_cell: "",
             lantern_name: "",
-            lantern_cell: "",
+            lantern_cell: ""
         });
     }
 
