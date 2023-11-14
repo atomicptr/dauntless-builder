@@ -3,6 +3,8 @@
 [![Build Status](https://github.com/atomicptr/dauntless-builder/actions/workflows/tests.yml/badge.svg)](https://github.com/atomicptr/dauntless-builder/actions/workflows/tests.yml)
 [![Crowdin](https://badges.crowdin.net/dauntless-builder/localized.svg)](https://crowdin.com/project/dauntless-builder)
 
+![](./public/assets/icon.png)
+
 Create and share Dauntless builds with your friends!
 
 ![](./public/assets/icon.png)
