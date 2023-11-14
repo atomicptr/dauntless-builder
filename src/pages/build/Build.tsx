@@ -496,7 +496,7 @@ const Build: React.FC = () => {
                         <CenterBox>
                             <AdSpace
                                 name={playwireUnitUnderPerkList}
-                                unitType={UnitType.MediumRect300x250}
+                                unitType={UnitType.MediumRect}
                             />
                         </CenterBox>
                     </ConstraintBox>
