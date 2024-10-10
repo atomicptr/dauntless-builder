@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+a.disabled {
+    @apply pointer-events-none opacity-50;
+}
