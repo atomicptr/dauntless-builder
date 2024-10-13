@@ -1,13 +1,10 @@
-<script lang="ts">
-    let x = $state(1);
-
-    const increment = () => {
-        x += 1;
-    }
+<script>
+    import WeaponPicker from "$lib/components/WeaponPicker.svelte";
 </script>
 
-<svelte:head>
-    <title>Demo Page | Dauntless Builder</title>
-</svelte:head>
+<h1 class="text-2xl mb-8">Example Weapon Picker</h1>
 
-<button class="btn btn-primary" onclick={increment}>+ { x }</button>
+<div class="flex flex-col gap-2">
+    <WeaponPicker />
+    <WeaponPicker />
+</div>

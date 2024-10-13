@@ -2,6 +2,72 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    --element-frost: #0E6A9F;
+    --element-blaze: #DB5454;
+    --element-shock: #F6D887;
+    --element-terra: #3F8230;
+    --element-umbral: #A866D3;
+    --element-radiant: #69CECE;
+}
+
 a.disabled {
     @apply pointer-events-none opacity-50;
+}
+
+.card-btn {
+    @apply btn p-2;
+    height: unset;
+}
+
+.element-border {
+    @apply border-0 border-l-4 border-solid;
+}
+
+.element-border-frost {
+    border-color: var(--element-frost);
+
+    &:hover {
+        border-color: var(--element-frost);
+    }
+}
+
+.element-border-blaze {
+    border-color: var(--element-blaze);
+
+    &:hover {
+        border-color: var(--element-blaze);
+    }
+}
+
+.element-border-shock {
+    border-color: var(--element-shock);
+
+    &:hover {
+        border-color: var(--element-shock);
+    }
+}
+
+.element-border-terra {
+    border-color: var(--element-terra);
+
+    &:hover {
+        border-color: var(--element-terra);
+    }
+}
+
+.element-border-umbral {
+    border-color: var(--element-umbral);
+
+    &:hover {
+        border-color: var(--element-umbral);
+    }
+}
+
+.element-border-radiant {
+    border-color: var(--element-radiant);
+
+    &:hover {
+        border-color: var(--element-radiant);
+    }
 }
