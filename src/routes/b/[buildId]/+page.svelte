@@ -38,39 +38,44 @@ const onArmourCellPickerClicked = (type: ArmourType, index: number, cellId: numb
 };
 </script>
 
-<div class="flex flex-col gap-2">
-    <WeaponPicker
-        selected={data.build.weapon1}
-        onWeaponClick={onWeaponPickerClicked(1)}
-        onTalentClick={onWeaponTalentPickerClicked(1)}
-    />
-    <WeaponPicker
-        selected={data.build.weapon2}
-        onWeaponClick={onWeaponPickerClicked(2)}
-        onTalentClick={onWeaponTalentPickerClicked(2)}
-    />
-    <ArmourPicker
-        type="head"
-        selected={data.build.head}
-        onArmourPieceClick={onArmourPieceClickerClicked}
-        onCellClick={onArmourCellPickerClicked}
-    />
-    <ArmourPicker
-        type="torso"
-        selected={data.build.torso}
-        onArmourPieceClick={onArmourPieceClickerClicked}
-        onCellClick={onArmourCellPickerClicked}
-    />
-    <ArmourPicker
-        type="arms"
-        selected={data.build.arms}
-        onArmourPieceClick={onArmourPieceClickerClicked}
-        onCellClick={onArmourCellPickerClicked}
-    />
-    <ArmourPicker
-        type="legs"
-        selected={data.build.legs}
-        onArmourPieceClick={onArmourPieceClickerClicked}
-        onCellClick={onArmourCellPickerClicked}
-    />
+<div class="flex flex-row">
+    <div class="flex flex-col gap-2 w-2/3">
+        <WeaponPicker
+            selected={data.build.weapon1}
+            onWeaponClick={onWeaponPickerClicked(1)}
+            onTalentClick={onWeaponTalentPickerClicked(1)}
+        />
+        <WeaponPicker
+            selected={data.build.weapon2}
+            onWeaponClick={onWeaponPickerClicked(2)}
+            onTalentClick={onWeaponTalentPickerClicked(2)}
+        />
+        <ArmourPicker
+            type="head"
+            selected={data.build.head}
+            onArmourPieceClick={onArmourPieceClickerClicked}
+            onCellClick={onArmourCellPickerClicked}
+        />
+        <ArmourPicker
+            type="torso"
+            selected={data.build.torso}
+            onArmourPieceClick={onArmourPieceClickerClicked}
+            onCellClick={onArmourCellPickerClicked}
+        />
+        <ArmourPicker
+            type="arms"
+            selected={data.build.arms}
+            onArmourPieceClick={onArmourPieceClickerClicked}
+            onCellClick={onArmourCellPickerClicked}
+        />
+        <ArmourPicker
+            type="legs"
+            selected={data.build.legs}
+            onArmourPieceClick={onArmourPieceClickerClicked}
+            onCellClick={onArmourCellPickerClicked}
+        />
+    </div>
+    <div class="w-1/3 p-4">
+        Perk list could be here
+    </div>
 </div>
