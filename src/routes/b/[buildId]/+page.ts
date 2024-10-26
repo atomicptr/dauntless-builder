@@ -1,11 +1,21 @@
+import { deserialize, empty, serialize } from "$lib/build/Build";
+import { redirect } from "@sveltejs/kit";
 import type { PageLoad } from "./$types";
 
 export const load: PageLoad = ({ params }) => {
     const buildId = params.buildId;
 
-    // TODO: handle validation / parsing / etc.
+    const build = deserialize(buildId);
+
+    if (build.isErr()) {
+        // something went wrong, redirect
+        // TODO: redirect to a special  error page?
+        const newBuild = empty();
+        const newBuildId = serialize(newBuild).unwrapOr("new"); // this should never fail...
+        return redirect(302, `/b/${newBuildId}`);
+    }
 
     return {
-        buildId,
+        build: build.unwrapOr(empty()),
     };
-}
+};

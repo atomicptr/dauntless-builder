@@ -1,20 +1,25 @@
 <script lang="ts">
-    import HomeIcon from "$lib/components/icons/HomeIcon.svelte";
-    import NewIcon from "$lib/components/icons/NewIcon.svelte";
-    import MyBuildsIcon from "$lib/components/icons/MyBuildsIcon.svelte";
-    import BuildFinderIcon from "$lib/components/icons/BuildFinderIcon.svelte";
-    import MetaBuildsIcon from "$lib/components/icons/MetaBuildsIcon.svelte";
-    import ProgressionBuildsIcon from "$lib/components/icons/ProgressionBuildsIcon.svelte";
-    import TrialBuildsIcon from "$lib/components/icons/TrialBuildsIcon.svelte";
-    import AboutIcon from "$lib/components/icons/AboutIcon.svelte";
-    import PrivacyIcon from "$lib/components/icons/PrivacyIcon.svelte";
-    import SettingsIcon from "$lib/components/icons/SettingsIcon.svelte";
-    import GithubIcon from "$lib/components/icons/GithubIcon.svelte";
-    import DiscordIcon from "$lib/components/icons/DiscordIcon.svelte";
-    import XIcon from "$lib/components/icons/XIcon.svelte";
-    import SupportUsIcon from "$lib/components/icons/SupportUsIcon.svelte";
-    import { discordLink, githubLink, patreonLink, xcomLink } from "$lib/constants";
-    import PatchIcon from "./icons/PatchIcon.svelte";
+import HomeIcon from "$lib/components/icons/HomeIcon.svelte";
+import NewIcon from "$lib/components/icons/NewIcon.svelte";
+import MyBuildsIcon from "$lib/components/icons/MyBuildsIcon.svelte";
+import BuildFinderIcon from "$lib/components/icons/BuildFinderIcon.svelte";
+import MetaBuildsIcon from "$lib/components/icons/MetaBuildsIcon.svelte";
+import ProgressionBuildsIcon from "$lib/components/icons/ProgressionBuildsIcon.svelte";
+import TrialBuildsIcon from "$lib/components/icons/TrialBuildsIcon.svelte";
+import AboutIcon from "$lib/components/icons/AboutIcon.svelte";
+import PrivacyIcon from "$lib/components/icons/PrivacyIcon.svelte";
+import SettingsIcon from "$lib/components/icons/SettingsIcon.svelte";
+import GithubIcon from "$lib/components/icons/GithubIcon.svelte";
+import DiscordIcon from "$lib/components/icons/DiscordIcon.svelte";
+import XIcon from "$lib/components/icons/XIcon.svelte";
+import SupportUsIcon from "$lib/components/icons/SupportUsIcon.svelte";
+import { discordLink, githubLink, supportUsLink, xcomLink } from "$lib/constants";
+import PatchIcon from "./icons/PatchIcon.svelte";
+import type { Patch } from "$lib/data/phalanx-types";
+
+const { patch }: { patch: Patch } = $props();
+
+const version = patch?.version;
 </script>
 
 <ul class="menu w-80 p-4 bg-base-100 sticky top-0 z-20 bg-opacity-90 backdrop-blur min-h-screen lg:min-h-max">
@@ -28,7 +33,7 @@
     </li>
 
     <li>
-        <a href="/b/new" class="disabled">
+        <a href="/b/new">
             <NewIcon />
             New Build
         </a>
@@ -91,7 +96,7 @@
     <li></li>
 
     <li>
-        <a href={patreonLink} target="_blank" class="disabled">
+        <a href={supportUsLink} target="_blank">
             <SupportUsIcon />
             Support Us
         </a>
@@ -111,16 +116,18 @@
     <li>
         <a href={xcomLink} target="_blank">
             <XIcon />
-            Follow me on X/Twitter
+            Follow on X/Twitter
         </a>
     </li>
 
     <li></li>
 
-    <li>
-        <a href="https://playdauntless.com/patch-notes/1-14-6/" target="_blank">
-            <PatchIcon />
-            Dauntless v1.14.6
-        </a>
-    </li>
+    {#if version}
+        <li>
+            <a href="https://playdauntless.com/patch-notes/{version.major}-{version.minor}-{version.patch}/" target="_blank">
+                <PatchIcon />
+                Dauntless v{version.major}.{version.minor}.{version.patch}
+            </a>
+        </li>
+    {/if}
 </ul>

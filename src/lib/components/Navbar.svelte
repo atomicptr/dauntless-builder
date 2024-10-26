@@ -1,6 +1,6 @@
 <script lang="ts">
-    import HamburgerIcon from "$lib/components/icons/HamburgerIcon.svelte";
-    import AppIcon from "$lib/components/AppIcon.svelte";
+import HamburgerIcon from "$lib/components/icons/HamburgerIcon.svelte";
+import AppIcon from "$lib/components/AppIcon.svelte";
 </script>
 
 <div class="navbar w-full sticky top-0 z-20 bg-base-100 bg-opacity-90 backdrop-blur">

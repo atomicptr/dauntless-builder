@@ -1,8 +1,12 @@
 <script lang="ts">
-    import "../app.css";
-    import AppIcon from "$lib/components/AppIcon.svelte";
-    import DrawerMenu from "$lib/components/DrawerMenu.svelte";
-    import Navbar from "$lib/components/Navbar.svelte";
+import "../app.css";
+import AppIcon from "$lib/components/AppIcon.svelte";
+import DrawerMenu from "$lib/components/DrawerMenu.svelte";
+import Navbar from "$lib/components/Navbar.svelte";
+import { page } from "$app/stores";
+import Container from "$lib/components/Container.svelte";
+
+const { children } = $props();
 </script>
 
 <svelte:head>
@@ -17,7 +21,9 @@
             <Navbar />
 
             <div class="p-2">
-                <slot />
+                <Container>
+                    {@render children()}
+                </Container>
             </div>
         </div>
 
@@ -30,7 +36,7 @@
 
             <label for="drawer" class="drawer-overlay"></label>
 
-            <DrawerMenu />
+            <DrawerMenu patch={$page.data.patch}/>
         </div>
     </div>
 </main>

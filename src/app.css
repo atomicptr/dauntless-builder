@@ -3,12 +3,12 @@
 @tailwind utilities;
 
 :root {
-    --element-frost: #0E6A9F;
-    --element-blaze: #DB5454;
-    --element-shock: #F6D887;
-    --element-terra: #3F8230;
-    --element-umbral: #A866D3;
-    --element-radiant: #69CECE;
+    --element-frost: #0e6a9f;
+    --element-blaze: #db5454;
+    --element-shock: #f6d887;
+    --element-terra: #3f8230;
+    --element-umbral: #a866d3;
+    --element-radiant: #69cece;
 }
 
 a.disabled {
@@ -70,4 +70,28 @@ a.disabled {
     &:hover {
         border-color: var(--element-radiant);
     }
+}
+
+.element-text-frost {
+    color: var(--element-frost);
+}
+
+.element-text-blaze {
+    color: var(--element-blaze);
+}
+
+.element-text-terra {
+    color: var(--element-terra);
+}
+
+.element-text-shock {
+    color: var(--element-shock);
+}
+
+.element-text-umbral {
+    color: var(--element-umbral);
+}
+
+.element-text-radiant {
+    color: var(--element-radiant);
 }
