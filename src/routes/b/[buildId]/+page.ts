@@ -8,6 +8,7 @@ export const load: PageLoad = ({ params }) => {
     const build = deserialize(buildId);
 
     if (build.isErr()) {
+        console.log(build.error);
         // something went wrong, redirect
         // TODO: redirect to a special  error page?
         const newBuild = empty();

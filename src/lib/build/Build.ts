@@ -126,10 +126,11 @@ export const empty = (): Build => {
 
 export const deserialize = (buildId: string): Result<Build, string> => {
     const data = sqids.decode(buildId);
+    const supposedLength = BuildFields.Checksum + 1;
 
-    console.log(data.length, Object.keys(BuildFields).length);
-
-    // TODO: validate length
+    if (data.length !== supposedLength) {
+        return err(`build length should be ${supposedLength}`);
+    }
 
     const ids = data.slice(0, data.length - 1);
     const rest = data.slice(ids.length);
@@ -138,9 +139,6 @@ export const deserialize = (buildId: string): Result<Build, string> => {
     if (checksum === null) {
         return err("invalid checksum");
     }
-
-    console.log(ids, checksum);
-    console.log(checkChecksum(ids, checksum));
 
     if (!checkChecksum(ids, checksum)) {
         return err("invalid checksum");
@@ -162,35 +160,27 @@ export const deserialize = (buildId: string): Result<Build, string> => {
         head: {
             id: ids[BuildFields.HeadId],
             level: ids[BuildFields.HeadLevel],
-            cells: [BuildFields.HeadCell],
+            cells: [ids[BuildFields.HeadCell]],
         },
         torso: {
             id: ids[BuildFields.TorsoId],
             level: ids[BuildFields.TorsoLevel],
-            cells: [BuildFields.TorsoCell1, BuildFields.TorsoCell2],
+            cells: [ids[BuildFields.TorsoCell1], ids[BuildFields.TorsoCell2]],
         },
         arms: {
             id: ids[BuildFields.ArmsId],
             level: ids[BuildFields.ArmsLevel],
-            cells: [BuildFields.ArmsCell],
+            cells: [ids[BuildFields.ArmsCell]],
         },
         legs: {
             id: ids[BuildFields.LegsId],
             level: ids[BuildFields.LegsLevel],
-            cells: [BuildFields.LegsCell1, BuildFields.LegsCell2],
+            cells: [ids[BuildFields.LegsCell1], ids[BuildFields.LegsCell2]],
         },
         lanternCore: {
             id: ids[BuildFields.LanternCoreId],
         },
     });
-};
-
-const getCells = (cells: number[], amount: number): number[] => {
-    if (cells.length < amount) {
-        return [...cells, ...Array(amount - cells.length).fill(0)];
-    }
-
-    return cells.slice(0, amount);
 };
 
 export const serialize = (build: Build): Result<string, string> => {
@@ -205,16 +195,18 @@ export const serialize = (build: Build): Result<string, string> => {
         build.weapon2.talents,
         build.head.id,
         build.head.level,
-        ...getCells(build.head.cells, 1),
+        build.head.cells[0],
         build.torso.id,
         build.torso.level,
-        ...getCells(build.torso.cells, 2),
+        build.torso.cells[0],
+        build.torso.cells[1],
         build.arms.id,
         build.arms.level,
-        ...getCells(build.arms.cells, 1),
+        build.arms.cells[0],
         build.legs.id,
         build.legs.level,
-        ...getCells(build.legs.cells, 2),
+        build.legs.cells[0],
+        build.legs.cells[1],
         build.lanternCore.id,
     ];
 
