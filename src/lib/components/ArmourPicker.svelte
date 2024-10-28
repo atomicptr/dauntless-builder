@@ -3,6 +3,7 @@ import { page } from "$app/stores";
 import type { BuildArmourPiece } from "$lib/build/Build";
 import type { ArmourType } from "$lib/data/phalanx-types";
 import { elementResistanceLevel, oppositeElement, powerLevel, resistanceLevel } from "$lib/data/static-data";
+import { translatableString } from "$lib/utils/translatable-string";
 
 interface ArmourPiecePickerProps {
     type: ArmourType;
@@ -23,7 +24,7 @@ const icon = $derived(armour.icon ?? "/icon.png");
                 <img src="{icon}" alt="{armour.name}" />
             </div>
             <div class="grow">
-                {armour.name}
+                {translatableString(armour.name)}
                 {#if selected.level > 1}
                     +{selected.level}
                 {/if}

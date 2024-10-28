@@ -2,6 +2,7 @@
 import { page } from "$app/stores";
 import type { BuildWeapon } from "$lib/build/Build";
 import { elementResistanceLevel, oppositeElement, powerLevel } from "$lib/data/static-data";
+import { translatableString } from "$lib/utils/translatable-string";
 
 interface WeaponPickerProps {
     selected: BuildWeapon;
@@ -21,7 +22,7 @@ const icon = $derived(weapon.icon ?? "/icon.png");
                 <img src="{icon}" alt="{weapon.name}" />
             </div>
             <div class="grow">
-                {weapon.name}
+                {translatableString(weapon.name)}
                 {#if selected.level > 1}
                     +{selected.level}
                 {/if}

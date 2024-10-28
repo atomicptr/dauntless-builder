@@ -20,6 +20,10 @@ export interface Patch {
     };
 }
 
+export interface TranslatableString {
+    [langIdent: string]: string;
+}
+
 export type ArmourType = "head" | "torso" | "arms" | "legs";
 
 export type Element = "blaze" | "frost" | "shock" | "terra" | "umbral" | "radiant";
@@ -28,7 +32,7 @@ export type Stat = "might" | "critical" | "speed" | "vitality" | "defense" | "en
 
 export interface Armour {
     id: number;
-    name: string;
+    name: TranslatableString | null;
     type: ArmourType;
     icon: string | null;
     element: Element;
@@ -52,7 +56,7 @@ export type WeaponType =
 
 export interface Weapon {
     id: number;
-    name: string;
+    name: TranslatableString | null;
     type: WeaponType;
     icon: string | null;
     element: Element;
@@ -68,7 +72,7 @@ export type WeaponTalent = {};
 
 export interface Perk {
     id: number;
-    name: string;
+    name: TranslatableString | null;
     effect: string;
     values: ValuesType[];
     threshold: number;
@@ -90,7 +94,7 @@ export interface ValuesTypeCustom {
 }
 
 export interface LanternCore {
-    name: string;
+    name: TranslatableString | null;
     icon: string | null;
     active_icon: string | null;
     active: LanternCoreAbility | null;
@@ -98,6 +102,7 @@ export interface LanternCore {
 }
 
 export interface LanternCoreAbility {
-    description: string;
+    title: TranslatableString | null;
+    description: TranslatableString | null;
     values: ValuesType;
 }
