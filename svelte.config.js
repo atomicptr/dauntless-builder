@@ -9,7 +9,7 @@ const config = {
         adapter: adapter({ fallback: "index.html" }),
         paths: {
             relative: false,
-        }
+        },
     },
 };
 
