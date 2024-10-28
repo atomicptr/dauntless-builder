@@ -24,12 +24,11 @@ export type ArmourType = "head" | "torso" | "arms" | "legs";
 
 export type Element = "blaze" | "frost" | "shock" | "terra" | "umbral" | "radiant";
 
-export type Stat = "might";
+export type Stat = "might" | "critical" | "speed" | "vitality" | "defense" | "endurance";
 
 export interface Armour {
     id: number;
     name: string;
-    description: string;
     type: ArmourType;
     icon: string | null;
     element: Element;
@@ -54,14 +53,13 @@ export type WeaponType =
 export interface Weapon {
     id: number;
     name: string;
-    description: string;
     type: WeaponType;
     icon: string | null;
     element: Element;
     special: WeaponAbility | null;
     active: WeaponAbility | null;
     passive: WeaponAbility | null;
-    talents: WeaponTalent | null[];
+    talents: (WeaponTalent | null)[];
 }
 
 export type WeaponAbility = {};
@@ -89,4 +87,17 @@ export interface ValuesTypeCustom {
     name: string;
     type: "custom";
     value: number;
+}
+
+export interface LanternCore {
+    name: string;
+    icon: string | null;
+    active_icon: string | null;
+    active: LanternCoreAbility | null;
+    passive: LanternCoreAbility | null;
+}
+
+export interface LanternCoreAbility {
+    description: string;
+    values: ValuesType;
 }
