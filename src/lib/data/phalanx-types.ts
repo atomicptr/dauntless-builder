@@ -6,6 +6,9 @@ export interface Data {
     weapons: {
         [id: string]: Weapon;
     };
+    lantern_cores: {
+        [id: string]: LanternCore;
+    };
     perks: {
         [id: string]: Perk;
     };

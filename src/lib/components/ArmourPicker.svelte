@@ -21,7 +21,7 @@ const icon = $derived(armour.icon ?? "/icon.png");
     <div class="flex flex-row gap-2 min-h-20">
         <button class="card-btn grow element-border element-border-{armour.element}" onclick={() => onArmourPieceClick(type)}>
             <div class="w-16 ml-2">
-                <img src="{icon}" alt="{armour.name}" />
+                <img src="{icon}" alt="{translatableString(armour.name)}" />
             </div>
             <div class="grow">
                 {translatableString(armour.name)}
