@@ -71,14 +71,17 @@ const onItemSelected = (id: number) => {
                 level: weaponMaxLevel, // TODO: add level picker
                 talents: 0, // TODO: add talents
             };
+            break;
         case "armour":
             data.build[dialog.filters.type as ArmourType] = {
                 id,
                 level: armourMaxLevel, // TODO: add level picker
                 cells: Array(data.armours[id].cell_slots).fill(0), // TODO: keep cells selected previously
             };
+            break;
         case "lantern_core":
             data.build.lanternCore = {id};
+            break;
     }
     onDialogClosed();
     updateBuild();
