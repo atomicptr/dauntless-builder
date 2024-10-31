@@ -1,8 +1,9 @@
 <script lang="ts">
 import { page } from "$app/stores";
 import type { BuildArmourPiece } from "$lib/build/Build";
+import { armourStatsForLevel } from "$lib/data/levels";
 import type { ArmourType } from "$lib/data/phalanx-types";
-import { elementResistanceLevel, oppositeElement, powerLevel, resistanceLevel } from "$lib/data/static-data";
+import { elementResistanceLevel, oppositeElement, resistanceLevel } from "$lib/data/static-data";
 import { translatableString } from "$lib/utils/translatable-string";
 
 interface ArmourPiecePickerProps {
@@ -14,7 +15,9 @@ interface ArmourPiecePickerProps {
 
 const { type, selected, onArmourPieceClick, onCellClick }: ArmourPiecePickerProps = $props();
 const armour = $derived(selected.id !== 0 ? $page.data.armours[selected.id] : null);
-const icon = $derived(armour.icon ?? "/icon.png");
+const icon = $derived(armour.icon ?? `/icons/${type}.png`);
+// TODO: add perks from cells
+const perks = $derived(armourStatsForLevel(armour, selected.level));
 </script>
 
 {#if armour}
@@ -52,19 +55,19 @@ const icon = $derived(armour.icon ?? "/icon.png");
             </button>
         {/each}
     </div>
+
+    <div class="pl-4">
+        <ul class="list-disc p-4">
+            {#each Object.entries(perks ?? {}) as [perkId, amount]}
+                <li>{translatableString($page.data.perks[perkId].name)} x{amount}</li>
+            {/each}
+        </ul>
+    </div>
 {:else}
     <div class="flex flex-row gap-2 min-h-20">
         <button class="card-btn grow" onclick={() => onArmourPieceClick(type)}>
             <div class="w-16 ml-2">
-                {#if type === "head"}
-                    <img src="/icons/head.png" alt="Head" />
-                {:else if type === "torso"}
-                    <img src="/icons/torso.png" alt="Torso" />
-                {:else if type === "arms"}
-                    <img src="/icons/arms.png" alt="Arms" />
-                {:else if type === "legs"}
-                    <img src="/icons/legs.png" alt="Legs" />
-                {/if}
+                <img src={`/icons/${type}.png`} alt={type} />
             </div>
             <div class="grow">
                 Select an armour piece

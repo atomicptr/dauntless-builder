@@ -44,7 +44,7 @@ const filteredItems = $derived(applyAll(items, [...(filters ?? []), filterName(s
             {#each filteredItems as item}
                 <button class={"card-btn grow " + elementClass(item)} onclick={onSelected ? () => onSelected(item.id) : undefined}>
                     <div class="w-16 ml-2">
-                        <img src="{item.icon ?? '/icon.png'}" alt="{translatableString(item.name)}" />
+                        <img src="{item.icon ?? '/icons/noicon.png'}" alt="{translatableString(item.name)}" />
                     </div>
                     <div class="grow">
                         {translatableString(item.name)}
