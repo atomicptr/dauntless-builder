@@ -12,8 +12,9 @@ interface ValuesTextProps {
 const { text, values }: ValuesTextProps = $props();
 
 const classMap: { [key: string]: string } = {
-    ol: "list-decimal pl-8 my-4",
-    ul: "list-disc pl-8 my-4",
+    ol: "list-decimal pl-8 my-2",
+    ul: "list-disc pl-8 my-2",
+    p: "py-2",
 };
 
 const converter = new showdown.Converter({

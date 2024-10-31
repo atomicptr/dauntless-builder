@@ -27,14 +27,14 @@ const icon = $derived(lanternCore.icon ?? "/icon.png");
     </div>
 
     <div>
-        <div class="p-4">
+        <div class="py-2 pl-4">
             {#if lanternCore.passive.title}
                 <h2 class="text-xl mb-4">{translatableString(lanternCore.passive.title)}</h2>
             {/if}
             <ValuesText text={lanternCore.passive.description} values={lanternCore.passive.values} />
         </div>
 
-        <div class="p-4">
+        <div class="py-2 pl-4">
             <div class="flex flex-row items-center gap-4 mb-4">
                 {#if lanternCore.active_icon}
                     <img class="w-12 h-12" src="{lanternCore.active_icon}" alt={lanternCore.active.title ? translatableString(lanternCore.active.title) : "Active"}/>
