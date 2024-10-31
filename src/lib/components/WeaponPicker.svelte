@@ -39,7 +39,7 @@ const icon = $derived(weapon.icon ?? "/icon.png");
                 </div>
             </div>
         </button>
-        <button class="card-btn max-w-32 grow" onclick={onTalentClick} aria-label="Talents">
+        <button class="card-btn sm:max-w-32 grow" onclick={onTalentClick} aria-label="Talents">
             <div class="grid grid-cols-5 gap-1">
                 <div class="w-2 h-2 rounded-sm bg-base-100"></div>
                 <div class="w-2 h-2 rounded-sm bg-primary"></div>

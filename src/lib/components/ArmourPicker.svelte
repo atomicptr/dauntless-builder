@@ -42,7 +42,7 @@ const icon = $derived(armour.icon ?? "/icon.png");
             </div>
         </button>
         {#each selected.cells as cellId, index}
-            <button class="card-btn max-w-32 grow" onclick={() => onCellClick(type, index, cellId)} aria-label="Cells">
+            <button class="card-btn sm:max-w-32 grow" onclick={() => onCellClick(type, index, cellId)} aria-label="Cells">
                 {#if cellId !== 0}
                     <div>ICON</div>
                     <div>+1 Super Duper Speed</div>
