@@ -19,7 +19,7 @@ const converter = new showdown.Converter({
     extensions: Object.keys(classMap).map((key) => ({
         type: "output",
         regex: new RegExp(`<${key}(.*)>`, "g"),
-        replace: `<${key} class="${classMap[key]}" $1`,
+        replace: `<${key} class="${classMap[key]}" $1>`,
     })),
 });
 </script>
