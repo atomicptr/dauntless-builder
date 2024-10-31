@@ -1,12 +1,24 @@
 <script lang="ts">
 import { goto } from "$app/navigation";
 import { empty, serialize } from "$lib/build/Build.js";
+import { filterArmourType, filterElementType, filterName, type GenericItem } from "$lib/build/filters";
 import ArmourPicker from "$lib/components/ArmourPicker.svelte";
 import LanternCorePicker from "$lib/components/LanternCorePicker.svelte";
+import PickerModal from "$lib/components/PickerModal.svelte";
 import WeaponPicker from "$lib/components/WeaponPicker.svelte";
-import type { ArmourType } from "$lib/data/phalanx-types.js";
+import type { Armour, ArmourType } from "$lib/data/phalanx-types.js";
+import { armourMaxLevel, weaponMaxLevel } from "$lib/data/static-data.js";
 
 const { data } = $props();
+
+interface DialogProps {
+    open: "weapon" | "weapon_talent" | "armour" | "lantern_core" | "cells" | null;
+    filters: {
+        [name: string]: string | number;
+    };
+}
+
+let dialog: DialogProps = $state({ open: null, filters: {} });
 
 const updateBuild = () => {
     const buildId = serialize(data.build).unwrapOr(empty());
@@ -15,37 +27,69 @@ const updateBuild = () => {
 };
 
 const onWeaponPickerClicked = (picker: 1 | 2) => () => {
-    data.build[`weapon${picker}`].id = data.build[`weapon${picker}`].id === 0 ? 1 : 0;
-    updateBuild();
+    dialog = {
+        open: "weapon",
+        filters: { picker },
+    };
 };
 
 const onWeaponTalentPickerClicked = (picker: 1 | 2) => () => {
-    data.build[`weapon${picker}`].level += 1;
-    updateBuild();
+    dialog = {
+        open: "weapon_talent",
+        filters: { picker },
+    };
 };
 
 const onArmourPieceClickerClicked = (type: ArmourType) => {
-    console.log("type clicked", type);
-    data.build[type].id =
-        Object.values(data.armours).find(
-            (a) => a.type === type && a.element !== data.armours[data.build[type].id]?.element,
-        )?.id ?? 0;
-    updateBuild();
+    dialog = {
+        open: "armour",
+        filters: { type },
+    };
 };
 
 const onArmourCellPickerClicked = (type: ArmourType, index: number, cellId: number) => {
-    console.log("cell clicker");
-    updateBuild();
+    dialog = {
+        open: "cells",
+        filters: {},
+    };
 };
 
 const onLanternCorePickerClicked = () => {
-    data.build.lanternCore.id = 1;
+    dialog = {
+        open: "lantern_core",
+        filters: {},
+    };
+};
+
+const onItemSelected = (id: number) => {
+    console.log(id);
+    switch (dialog.open) {
+        case "weapon":
+            data.build[`weapon${dialog.filters.picker as 1 | 2}`] = {
+                // TODO: if weapon is already in other slot move
+                id,
+                level: weaponMaxLevel, // TODO: add level picker
+                talents: 0, // TODO: add talents
+            };
+        case "armour":
+            data.build[dialog.filters.type as ArmourType] = {
+                id,
+                level: armourMaxLevel, // TODO: add level picker
+                cells: Array(data.armours[id].cell_slots).fill(0), // TODO: keep cells selected previously
+            };
+        case "lantern_core":
+    }
+    onDialogClosed();
     updateBuild();
+};
+
+const onDialogClosed = () => {
+    dialog = { open: null, filters: {} };
 };
 </script>
 
-<div class="flex flex-row">
-    <div class="flex flex-col gap-2 w-2/3">
+<div class="flex flex-col sm:flex-row">
+    <div class="flex flex-col gap-2 sm:w-2/3">
         <WeaponPicker
             selected={data.build.weapon1}
             onWeaponClick={onWeaponPickerClicked(1)}
@@ -89,3 +133,26 @@ const onLanternCorePickerClicked = () => {
         Perk list could be here
     </div>
 </div>
+
+{#if dialog.open === "weapon"}
+    <PickerModal
+        items={Object.values(data.weapons)}
+        onSelected={onItemSelected}
+        onClose={onDialogClosed}
+    />
+{:else if dialog.open === "armour"}
+    <PickerModal
+        items={Object.values(data.armours)}
+        filters={[
+            filterArmourType(dialog.filters.type as ArmourType),
+        ]}
+        onSelected={onItemSelected}
+        onClose={onDialogClosed}
+    />
+{:else if dialog.open === "lantern_core"}
+    <PickerModal
+        items={Object.values(data.lantern_cores)}
+        onSelected={onItemSelected}
+        onClose={onDialogClosed}
+    />
+{/if}

@@ -1,6 +1,9 @@
 import { match } from "ts-pattern";
 import type { Element } from "./phalanx-types";
 
+export const weaponMaxLevel = 60;
+export const armourMaxLevel = 20;
+
 export const powerLevel = (level: number): number =>
     match(level)
         .with(1, () => 10)

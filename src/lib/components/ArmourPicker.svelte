@@ -18,7 +18,7 @@ const icon = $derived(armour.icon ?? "/icon.png");
 </script>
 
 {#if armour}
-    <div class="flex flex-row gap-2 min-h-20">
+    <div class="flex flex-col sm:flex-row gap-2 min-h-20">
         <button class="card-btn grow element-border element-border-{armour.element}" onclick={() => onArmourPieceClick(type)}>
             <div class="w-16 ml-2">
                 <img src="{icon}" alt="{translatableString(armour.name)}" />

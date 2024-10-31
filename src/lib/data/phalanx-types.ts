@@ -97,6 +97,7 @@ export interface ValuesTypeCustom {
 }
 
 export interface LanternCore {
+    id: number;
     name: TranslatableString | null;
     icon: string | null;
     active_icon: string | null;

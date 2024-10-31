@@ -16,7 +16,7 @@ const icon = $derived(weapon.icon ?? "/icon.png");
 </script>
 
 {#if weapon}
-    <div class="flex flex-row gap-2 min-h-20">
+    <div class="flex flex-col sm:flex-row gap-2 min-h-20">
         <button class="card-btn grow element-border element-border-{weapon.element}" onclick={onWeaponClick}>
             <div class="w-16 ml-2">
                 <img src="{icon}" alt="{translatableString(weapon.name)}" />
