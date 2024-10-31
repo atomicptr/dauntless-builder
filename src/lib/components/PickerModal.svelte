@@ -1,5 +1,5 @@
 <script lang="ts">
-import { applyAll, filterName, type FilterFunc, type FilterItem, type GenericItem } from "$lib/build/filters";
+import { applyAll, filterName, type FilterFunc, type FilterItem } from "$lib/build/filters";
 import { translatableString } from "$lib/utils/translatable-string";
 
 interface PickerModalProps {
@@ -20,7 +20,7 @@ const filteredItems = $derived(applyAll(items, [...(filters ?? []), filterName(s
 </script>
 
 <dialog class="modal modal-top sm:modal-middle bg-base-300/80" open>
-    <div class="modal-box h-full">
+    <div class="modal-box">
         <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onclick={onClose ? () => onClose() : undefined}>✕</button>
 
         <div class="mt-8"></div>
