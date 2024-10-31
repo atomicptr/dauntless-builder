@@ -47,10 +47,10 @@ const onArmourPieceClickerClicked = (type: ArmourType) => {
     };
 };
 
-const onArmourCellPickerClicked = (type: ArmourType, index: number, cellId: number) => {
+const onArmourCellPickerClicked = (type: ArmourType, index: number) => {
     dialog = {
         open: "cells",
-        filters: {},
+        filters: { type, index },
     };
 };
 
@@ -81,6 +81,9 @@ const onItemSelected = (id: number) => {
             break;
         case "lantern_core":
             data.build.lanternCore = { id };
+            break;
+        case "cells":
+            data.build[dialog.filters.type as ArmourType].cells[dialog.filters.index as number] = id;
             break;
     }
     onDialogClosed();
@@ -156,6 +159,16 @@ const onDialogClosed = () => {
 {:else if dialog.open === "lantern_core"}
     <PickerModal
         items={Object.values(data.lantern_cores)}
+        onSelected={onItemSelected}
+        onClose={onDialogClosed}
+    />
+{:else if dialog.open === "cells"}
+    <PickerModal
+        items={Object.values(data.perks).map(perk => ({
+            id: perk.id,
+            name: perk.name,
+            icon: `/icons/${perk.type}.png`,
+        }))}
         onSelected={onItemSelected}
         onClose={onDialogClosed}
     />

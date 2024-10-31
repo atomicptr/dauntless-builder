@@ -1,7 +1,7 @@
-import type { Armour } from "./phalanx-types";
+import type { Armour, PerkSet } from "./phalanx-types";
 import { armourMaxLevel } from "./static-data";
 
-export const armourStatsForLevel = (armourPiece: Armour, level: number): { [perkId: string]: number } | null => {
+export const armourStatsForLevel = (armourPiece: Armour, level: number): PerkSet | null => {
     const lvl = Math.min(armourMaxLevel, Math.max(1, level));
 
     const biggest = armourPiece.stats
@@ -15,4 +15,18 @@ export const armourStatsForLevel = (armourPiece: Armour, level: number): { [perk
     }
 
     return biggest.perks;
+};
+
+export const mergePerks = (base: PerkSet, other: PerkSet): PerkSet => {
+    const newSet: PerkSet = { ...base };
+
+    Object.entries(other).forEach(([perkId, amount]) => {
+        if (!(perkId in newSet)) {
+            newSet[perkId] = 0;
+        }
+
+        newSet[perkId] += amount;
+    });
+
+    return newSet;
 };

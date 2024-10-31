@@ -33,6 +33,10 @@ export type Element = "blaze" | "frost" | "shock" | "terra" | "umbral" | "radian
 
 export type Stat = "might" | "critical" | "speed" | "vitality" | "defense" | "endurance";
 
+export interface PerkSet {
+    [perkId: string]: number;
+}
+
 export interface Armour {
     id: number;
     name: TranslatableString | null;
@@ -42,9 +46,7 @@ export interface Armour {
     cell_slots: number;
     stats: {
         min_level: number;
-        perks: {
-            [perkId: string]: number;
-        };
+        perks: PerkSet;
     }[];
 }
 
@@ -73,9 +75,12 @@ export type WeaponAbility = {};
 
 export type WeaponTalent = {};
 
+export type PerkType = "alacrity" | "brutality" | "finesse" | "fortitude" | "insight";
+
 export interface Perk {
     id: number;
     name: TranslatableString | null;
+    type: PerkType;
     effect: string;
     values: ValuesType[];
     threshold: number;

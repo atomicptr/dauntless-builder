@@ -1,23 +1,46 @@
 <script lang="ts">
 import { page } from "$app/stores";
 import type { BuildArmourPiece } from "$lib/build/Build";
-import { armourStatsForLevel } from "$lib/data/levels";
-import type { ArmourType } from "$lib/data/phalanx-types";
+import { armourStatsForLevel, mergePerks } from "$lib/data/levels";
+import type { ArmourType, PerkSet } from "$lib/data/phalanx-types";
 import { elementResistanceLevel, oppositeElement, resistanceLevel } from "$lib/data/static-data";
 import { translatableString } from "$lib/utils/translatable-string";
+import CellPicker from "./CellPicker.svelte";
 
 interface ArmourPiecePickerProps {
     type: ArmourType;
     selected: BuildArmourPiece;
     onArmourPieceClick: (type: ArmourType) => void;
-    onCellClick: (type: ArmourType, index: number, cellId: number) => void;
+    onCellClick: (type: ArmourType, index: number) => void;
 }
 
 const { type, selected, onArmourPieceClick, onCellClick }: ArmourPiecePickerProps = $props();
 const armour = $derived(selected.id !== 0 ? $page.data.armours[selected.id] : null);
 const icon = $derived(armour.icon ?? `/icons/${type}.png`);
-// TODO: add perks from cells
-const perks = $derived(armourStatsForLevel(armour, selected.level));
+const perks = $derived(armourStatsForLevel(armour, selected.level) ?? {});
+const cellPerks = $derived.by(() => {
+    if (!armour) {
+        return {};
+    }
+
+    const newSet: PerkSet = {};
+
+    selected.cells.forEach((id) => {
+        if (id === 0) {
+            return;
+        }
+
+        if (!(id in newSet)) {
+            newSet[id] = 0;
+        }
+
+        newSet[id] += 1;
+    });
+
+    return newSet;
+});
+
+console.log(cellPerks);
 </script>
 
 {#if armour}
@@ -45,21 +68,17 @@ const perks = $derived(armourStatsForLevel(armour, selected.level));
             </div>
         </button>
         {#each selected.cells as cellId, index}
-            <button class="card-btn sm:max-w-32 grow" onclick={() => onCellClick(type, index, cellId)} aria-label="Cells">
-                {#if cellId !== 0}
-                    <div>ICON</div>
-                    <div>+1 Super Duper Speed</div>
-                {:else}
-                    None
-                {/if}
-            </button>
+            <CellPicker type={type} index={index} selected={cellId} onClick={onCellClick} />
         {/each}
     </div>
 
     <div class="pl-4">
         <ul class="list-disc p-4">
-            {#each Object.entries(perks ?? {}) as [perkId, amount]}
+            {#each Object.entries(perks) as [perkId, amount]}
                 <li>{translatableString($page.data.perks[perkId].name)} x{amount}</li>
+            {/each}
+            {#each Object.entries(cellPerks) as [perkId, amount]}
+                <li class="text-secondary">{translatableString($page.data.perks[perkId].name)} x{amount}</li>
             {/each}
         </ul>
     </div>
