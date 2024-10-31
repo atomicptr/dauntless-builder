@@ -46,9 +46,9 @@ const icon = $derived(lanternCore.icon ?? "/icon.png");
     </div>
 {:else}
     <div class="flex flex-row gap-2 min-h-20">
-        <button class="card-btn grow" onclick={() => onClick()}>
+        <button class="card-btn grow" onclick={onClick}>
             <div class="w-16 ml-2">
-                Placeholder icon
+                <img src="/icons/lantern.png" alt="Lantern Core" />
             </div>
             <div class="grow">
                 Select a lantern core

@@ -56,7 +56,15 @@ const icon = $derived(armour.icon ?? "/icon.png");
     <div class="flex flex-row gap-2 min-h-20">
         <button class="card-btn grow" onclick={() => onArmourPieceClick(type)}>
             <div class="w-16 ml-2">
-                Placeholder icon
+                {#if type === "head"}
+                    <img src="/icons/head.png" alt="Head" />
+                {:else if type === "torso"}
+                    <img src="/icons/torso.png" alt="Torso" />
+                {:else if type === "arms"}
+                    <img src="/icons/arms.png" alt="Arms" />
+                {:else if type === "legs"}
+                    <img src="/icons/legs.png" alt="Legs" />
+                {/if}
             </div>
             <div class="grow">
                 Select an armour piece

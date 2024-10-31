@@ -81,7 +81,7 @@ const icon = $derived(weapon.icon ?? "/icon.png");
     <div class="flex flex-row gap-2 min-h-20">
         <button class="card-btn grow" onclick={onWeaponClick}>
             <div class="w-16 ml-2">
-                Placeholder icon
+                <img src="/icons/weapons.png" alt="Weapon" />
             </div>
             <div class="grow">
                 Select a weapon

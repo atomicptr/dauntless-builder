@@ -1,4 +1,12 @@
-import type { Armour, ArmourType, Element, LanternCore, TranslatableString, Weapon } from "$lib/data/phalanx-types";
+import type {
+    Armour,
+    ArmourType,
+    Element,
+    LanternCore,
+    TranslatableString,
+    Weapon,
+    WeaponType,
+} from "$lib/data/phalanx-types";
 import { translatableString } from "$lib/utils/translatable-string";
 
 export interface GenericItem {
@@ -16,6 +24,8 @@ export const applyAll = (items: FilterItem[], funcs: FilterFunc[]) =>
 
 export const filterName = (search: string) => (item: FilterItem) =>
     translatableString(item.name).toLowerCase().indexOf(search.toLowerCase()) > -1;
+
+export const filterWeaponType = (weaponType: WeaponType) => (item: FilterItem) => (item as Weapon).type === weaponType;
 
 export const filterArmourType = (armourType: ArmourType) => (item: FilterItem) => (item as Armour).type === armourType;
 
