@@ -80,7 +80,7 @@ const onItemSelected = (id: number) => {
             };
             break;
         case "lantern_core":
-            data.build.lanternCore = {id};
+            data.build.lanternCore = { id };
             break;
     }
     onDialogClosed();

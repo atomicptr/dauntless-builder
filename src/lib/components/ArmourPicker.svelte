@@ -33,10 +33,10 @@ const icon = $derived(armour.icon ?? "/icon.png");
                 <div class="text-xl">
                     {resistanceLevel(selected.level)}
                 </div>
-                <div class="element-text-{oppositeElement(armour.element)}">
+                <div class="element-text-{armour.element}">
                     +{elementResistanceLevel(selected.level)}
                 </div>
-                <div class="element-text-{armour.element}">
+                <div class="element-text-{oppositeElement(armour.element)}">
                     -{elementResistanceLevel(selected.level)}
                 </div>
             </div>
