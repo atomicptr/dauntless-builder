@@ -78,6 +78,7 @@ const onItemSelected = (id: number) => {
                 cells: Array(data.armours[id].cell_slots).fill(0), // TODO: keep cells selected previously
             };
         case "lantern_core":
+            data.build.lanternCore = {id};
     }
     onDialogClosed();
     updateBuild();
