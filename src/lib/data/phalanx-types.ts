@@ -68,12 +68,31 @@ export interface Weapon {
     special: WeaponAbility | null;
     active: WeaponAbility | null;
     passive: WeaponAbility | null;
-    talents: (WeaponTalent | null)[];
+    talents: WeaponTalent[];
 }
 
 export type WeaponAbility = {};
 
-export type WeaponTalent = {};
+export interface WeaponTalent {
+    name: TranslatableString | null;
+    options: (WeaponTalentOption | null)[];
+}
+
+export type WeaponTalentOption = WeaponTalentOptionStat | WeaponTalentOptionCustom;
+
+export interface WeaponTalentOptionStat {
+    name: TranslatableString | null;
+    type: "stat";
+    stat: Stat;
+    value: number;
+}
+
+export interface WeaponTalentOptionCustom {
+    name: TranslatableString | null;
+    type: "custom";
+    description: TranslatableString | null;
+    values: ValuesType[];
+}
 
 export type PerkType = "alacrity" | "brutality" | "finesse" | "fortitude" | "insight";
 

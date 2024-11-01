@@ -83,7 +83,7 @@ const perkSet = $derived(mergePerks(perks, cellPerks));
     <div class="flex flex-row gap-2 min-h-20">
         <button class="card-btn grow" onclick={() => onArmourPieceClick(type)}>
             <div class="w-16 ml-2">
-                <img src={`/icons/${type}.png`} alt={type} />
+                <img src={`/icons/${type}.png`} alt={type} class="invert dark:invert-0" />
             </div>
             <div class="grow">
                 Select an armour piece

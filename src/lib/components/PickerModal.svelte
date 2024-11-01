@@ -19,8 +19,8 @@ const elementClass = (item: FilterItem): string =>
 const filteredItems = $derived(applyAll(items, [...(filters ?? []), filterName(search)]));
 </script>
 
-<dialog class="modal modal-top sm:modal-middle bg-base-300/80" open>
-    <div class="modal-box">
+<dialog class="modal bg-base-300/80" open>
+    <div class="modal-box w-5xl max-w-5xl">
         <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onclick={onClose ? () => onClose() : undefined}>✕</button>
 
         <div class="mt-8"></div>
