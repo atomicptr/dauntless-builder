@@ -15,6 +15,24 @@ export const armourStatsForLevel = (armourPiece: Armour, level: number): PerkSet
     return biggest.perks;
 };
 
+export const getCellPerks = (cells: number[]): PerkSet => {
+    const newSet: PerkSet = {};
+
+    cells.forEach((id) => {
+        if (id === 0) {
+            return;
+        }
+
+        if (!(id in newSet)) {
+            newSet[id] = 0;
+        }
+
+        newSet[id] += 1;
+    });
+
+    return newSet;
+};
+
 export const mergePerks = (base: PerkSet, other: PerkSet): PerkSet => {
     const newSet: PerkSet = { ...base };
 
@@ -28,3 +46,5 @@ export const mergePerks = (base: PerkSet, other: PerkSet): PerkSet => {
 
     return newSet;
 };
+
+export const mergePerksArray = (sets: PerkSet[]): PerkSet => sets.reduce((prev, curr) => mergePerks(prev, curr), {});

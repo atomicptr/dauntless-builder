@@ -5,6 +5,7 @@ import { filterArmourType, filterElementType, filterName, type GenericItem } fro
 import { talentEmpty, talentSerialize, talentSet } from "$lib/build/talents.js";
 import ArmourPicker from "$lib/components/ArmourPicker.svelte";
 import LanternCorePicker from "$lib/components/LanternCorePicker.svelte";
+import PerkList from "$lib/components/PerkList.svelte";
 import PickerModal from "$lib/components/PickerModal.svelte";
 import TalentModal from "$lib/components/TalentModal.svelte";
 import WeaponPicker from "$lib/components/WeaponPicker.svelte";
@@ -148,7 +149,7 @@ const onDialogClosed = () => {
         />
     </div>
     <div class="w-1/3 p-4">
-        Perk list could be here
+        <PerkList build={data.build} />
     </div>
 </div>
 

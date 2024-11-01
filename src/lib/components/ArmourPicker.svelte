@@ -2,7 +2,7 @@
 import { page } from "$app/stores";
 import type { BuildArmourPiece } from "$lib/build/Build";
 import { applyAll } from "$lib/build/filters";
-import { armourStatsForLevel, mergePerks } from "$lib/data/levels";
+import { armourStatsForLevel, getCellPerks, mergePerks } from "$lib/data/levels";
 import type { ArmourType, PerkSet } from "$lib/data/phalanx-types";
 import { elementResistanceLevel, oppositeElement, resistanceLevel } from "$lib/data/static-data";
 import { translatableString } from "$lib/utils/translatable-string";
@@ -19,28 +19,7 @@ const { type, selected, onArmourPieceClick, onCellClick }: ArmourPiecePickerProp
 const armour = $derived(selected.id !== 0 ? $page.data.armours[selected.id] : null);
 const icon = $derived(armour.icon ?? `/icons/${type}.png`);
 const perks = $derived(armourStatsForLevel(armour, selected.level) ?? {});
-const cellPerks = $derived.by(() => {
-    if (!armour) {
-        return {};
-    }
-
-    const newSet: PerkSet = {};
-
-    selected.cells.forEach((id) => {
-        if (id === 0) {
-            return;
-        }
-
-        if (!(id in newSet)) {
-            newSet[id] = 0;
-        }
-
-        newSet[id] += 1;
-    });
-
-    return newSet;
-});
-const perkSet = $derived(mergePerks(perks, cellPerks));
+const perkSet = $derived(mergePerks(perks, getCellPerks(selected.cells)));
 </script>
 
 {#if armour}
@@ -75,7 +54,7 @@ const perkSet = $derived(mergePerks(perks, cellPerks));
     <div class="pl-4">
         <ul class="list-disc p-4">
             {#each Object.entries(perkSet) as [perkId, amount]}
-                <li class:text-secondary={perkId in cellPerks}>{translatableString($page.data.perks[perkId].name)} x{amount}</li>
+                <li class:text-secondary={perkId in getCellPerks(selected.cells)}>{translatableString($page.data.perks[perkId].name)} x{amount}</li>
             {/each}
         </ul>
     </div>
