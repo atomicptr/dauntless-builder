@@ -6,6 +6,7 @@ import { talentEmpty, talentSerialize, talentSet } from "$lib/build/talents.js";
 import ArmourPicker from "$lib/components/ArmourPicker.svelte";
 import LanternCorePicker from "$lib/components/LanternCorePicker.svelte";
 import PickerModal from "$lib/components/PickerModal.svelte";
+import TalentModal from "$lib/components/TalentModal.svelte";
 import WeaponPicker from "$lib/components/WeaponPicker.svelte";
 import type { Armour, ArmourType } from "$lib/data/phalanx-types.js";
 import { armourMaxLevel, weaponMaxLevel } from "$lib/data/static-data.js";
@@ -35,18 +36,10 @@ const onWeaponPickerClicked = (picker: 1 | 2) => () => {
 };
 
 const onWeaponTalentPickerClicked = (picker: 1 | 2) => () => {
-    // dialog = {
-    //     open: "weapon_talent",
-    //     filters: { picker },
-    // };
-
-    data.build[`weapon${picker}`].talents = talentSet(
-        data.build[`weapon${picker}`].talents,
-        1,
-        1,
-        !data.build[`weapon${picker}`].talents[1][1],
-    );
-    updateBuild();
+    dialog = {
+        open: "weapon_talent",
+        filters: { picker },
+    };
 };
 
 const onArmourPieceClickerClicked = (type: ArmourType) => {
@@ -95,6 +88,16 @@ const onItemSelected = (id: number) => {
             break;
     }
     onDialogClosed();
+    updateBuild();
+};
+
+const onTalentSelected = (row: number, col: number, value: boolean) => {
+    data.build[`weapon${dialog.filters.picker as 1 | 2}`].talents = talentSet(
+        data.build[`weapon${dialog.filters.picker as 1 | 2}`].talents,
+        row,
+        col,
+        value,
+    );
     updateBuild();
 };
 
@@ -153,6 +156,12 @@ const onDialogClosed = () => {
     <PickerModal
         items={Object.values(data.weapons)}
         onSelected={onItemSelected}
+        onClose={onDialogClosed}
+    />
+{:else if dialog.open === "weapon_talent"}
+    <TalentModal
+        weapon={data.build[`weapon${dialog.filters.picker as 1|2}`]}
+        onSelected={onTalentSelected}
         onClose={onDialogClosed}
     />
 {:else if dialog.open === "armour"}

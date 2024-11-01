@@ -145,6 +145,8 @@ export const deserialize = (buildId: string): Result<Build, string> => {
         return err("invalid checksum");
     }
 
+    // TODO: do validation
+
     return ok({
         version: ids[BuildFields.Version],
         flags: ids[BuildFields.Flags],
@@ -185,6 +187,8 @@ export const deserialize = (buildId: string): Result<Build, string> => {
 };
 
 export const serialize = (build: Build): Result<string, string> => {
+    // TODO: do validation
+
     const data: number[] = [
         build.version,
         build.flags,
