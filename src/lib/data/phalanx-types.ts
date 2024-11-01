@@ -106,6 +106,7 @@ export interface LanternCore {
     name: TranslatableString | null;
     icon: string | null;
     active_icon: string | null;
+    active_cooldown: number | null;
     active: LanternCoreAbility | null;
     passive: LanternCoreAbility | null;
 }

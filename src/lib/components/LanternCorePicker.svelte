@@ -42,6 +42,9 @@ const icon = $derived(lanternCore.icon ?? "/icon.png");
                 <h2 class="text-xl">{lanternCore.active.title ? translatableString(lanternCore.active.title) : "Active"}</h2>
             </div>
             <ValuesText text={lanternCore.active.description} values={lanternCore.active.values} />
+            <div>
+                <strong>Cooldown</strong>: {lanternCore.active_cooldown}s
+            </div>
         </div>
     </div>
 {:else}
