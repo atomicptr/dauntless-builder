@@ -8,8 +8,6 @@ export const armourStatsForLevel = (armourPiece: Armour, level: number): PerkSet
         .filter((s) => s.min_level <= lvl)
         .reduce((prev, curr) => (prev.min_level < curr.min_level ? curr : prev), { min_level: -Infinity, perks: {} });
 
-    console.log(biggest);
-
     if (biggest.min_level < 0) {
         return null;
     }

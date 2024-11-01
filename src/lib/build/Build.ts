@@ -1,5 +1,6 @@
 import { ok, err, type Result } from "neverthrow";
 import Sqids from "sqids";
+import { talentEmpty, talentParse, talentSerialize, type TalentGrid } from "./talents";
 
 const sqids = new Sqids({
     alphabet: "tr1GwdIv2NFgTOLso3zfJ95QbenZACWDqiRl@y8haYE7K-cHx6uUPmVX4BkS_0pjM",
@@ -71,7 +72,7 @@ export interface Build {
 export interface BuildWeapon {
     id: number;
     level: number;
-    talents: number;
+    talents: TalentGrid;
 }
 
 export interface BuildArmourPiece {
@@ -91,12 +92,12 @@ export const empty = (): Build => {
         weapon1: {
             id: 0,
             level: 1,
-            talents: 0,
+            talents: talentEmpty(),
         },
         weapon2: {
             id: 0,
             level: 1,
-            talents: 0,
+            talents: talentEmpty(),
         },
         head: {
             id: 0,
@@ -150,12 +151,12 @@ export const deserialize = (buildId: string): Result<Build, string> => {
         weapon1: {
             id: ids[BuildFields.Weapon1Id],
             level: ids[BuildFields.Weapon1Level],
-            talents: ids[BuildFields.Weapon1Talents],
+            talents: talentParse(ids[BuildFields.Weapon1Talents]),
         },
         weapon2: {
             id: ids[BuildFields.Weapon2Id],
             level: ids[BuildFields.Weapon2Level],
-            talents: ids[BuildFields.Weapon2Talents],
+            talents: talentParse(ids[BuildFields.Weapon2Talents]),
         },
         head: {
             id: ids[BuildFields.HeadId],
@@ -189,10 +190,10 @@ export const serialize = (build: Build): Result<string, string> => {
         build.flags,
         build.weapon1.id,
         build.weapon1.level,
-        build.weapon1.talents,
+        talentSerialize(build.weapon1.talents),
         build.weapon2.id,
         build.weapon2.level,
-        build.weapon2.talents,
+        talentSerialize(build.weapon2.talents),
         build.head.id,
         build.head.level,
         build.head.cells[0],

@@ -2,6 +2,7 @@
 import { goto } from "$app/navigation";
 import { empty, serialize } from "$lib/build/Build.js";
 import { filterArmourType, filterElementType, filterName, type GenericItem } from "$lib/build/filters";
+import { talentEmpty, talentSerialize, talentSet } from "$lib/build/talents.js";
 import ArmourPicker from "$lib/components/ArmourPicker.svelte";
 import LanternCorePicker from "$lib/components/LanternCorePicker.svelte";
 import PickerModal from "$lib/components/PickerModal.svelte";
@@ -34,10 +35,18 @@ const onWeaponPickerClicked = (picker: 1 | 2) => () => {
 };
 
 const onWeaponTalentPickerClicked = (picker: 1 | 2) => () => {
-    dialog = {
-        open: "weapon_talent",
-        filters: { picker },
-    };
+    // dialog = {
+    //     open: "weapon_talent",
+    //     filters: { picker },
+    // };
+
+    data.build[`weapon${picker}`].talents = talentSet(
+        data.build[`weapon${picker}`].talents,
+        1,
+        1,
+        !data.build[`weapon${picker}`].talents[1][1],
+    );
+    updateBuild();
 };
 
 const onArmourPieceClickerClicked = (type: ArmourType) => {
@@ -62,14 +71,13 @@ const onLanternCorePickerClicked = () => {
 };
 
 const onItemSelected = (id: number) => {
-    console.log(id);
     switch (dialog.open) {
         case "weapon":
             data.build[`weapon${dialog.filters.picker as 1 | 2}`] = {
                 // TODO: if weapon is already in other slot move
                 id,
                 level: weaponMaxLevel, // TODO: add level picker
-                talents: 0, // TODO: add talents
+                talents: talentEmpty(), // TODO: add talents
             };
             break;
         case "armour":
