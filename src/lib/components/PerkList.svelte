@@ -1,7 +1,7 @@
 <script lang="ts">
 import { page } from "$app/stores";
 import type { Build } from "$lib/build/Build";
-import { armourStatsForLevel, getCellPerks, mergePerks, mergePerksArray } from "$lib/data/levels";
+import { armourStatsForLevel, getCellPerks, mergePerksArray } from "$lib/data/levels";
 import { translatableString } from "$lib/utils/translatable-string";
 
 interface PerkListProps {

@@ -1,8 +1,8 @@
 import { PHALANX_BASE_URL, PHALANX_API_KEY } from "$env/static/private";
-import type { Data } from "./phalanx-types";
+import type { Data, FinderData } from "./phalanx-types";
 
-export const fetchData = async (): Promise<Data> => {
-    const res = await fetch(PHALANX_BASE_URL + "/api/data", {
+const fetchApi = async <T>(endpoint: string): Promise<T> => {
+    const res = await fetch(PHALANX_BASE_URL + endpoint, {
         headers: {
             "X-Phalanx-Api-Key": PHALANX_API_KEY,
         },
@@ -14,3 +14,7 @@ export const fetchData = async (): Promise<Data> => {
 
     return await res.json();
 };
+
+export const fetchData = async () => fetchApi<Data>("/api/data");
+
+export const fetchFinderData = async () => fetchApi<FinderData>("/api/finder-data");

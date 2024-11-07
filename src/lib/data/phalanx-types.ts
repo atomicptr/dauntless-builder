@@ -135,3 +135,35 @@ export interface LanternCoreAbility {
     description: TranslatableString | null;
     values: ValuesType;
 }
+
+export interface FinderData {
+    heads: {
+        [perkLevel1: string]: {
+            [perkLevel2: string]: {
+                [perkLevel3: string]: FinderBasicArmour[];
+            };
+        };
+    };
+    torsos: {
+        [perkLevel1: string]: {
+            [perkLevel2: string]: FinderBasicArmour[];
+        };
+    };
+    arms: {
+        [perkLevel1: string]: {
+            [perkLevel2: string]: {
+                [perkLevel3: string]: FinderBasicArmour[];
+            };
+        };
+    };
+    legs: {
+        [perkLevel1: string]: {
+            [perkLevel2: string]: FinderBasicArmour[];
+        };
+    };
+}
+
+export interface FinderBasicArmour {
+    id: number;
+    perks: PerkSet;
+}

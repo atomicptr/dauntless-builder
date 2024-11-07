@@ -45,7 +45,7 @@ const version = patch?.version;
         </a>
     </li>
     <li>
-        <a href="/b/finder" class="disabled">
+        <a href="/b/finder">
             <BuildFinderIcon />
             Build Finder
         </a>
