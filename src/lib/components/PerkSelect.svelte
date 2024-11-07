@@ -13,12 +13,12 @@ const { perks, disabledPerks, onSelect }: Props = $props();
 const perkGroups = Object.groupBy(Object.values($page.data.perks) as Perk[], (perk) => perk.type);
 </script>
 
-<div class="flex flex-row">
+<div class="flex flex-row gap-2 w-full">
     {#each Object.keys(perkGroups) as perkGroupName}
-        <div class="flex flex-col gap-2">
+        <div class="flex flex-col gap-2 grow basis-0">
             <div class="flex flex-col items-center gap-2">
                 <img class="w-8 h-8" src={`/icons/${perkGroupName}.png`} alt={perkGroupName} />
-                <div>{perkGroupName}</div>
+                <div>{perkGroupName[0].toUpperCase() + perkGroupName.slice(1)}</div>
             </div>
 
             <div class="flex flex-col gap-1">

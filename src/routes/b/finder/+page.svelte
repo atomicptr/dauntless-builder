@@ -34,7 +34,7 @@ const onPerkSelected = (perkId: number): void => {
 };
 </script>
 
-<div class="flex flex-col gap-2 mb-8">
+<div class="flex flex-col gap-2 mb-8 w-full">
     <h2 class="text-2xl">Perks</h2>
 
     <PerkSelect perks={selectedPerks} {disabledPerks} onSelect={onPerkSelected} />
