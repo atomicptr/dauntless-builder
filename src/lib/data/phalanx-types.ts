@@ -137,14 +137,14 @@ export interface LanternCoreAbility {
 }
 
 export interface FinderData {
-    heads: {
+    head: {
         [perkLevel1: string]: {
             [perkLevel2: string]: {
                 [perkLevel3: string]: FinderBasicArmour[];
             };
         };
     };
-    torsos: {
+    torso: {
         [perkLevel1: string]: {
             [perkLevel2: string]: FinderBasicArmour[];
         };
