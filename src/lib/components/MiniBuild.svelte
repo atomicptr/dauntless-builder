@@ -42,20 +42,18 @@ const imgClasses = "w-12 h-12";
 </script>
 
 <a class="flex flex-col card-btn w-full" href={`/b/${buildId.unwrapOr(empty())}`}>
-    {#if title}
-        <div>
+    <div class="py-2">
+        {#if title}
             {title}
-        </div>
-    {:else if build.weapon1.id !== 0 || build.weapon2.id !== 0}
-        <div>
+        {:else if build.weapon1.id !== 0 || build.weapon2.id !== 0}
             {translatableString($page.data.weapons[build.weapon1.id].name)}
             {#if build.weapon1.id !== 0 && build.weapon2.id !== 0}
                 &nbsp;/&nbsp;
             {/if}
             {translatableString($page.data.weapons[build.weapon2.id].name)}
-        </div>
-    {/if}
-    <div class="flex flex-row gap-2">
+        {/if}
+    </div>
+    <div class="flex flex-row flex-wrap gap-2 justify-center sm:justify-start max-w-64 sm:max-w-full">
         {#if build.weapon1.id !== 0}
             <img class={imgClasses} src={$page.data.weapons[build.weapon1.id].icon ?? `/icons/${$page.data.weapons[build.weapon1.id].type}.png`} alt={translatableString($page.data.weapons[build.weapon1.id].name)} />
         {/if}
@@ -78,7 +76,7 @@ const imgClasses = "w-12 h-12";
             <img class={imgClasses} src={$page.data.lantern_cores[build.lanternCore.id].icon ?? `/icons/${$page.data.lantern_cores[build.lanternCore.id].type}.png`} alt={translatableString($page.data.lantern_cores[build.lanternCore.id].name)} />
         {/if}
     </div>
-    <div class="flex flex-row flex-wrap gap-2">
+    <div class="flex flex-row flex-wrap gap-2 justify-center">
         {#each Object.entries(perkSet) as [perkId, amount]}
             <div class="badge" class:badge-primary={amount == $page.data.perks[perkId].threshold} class:badge-error={amount > $page.data.perks[perkId].threshold}>
                 {translatableString($page.data.perks[perkId].name)}
