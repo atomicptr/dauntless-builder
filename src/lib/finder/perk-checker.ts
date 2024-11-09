@@ -1,13 +1,20 @@
-import { page } from "$app/stores";
-import { get } from "svelte/store";
-import { armourTypeValues, type FinderBasicArmour2LevelPerkMap, type FinderBasicArmour3LevelPerkMap, type FinderData, type Perk, type PerkSet } from "$lib/data/phalanx-types";
+import {
+    armourTypeValues,
+    type FinderBasicArmour2LevelPerkMap,
+    type FinderBasicArmour3LevelPerkMap,
+    type FinderData,
+    type Perk,
+    type PerkSet,
+} from "$lib/data/phalanx-types";
 
 const maxEmptyCellSlots = 6;
 
-export const findAvailablePerks = (selectedPerks: number[], requestedPerks: number[]): number[] => {
-    const finderData: FinderData = get(page).data.finderData;
-    const allPerks: { [id: string]: Perk } = get(page).data.perks;
-
+export const findAvailablePerksImplementation = (
+    selectedPerks: number[],
+    requestedPerks: number[],
+    finderData: FinderData,
+    allPerks: { [id: string]: Perk },
+): number[] => {
     requestedPerks = [...requestedPerks];
     requestedPerks.sort();
 
@@ -19,11 +26,7 @@ export const findAvailablePerks = (selectedPerks: number[], requestedPerks: numb
         requiredPerks.push(requestedPerk);
         requiredPerks.sort();
 
-        const [foundBuild, emptyCellSlots] = findAvailablePerksInternal(
-            requiredPerks,
-            finderData,
-            allPerks,
-        );
+        const [foundBuild, emptyCellSlots] = findAvailablePerksInternal(requiredPerks, finderData, allPerks);
         if (foundBuild) {
             requestedPerks = buildFound(requestedPerk, availablePerks, emptyCellSlots, requestedPerks, allPerks);
         }
@@ -98,7 +101,12 @@ const findArmourPiece2Perks = (
             for (const armour of currentData[requiredPerks[i]][requiredPerks[j]]) {
                 const perks = armour.perks;
                 reduceCurrentPerkValues(perks, currentPerkValues);
-                const [found, cellSlots] = findArmourPiece(armourType + 1, requiredPerks, currentPerkValues, finderData);
+                const [found, cellSlots] = findArmourPiece(
+                    armourType + 1,
+                    requiredPerks,
+                    currentPerkValues,
+                    finderData,
+                );
                 if (found) {
                     return [found, cellSlots];
                 }
@@ -122,13 +130,18 @@ const findArmourPiece2Perks = (
         increaseCurrentPerkValues(perks, currentPerkValues);
     }
 
-    const [foundGeneric, cellSlotsGeneric] = findArmourPiece(armourType + 1, requiredPerks, currentPerkValues, finderData);
+    const [foundGeneric, cellSlotsGeneric] = findArmourPiece(
+        armourType + 1,
+        requiredPerks,
+        currentPerkValues,
+        finderData,
+    );
     if (foundGeneric) {
         return [foundGeneric, cellSlotsGeneric];
     }
 
     return [false, 0];
-}
+};
 
 const findArmourPiece3Perks = (
     armourType: number,
@@ -146,13 +159,21 @@ const findArmourPiece3Perks = (
                 continue;
             }
             for (let k = j + 1; k < requiredPerks.length; k++) {
-                if (currentPerkValues[requiredPerks[k]] <= 0 || !(requiredPerks[k] in currentData[requiredPerks[i]][requiredPerks[j]])) {
+                if (
+                    currentPerkValues[requiredPerks[k]] <= 0 ||
+                    !(requiredPerks[k] in currentData[requiredPerks[i]][requiredPerks[j]])
+                ) {
                     continue;
                 }
                 for (const armour of currentData[requiredPerks[i]][requiredPerks[j]][requiredPerks[k]]) {
                     const perks = armour.perks;
                     reduceCurrentPerkValues(perks, currentPerkValues);
-                    const [found, cellSlots] = findArmourPiece(armourType + 1, requiredPerks, currentPerkValues, finderData);
+                    const [found, cellSlots] = findArmourPiece(
+                        armourType + 1,
+                        requiredPerks,
+                        currentPerkValues,
+                        finderData,
+                    );
                     if (found) {
                         return [found, cellSlots];
                     }
@@ -173,7 +194,12 @@ const findArmourPiece3Perks = (
             for (const armour of currentData[requiredPerks[i]][requiredPerks[j]][0]) {
                 const perks = armour.perks;
                 reduceCurrentPerkValues(perks, currentPerkValues);
-                const [found, cellSlots] = findArmourPiece(armourType + 1, requiredPerks, currentPerkValues, finderData);
+                const [found, cellSlots] = findArmourPiece(
+                    armourType + 1,
+                    requiredPerks,
+                    currentPerkValues,
+                    finderData,
+                );
                 if (found) {
                     return [found, cellSlots];
                 }
@@ -197,13 +223,18 @@ const findArmourPiece3Perks = (
         increaseCurrentPerkValues(perks, currentPerkValues);
     }
 
-    const [foundGeneric, cellSlotsGeneric] = findArmourPiece(armourType + 1, requiredPerks, currentPerkValues, finderData);
+    const [foundGeneric, cellSlotsGeneric] = findArmourPiece(
+        armourType + 1,
+        requiredPerks,
+        currentPerkValues,
+        finderData,
+    );
     if (foundGeneric) {
         return [foundGeneric, cellSlotsGeneric];
     }
 
     return [false, 0];
-}
+};
 
 const getCurrentPerkValues = (perkList: number[], allPerks: { [id: string]: Perk }): PerkSet => {
     let currentPerkValues: { [id: number]: number } = [];
@@ -221,7 +252,7 @@ const reduceCurrentPerkValues = (perks: PerkSet, currentPerkValues: PerkSet) => 
             currentPerkValues[key] -= perks[key];
         }
     }
-}
+};
 
 const increaseCurrentPerkValues = (perks: PerkSet, currentPerkValues: PerkSet) => {
     for (const key in perks) {
@@ -229,7 +260,7 @@ const increaseCurrentPerkValues = (perks: PerkSet, currentPerkValues: PerkSet) =
             currentPerkValues[key] += perks[key];
         }
     }
-}
+};
 
 const buildFound = (
     requestedPerk: number,

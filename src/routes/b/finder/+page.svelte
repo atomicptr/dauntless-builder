@@ -3,8 +3,7 @@ import { page } from "$app/stores";
 import MiniBuild from "$lib/components/MiniBuild.svelte";
 import PerkSelect from "$lib/components/PerkSelect.svelte";
 import type { Perk } from "$lib/data/phalanx-types";
-import { findBuilds } from "$lib/finder/build-finder.svelte";
-import { findAvailablePerks } from "$lib/finder/perk-checker.svelte";
+import { findBuilds, findAvailablePerks } from "$lib/finder/finder.svelte";
 
 // TODO: determine pre selected perk ids from url
 let selectedPerks = $state([] as number[]);
