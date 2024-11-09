@@ -3,10 +3,19 @@ import "../app.css";
 import AppIcon from "$lib/components/AppIcon.svelte";
 import DrawerMenu from "$lib/components/DrawerMenu.svelte";
 import Navbar from "$lib/components/Navbar.svelte";
-import { page } from "$app/stores";
 import Container from "$lib/components/Container.svelte";
+import { page } from "$app/stores";
+import { drawerOpen } from "$lib/state.svelte";
+import { afterNavigate } from "$app/navigation";
 
 const { children } = $props();
+
+afterNavigate(() => {
+    if (!$drawerOpen) {
+        return;
+    }
+    drawerOpen.set(false);
+});
 </script>
 
 <svelte:head>
@@ -15,8 +24,8 @@ const { children } = $props();
 
 <main>
     <div class="drawer lg:drawer-open">
-        <input id="drawer" type="checkbox" class="drawer-toggle" />
-
+        <input id="drawer" type="checkbox" class="drawer-toggle" checked={$drawerOpen} />
+        
         <div class="drawer-content flex flex-col">
             <Navbar />
 
