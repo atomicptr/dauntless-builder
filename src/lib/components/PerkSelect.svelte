@@ -24,7 +24,12 @@ const perkGroups = Object.groupBy(Object.values($page.data.perks) as Perk[], (pe
 
             <div class="flex flex-col gap-1">
                 {#each perkGroups[perkGroupName as keyof typeof perkGroups] as Perk[] as perk}
-                    <button class="card-btn disabled:hidden sm:disabled:flex flex-col" class:btn-primary={perks.indexOf(perk.id) > -1} onclick={onSelect ? () => onSelect(perk.id) : undefined} disabled={(disabledPerks ?? []).indexOf(perk.id) > -1}>
+                    <button
+                        class="card-btn disabled:hidden sm:disabled:flex flex-col" 
+                        class:btn-primary={perks.indexOf(perk.id) > -1}
+                        onclick={onSelect ? () => onSelect(perk.id) : undefined}
+                        disabled={(disabledPerks ?? []).indexOf(perk.id) > -1}
+                    >
                         {translatableString(perk.name)}
 
                         <div class="text-xs text-base-content/75 mt-2 block sm:hidden">

@@ -18,6 +18,14 @@ a.disabled {
 .card-btn {
     @apply btn p-2;
     height: unset;
+
+    &.btn-primary {
+        @apply text-primary-content;
+    }
+
+    &.btn-secondary {
+        @apply text-secondary-content;
+    }
 }
 
 .element-border {
