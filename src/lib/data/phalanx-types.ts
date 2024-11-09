@@ -28,6 +28,7 @@ export interface TranslatableString {
 }
 
 export type ArmourType = "head" | "torso" | "arms" | "legs";
+export const armourTypeValues: ArmourType[] = ["head", "torso", "arms", "legs"];
 
 export type Element = "blaze" | "frost" | "shock" | "terra" | "umbral" | "radiant";
 
