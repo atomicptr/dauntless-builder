@@ -1,0 +1,33 @@
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  tests:
+    name: CI Tests
+    runs-on: ubuntu-latest
+    environment: CI
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 22
+          cache: "npm"
+      - run: npm install
+      - name: Lint & Sanity Checks
+        run: |
+          npm run check # TODO: add biome lint
+      - name: Tests
+        run: |
+          npm run test
+      # TODO: readd this
+      # - name: Benchmarks
+      #   run: |
+      #     npm run bench
+      #   # only run on pull requests
+      #   if: github.event_name == 'pull_request'
