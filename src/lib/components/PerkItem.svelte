@@ -1,6 +1,7 @@
 <script lang="ts">
 import { page } from "$app/stores";
 import { translatableString } from "$lib/utils/translatable-string";
+import PerkTooltip from "./PerkTooltip.svelte";
 
 interface Props {
     perkId: string;
@@ -10,9 +11,9 @@ interface Props {
 const { perkId, amount }: Props = $props();
 </script>
 
-<div>
+<PerkTooltip {perkId}>
     {translatableString($page.data.perks[perkId].name)}
     {#if amount !== $page.data.perks[perkId].threshold}
         {amount} / {$page.data.perks[perkId].threshold}
     {/if}
-</div>
+</PerkTooltip>

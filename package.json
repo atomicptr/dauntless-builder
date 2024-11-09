@@ -1,6 +1,6 @@
 {
-	"name": "dauntless-builder-v3",
-	"version": "0.0.1",
+	"name": "dauntless-builder",
+	"version": "3.0.0",
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
