@@ -3,6 +3,7 @@ import { page } from "$app/stores";
 import type { Build } from "$lib/build/Build";
 import { armourStatsForLevel, getCellPerks, mergePerksArray } from "$lib/data/levels";
 import { translatableString } from "$lib/utils/translatable-string";
+import PerkItem from "./PerkItem.svelte";
 
 interface PerkListProps {
     build: Build;
@@ -43,7 +44,7 @@ const perkSet = $derived(
             class:text-error={amount > $page.data.perks[perkId].threshold}
             class:text-gray-500={amount < $page.data.perks[perkId].threshold}
         >
-            {translatableString($page.data.perks[perkId].name)} x{amount}
+            <PerkItem {perkId} {amount} />
         </li>
     {/each}
 </ul>
