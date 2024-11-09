@@ -20,13 +20,15 @@ jobs:
           cache: "npm"
       - run: npm install
       - name: Lint & Sanity Checks
-        env: &phalanx
+        env:
           PHALANX_BASE_URL: https://next.dauntless-builder.com
           PHALANX_API_KEY: static
         run: |
           npm run check # TODO: add biome lint
       - name: Tests
-        env: *phalanx
+        env:
+          PHALANX_BASE_URL: https://next.dauntless-builder.com
+          PHALANX_API_KEY: static
         run: |
           npm run test
       # TODO: readd this
