@@ -2,7 +2,6 @@
 import { page } from "$app/stores";
 import type { Build } from "$lib/build/Build";
 import { armourStatsForLevel, getCellPerks, mergePerksArray } from "$lib/data/levels";
-import { translatableString } from "$lib/utils/translatable-string";
 import PerkItem from "./PerkItem.svelte";
 
 interface PerkListProps {
@@ -33,18 +32,20 @@ const perkSet = $derived(
 );
 </script>
 
-<div class="text-xl mb-4 pl-4">
-    Perks
-</div>
+{#if Object.values(perkSet).length > 0}
+    <div class="text-xl mb-4 pl-4">
+        Perks
+    </div>
 
-<ul class="list-disc pl-8">
-    {#each Object.entries(perkSet) as [perkId, amount]}
-        <li
-            class="ml-4"
-            class:text-error={amount > $page.data.perks[perkId].threshold}
-            class:text-gray-500={amount < $page.data.perks[perkId].threshold}
-        >
-            <PerkItem {perkId} {amount} />
-        </li>
-    {/each}
-</ul>
+    <ul class="list-disc pl-8">
+        {#each Object.entries(perkSet) as [perkId, amount]}
+            <li
+                class="ml-4"
+                class:text-error={amount > $page.data.perks[perkId].threshold}
+                class:text-gray-500={amount < $page.data.perks[perkId].threshold}
+            >
+                <PerkItem {perkId} {amount} />
+            </li>
+        {/each}
+    </ul>
+{/if}
