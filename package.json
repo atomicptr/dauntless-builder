@@ -8,7 +8,7 @@
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"format": "npx -y @biomejs/biome format src *.{ts,js} --write",
+		"format": "npx -y @biomejs/biome format src *.ts *.js --write",
 		"test": "vitest run"
 	},
 	"devDependencies": {
