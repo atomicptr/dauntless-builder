@@ -1,11 +1,13 @@
 <script lang="ts">
 import { page } from "$app/stores";
 import type { BuildArmourPiece } from "$lib/build/Build";
+import { itemIconSize } from "$lib/constants";
 import type { ArmourType } from "$lib/data/phalanx-types";
-import { elementResistanceLevel, oppositeElement, resistanceLevel } from "$lib/data/static-data";
 import { translatableString } from "$lib/utils/translatable-string";
 import ArmourPerks from "./ArmourPerks.svelte";
+import ArmourResistance from "./ArmourResistance.svelte";
 import CellPicker from "./CellPicker.svelte";
+import Level from "./Level.svelte";
 
 interface ArmourPiecePickerProps {
     type: ArmourType;
@@ -22,26 +24,14 @@ const icon = $derived(armour.icon ?? `/icons/${type}.png`);
 {#if armour}
     <div class="flex flex-col sm:flex-row gap-2 min-h-20">
         <button class="card-btn grow element-border element-border-{armour.element}" onclick={() => onArmourPieceClick(type)}>
-            <div class="w-16 ml-2">
+            <div class={`${itemIconSize} ml-2`}>
                 <img src="{icon}" alt="{translatableString(armour.name)}" />
             </div>
             <div class="grow">
                 {translatableString(armour.name)}
-                {#if selected.level > 1}
-                    +{selected.level}
-                {/if}
+                <Level level={selected.level} />
             </div>
-            <div class="mr-4 flex flex-col align-center">
-                <div class="text-xl">
-                    {resistanceLevel(selected.level)}
-                </div>
-                <div class="element-text-{armour.element}">
-                    +{elementResistanceLevel(selected.level)}
-                </div>
-                <div class="element-text-{oppositeElement(armour.element)}">
-                    -{elementResistanceLevel(selected.level)}
-                </div>
-            </div>
+            <ArmourResistance level={selected.level} element={armour.element} />
         </button>
         {#each selected.cells as cellId, index}
             <CellPicker type={type} index={index} selected={cellId} onClick={onCellClick} />
@@ -52,7 +42,7 @@ const icon = $derived(armour.icon ?? `/icons/${type}.png`);
 {:else}
     <div class="flex flex-row gap-2 min-h-20">
         <button class="card-btn grow" onclick={() => onArmourPieceClick(type)}>
-            <div class="w-16 ml-2">
+            <div class={`${itemIconSize} ml-2`}>
                 <img src={`/icons/${type}.png`} alt={type} class="invert dark:invert-0" />
             </div>
             <div class="grow">

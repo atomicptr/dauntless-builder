@@ -100,7 +100,7 @@ export interface Perk {
     id: number;
     name: TranslatableString | null;
     type: PerkType;
-    effect: string;
+    effect: TranslatableString;
     values: ValuesType[];
     threshold: number;
 }

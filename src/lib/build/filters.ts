@@ -3,6 +3,7 @@ import type {
     ArmourType,
     Element,
     LanternCore,
+    Perk,
     TranslatableString,
     Weapon,
     WeaponType,
@@ -15,7 +16,7 @@ export interface GenericItem {
     icon: string | null;
 }
 
-export type FilterItem = GenericItem | Weapon | Armour | LanternCore;
+export type FilterItem = GenericItem | Weapon | Armour | LanternCore | Perk;
 
 export type FilterFunc = (item: FilterItem) => boolean;
 
