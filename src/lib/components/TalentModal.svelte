@@ -2,9 +2,9 @@
 import { page } from "$app/stores";
 import type { BuildWeapon } from "$lib/build/Build";
 import { translatableString } from "$lib/utils/translatable-string";
+import LazyImage from "./LazyImage.svelte";
 import Shape from "./Shape.svelte";
 import TalentOptionText from "./TalentOptionText.svelte";
-import ValuesText from "./ValuesText.svelte";
 
 interface TalentModalProps {
     weapon: BuildWeapon;
@@ -46,7 +46,7 @@ const cellIconShape = (colIndex: number): "square" | "pentagon" | "hexagon" | "o
                         >
                             <div>
                                 <Shape type={cellIconShape(colIndex)}>
-                                    <img class="w-6 h-6 dark:invert" src="/icons/noicon.png" alt={"Talent"} />
+                                    <LazyImage class="w-6 h-6 dark:invert" src="/icons/noicon.png" alt={"Talent"} />
                                 </Shape>
                             </div>
                             <TalentOptionText class={cellTextColor(rowIndex, col)} option={weaponData.talents[rowIndex].options[colIndex]} />

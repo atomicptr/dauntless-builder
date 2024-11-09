@@ -1,8 +1,9 @@
 <script lang="ts">
-import { applyAll, filterName, type FilterFunc, type FilterItem } from "$lib/build/filters";
+import { applyAll, filterName, type FilterFunc, type FilterItem, type GenericItem } from "$lib/build/filters";
 import { itemIconSize } from "$lib/constants";
 import { translatableString } from "$lib/utils/translatable-string";
 import type { Snippet } from "svelte";
+import LazyImage from "./LazyImage.svelte";
 
 interface PickerModalProps {
     items: FilterItem[];
@@ -24,9 +25,7 @@ const filteredItems = $derived(applyAll(items, [...(filters ?? []), filterName(s
 
 {#snippet listItemGeneric(item: FilterItem, onclick?: () => void)}
     <button class={"card-btn grow " + elementClass(item)} {onclick}>
-        <div class={`${itemIconSize} ml-2`}>
-            <img src="{item.icon ?? '/icons/noicon.png'}" alt="{translatableString(item.name)}" />
-        </div>
+        <LazyImage class={`${itemIconSize} ml-2`} src={(item as GenericItem).icon ?? '/icons/noicon.png'} alt={translatableString(item.name)} />
         <div class="grow">
             {translatableString(item.name)}
         </div>

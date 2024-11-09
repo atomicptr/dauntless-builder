@@ -7,6 +7,7 @@ import { translatableString } from "$lib/utils/translatable-string";
 import ArmourPerks from "./ArmourPerks.svelte";
 import ArmourResistance from "./ArmourResistance.svelte";
 import CellPicker from "./CellPicker.svelte";
+import LazyImage from "./LazyImage.svelte";
 import Level from "./Level.svelte";
 
 interface ArmourPiecePickerProps {
@@ -24,9 +25,7 @@ const icon = $derived(armour.icon ?? `/icons/${type}.png`);
 {#if armour}
     <div class="flex flex-col sm:flex-row gap-2 min-h-20">
         <button class="card-btn grow element-border element-border-{armour.element}" onclick={() => onArmourPieceClick(type)}>
-            <div class={`${itemIconSize} ml-2`}>
-                <img src="{icon}" alt="{translatableString(armour.name)}" />
-            </div>
+            <LazyImage class={`${itemIconSize} ml-2`} src={icon} alt={translatableString(armour.name)} />
             <div class="grow">
                 {translatableString(armour.name)}
                 <Level level={selected.level} />
@@ -42,9 +41,7 @@ const icon = $derived(armour.icon ?? `/icons/${type}.png`);
 {:else}
     <div class="flex flex-row gap-2 min-h-20">
         <button class="card-btn grow" onclick={() => onArmourPieceClick(type)}>
-            <div class={`${itemIconSize} ml-2`}>
-                <img src={`/icons/${type}.png`} alt={type} class="invert dark:invert-0" />
-            </div>
+            <LazyImage src={`/icons/${type}.png`} alt={type} class={`${itemIconSize} ml-2 invert dark:invert-0`} />
             <div class="grow">
                 Select an armour piece
             </div>

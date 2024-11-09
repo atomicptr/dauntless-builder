@@ -8,6 +8,7 @@ import ArmourPicker from "$lib/components/ArmourPicker.svelte";
 import ArmourResistance from "$lib/components/ArmourResistance.svelte";
 import LanternCorePicker from "$lib/components/LanternCorePicker.svelte";
 import LanternCoreStats from "$lib/components/LanternCoreStats.svelte";
+import LazyImage from "$lib/components/LazyImage.svelte";
 import Level from "$lib/components/Level.svelte";
 import PerkList from "$lib/components/PerkList.svelte";
 import PickerModal from "$lib/components/PickerModal.svelte";
@@ -173,9 +174,7 @@ const elementClass = (item: FilterItem): string =>
         {#snippet listItem(item, onclick)}
             <div class="flex flex-col w-full">
                 <button class={"card-btn grow " + elementClass(item)} {onclick}>
-                    <div class={`${itemIconSize} ml-2`}>
-                        <img src={(item as Weapon).icon ?? `/icons/${(item as Weapon).type}.png`} alt={translatableString(item.name)} />
-                    </div>
+                    <LazyImage class={`${itemIconSize} ml-2`} src={(item as Weapon).icon ?? `/icons/${(item as Weapon).type}.png`} alt={translatableString(item.name)} />
                     <div class="grow">
                         {translatableString(item.name)}
                         <Level level={weaponMaxLevel} />
@@ -203,9 +202,7 @@ const elementClass = (item: FilterItem): string =>
         {#snippet listItem(item, onclick)}
             <div class="flex flex-col w-full">
                 <button class={"card-btn grow " + elementClass(item)} {onclick}>
-                    <div class={`${itemIconSize} ml-2`}>
-                        <img src={(item as Armour).icon ?? `/icons/${(item as Armour).type}.png`} alt={translatableString(item.name)} />
-                    </div>
+                    <LazyImage class={`${itemIconSize} ml-2`} src={(item as Armour).icon ?? `/icons/${(item as Armour).type}.png`} alt={translatableString(item.name)} />
                     <div class="grow">
                         {translatableString(item.name)}
                         <Level level={armourMaxLevel} />
@@ -225,9 +222,7 @@ const elementClass = (item: FilterItem): string =>
         {#snippet listItem(item, onclick)}
             <div class="flex flex-col w-full">
                 <button class={"card-btn grow"} {onclick}>
-                    <div class={`${itemIconSize} ml-2`}>
-                        <img src={(item as LanternCore).icon ?? `/icons/lantern.png`} alt={translatableString(item.name)} />
-                    </div>
+                    <LazyImage class={`${itemIconSize} ml-2`} src={(item as LanternCore).icon ?? `/icons/lantern.png`} alt={translatableString(item.name)} />
                     <div class="grow">
                         {translatableString(item.name)}
                     </div>
@@ -245,9 +240,7 @@ const elementClass = (item: FilterItem): string =>
         {#snippet listItem(item, onclick)}
             <div class="flex flex-col w-full">
                 <button class={"card-btn grow"} {onclick}>
-                    <div class={`${itemIconSize} ml-2`}>
-                        <img src={`/icons/${(item as Perk).type}.png`} alt={translatableString(item.name)} />
-                    </div>
+                    <LazyImage class={`${itemIconSize} ml-2`} src={`/icons/${(item as Perk).type}.png`} alt={translatableString(item.name)} />
                     <div class="grow">
                         {translatableString(item.name)}
                     </div>

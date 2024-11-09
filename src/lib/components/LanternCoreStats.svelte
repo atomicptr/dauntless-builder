@@ -2,6 +2,7 @@
 import { page } from "$app/stores";
 import type { BuildLanternCore } from "$lib/build/Build";
 import { translatableString } from "$lib/utils/translatable-string";
+import LazyImage from "./LazyImage.svelte";
 import ValuesText from "./ValuesText.svelte";
 
 interface Props {
@@ -23,7 +24,7 @@ const lanternCore = $derived(selected.id !== 0 ? $page.data.lantern_cores[select
     <div class="py-2 pl-4">
         <div class="flex flex-row items-center gap-4 mb-4">
             {#if lanternCore.active_icon}
-                <img class="w-12 h-12" src="{lanternCore.active_icon}" alt={lanternCore.active.title ? translatableString(lanternCore.active.title) : "Active"}/>
+                <LazyImage class="w-12 h-12" src={lanternCore.active_icon} alt={lanternCore.active.title ? translatableString(lanternCore.active.title) : "Active"}/>
             {/if}
             <h2 class="text-xl">{lanternCore.active.title ? translatableString(lanternCore.active.title) : "Active"}</h2>
         </div>
