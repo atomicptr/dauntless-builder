@@ -4,8 +4,8 @@ import {
     type FinderBasicArmour3LevelPerkMap,
     type FinderData,
     type Perk,
-    type PerkSet,
 } from "$lib/data/phalanx-types";
+import { getCurrentPerkValues, increaseCurrentPerkValues, reduceCurrentPerkValues } from "./finder-utils";
 
 const maxEmptyCellSlots = 6;
 
@@ -234,32 +234,6 @@ const findArmourPiece3Perks = (
     }
 
     return [false, 0];
-};
-
-const getCurrentPerkValues = (perkList: number[], allPerks: { [id: string]: Perk }): PerkSet => {
-    let currentPerkValues: { [id: number]: number } = [];
-
-    for (let perk of perkList) {
-        currentPerkValues[perk] = allPerks[perk].threshold;
-    }
-
-    return currentPerkValues;
-};
-
-const reduceCurrentPerkValues = (perks: PerkSet, currentPerkValues: PerkSet) => {
-    for (const key in perks) {
-        if (key in currentPerkValues) {
-            currentPerkValues[key] -= perks[key];
-        }
-    }
-};
-
-const increaseCurrentPerkValues = (perks: PerkSet, currentPerkValues: PerkSet) => {
-    for (const key in perks) {
-        if (key in currentPerkValues) {
-            currentPerkValues[key] += perks[key];
-        }
-    }
 };
 
 const buildFound = (
