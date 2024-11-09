@@ -3,6 +3,7 @@ import { page } from "$app/stores";
 import type { BuildWeapon } from "$lib/build/Build";
 import { translatableString } from "$lib/utils/translatable-string";
 import Shape from "./Shape.svelte";
+import TalentOptionText from "./TalentOptionText.svelte";
 import ValuesText from "./ValuesText.svelte";
 
 interface TalentModalProps {
@@ -26,7 +27,7 @@ const cellIconShape = (colIndex: number): "square" | "pentagon" | "hexagon" | "o
         | "circle";
 </script>
 
-<dialog class="modal  bg-base-300/80" open>
+<dialog class="modal bg-base-300/80" open>
     <div class="modal-box w-5xl max-w-5xl">
         <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onclick={onClose ? () => onClose() : undefined}>✕</button>
 
@@ -48,18 +49,7 @@ const cellIconShape = (colIndex: number): "square" | "pentagon" | "hexagon" | "o
                                     <img class="w-6 h-6 dark:invert" src="/icons/noicon.png" alt={"Talent"} />
                                 </Shape>
                             </div>
-                            <div class={cellTextColor(rowIndex, col)}>
-                                {#if weaponData.talents[rowIndex].options[colIndex].type === 'custom'}
-                                    <ValuesText
-                                        text={weaponData.talents[rowIndex].options[colIndex].description}
-                                        values={weaponData.talents[rowIndex].options[colIndex].values}
-                                    />
-                                {:else if weaponData.talents[rowIndex].options[colIndex].type === 'stat'}
-                                    <div>
-                                        You have {weaponData.talents[rowIndex].options[colIndex].value} additional point held of {weaponData.talents[rowIndex].options[colIndex].stat.toUpperCase()}
-                                    </div>
-                                {/if}
-                            </div>
+                            <TalentOptionText class={cellTextColor(rowIndex, col)} option={weaponData.talents[rowIndex].options[colIndex]} />
                         </button>
                     {:else}
                         <button class="card-btn" disabled>x</button>

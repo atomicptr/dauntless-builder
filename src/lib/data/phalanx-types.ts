@@ -137,28 +137,22 @@ export interface LanternCoreAbility {
 }
 
 export interface FinderData {
-    head: {
-        [perkLevel1: string]: {
-            [perkLevel2: string]: {
-                [perkLevel3: string]: FinderBasicArmour[];
-            };
-        };
+    head: FinderBasicArmour3LevelPerkMap;
+    torso: FinderBasicArmour2LevelPerkMap;
+    arms: FinderBasicArmour3LevelPerkMap;
+    legs: FinderBasicArmour2LevelPerkMap;
+}
+
+export interface FinderBasicArmour2LevelPerkMap {
+    [perkLevel1: string]: {
+        [perkLevel2: string]: FinderBasicArmour[];
     };
-    torso: {
-        [perkLevel1: string]: {
-            [perkLevel2: string]: FinderBasicArmour[];
-        };
-    };
-    arms: {
-        [perkLevel1: string]: {
-            [perkLevel2: string]: {
-                [perkLevel3: string]: FinderBasicArmour[];
-            };
-        };
-    };
-    legs: {
-        [perkLevel1: string]: {
-            [perkLevel2: string]: FinderBasicArmour[];
+}
+
+export interface FinderBasicArmour3LevelPerkMap {
+    [perkLevel1: string]: {
+        [perkLevel2: string]: {
+            [perkLevel3: string]: FinderBasicArmour[];
         };
     };
 }

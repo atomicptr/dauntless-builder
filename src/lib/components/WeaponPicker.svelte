@@ -3,6 +3,7 @@ import { page } from "$app/stores";
 import type { BuildWeapon } from "$lib/build/Build";
 import { elementResistanceLevel, oppositeElement, powerLevel } from "$lib/data/static-data";
 import { translatableString } from "$lib/utils/translatable-string";
+import TalentList from "./TalentList.svelte";
 import TalentPicker from "./TalentPicker.svelte";
 
 interface WeaponPickerProps {
@@ -43,9 +44,7 @@ const icon = $derived(weapon.icon ?? "/icon.png");
         <TalentPicker talents={selected.talents} onClick={onTalentClick} />
     </div>
 
-    <div>
-        SELECTED TALENTS
-    </div>
+    <TalentList {selected} />
 {:else}
     <div class="flex flex-row gap-2 min-h-20">
         <button class="card-btn grow" onclick={onWeaponClick}>

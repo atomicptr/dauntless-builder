@@ -1,9 +1,8 @@
 <script lang="ts">
 import { page } from "$app/stores";
 import type { BuildArmourPiece } from "$lib/build/Build";
-import { applyAll } from "$lib/build/filters";
 import { armourStatsForLevel, getCellPerks, mergePerks } from "$lib/data/levels";
-import type { ArmourType, PerkSet } from "$lib/data/phalanx-types";
+import type { ArmourType } from "$lib/data/phalanx-types";
 import { elementResistanceLevel, oppositeElement, resistanceLevel } from "$lib/data/static-data";
 import { translatableString } from "$lib/utils/translatable-string";
 import CellPicker from "./CellPicker.svelte";

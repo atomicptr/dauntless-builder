@@ -7,14 +7,16 @@ import showdown from "showdown";
 interface ValuesTextProps {
     text: TranslatableString | null;
     values: ValuesType[];
+    classOverwrite?: { [key: string]: string };
 }
 
-const { text, values }: ValuesTextProps = $props();
+const { text, values, classOverwrite }: ValuesTextProps = $props();
 
 const classMap: { [key: string]: string } = {
     ol: "list-decimal pl-8 my-2",
     ul: "list-disc pl-8 my-2",
     p: "py-2",
+    ...(classOverwrite ?? {}),
 };
 
 const converter = new showdown.Converter({
