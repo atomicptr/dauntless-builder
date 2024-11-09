@@ -2,7 +2,9 @@ import { PHALANX_BASE_URL, PHALANX_API_KEY } from "$env/static/private";
 import type { Data, FinderData } from "./phalanx-types";
 
 const fetchApi = async <T>(endpoint: string): Promise<T> => {
-    const res = await fetch(PHALANX_BASE_URL + endpoint, {
+    const endpointExt = PHALANX_API_KEY === "static" || PHALANX_API_KEY === undefined ? ".json" : "";
+
+    const res = await fetch(PHALANX_BASE_URL + endpoint + endpointExt, {
         headers: {
             "X-Phalanx-Api-Key": PHALANX_API_KEY,
         },
