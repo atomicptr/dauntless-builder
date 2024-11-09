@@ -1,4 +1,5 @@
-import type { Armour, PerkSet } from "./phalanx-types";
+import { translatableString } from "$lib/utils/translatable-string";
+import type { Armour, Perk, PerkSet } from "./phalanx-types";
 import { armourMaxLevel } from "./static-data";
 
 export const armourStatsForLevel = (armourPiece: Armour, level: number): PerkSet | null => {
@@ -51,3 +52,12 @@ export const mergePerks = (base: PerkSet, other: PerkSet): PerkSet => {
 };
 
 export const mergePerksArray = (sets: PerkSet[]): PerkSet => sets.reduce((prev, curr) => mergePerks(prev, curr), {});
+
+export const sortPerkSetByName = (perks: { [id: string]: Perk }, perkSet: PerkSet): PerkSet =>
+    Object.fromEntries(
+        Object.entries(perkSet)
+            .filter(([id, _amount]) => id in perks)
+            .sort(([aId, _aAmount], [bId, _bAmount]) =>
+                translatableString(perks[aId].name).localeCompare(translatableString(perks[bId].name)),
+            ),
+    );

@@ -1,10 +1,10 @@
 <script lang="ts">
 import { page } from "$app/stores";
 import type { BuildArmourPiece } from "$lib/build/Build";
-import { armourStatsForLevel, getCellPerks, mergePerks } from "$lib/data/levels";
 import type { ArmourType } from "$lib/data/phalanx-types";
 import { elementResistanceLevel, oppositeElement, resistanceLevel } from "$lib/data/static-data";
 import { translatableString } from "$lib/utils/translatable-string";
+import ArmourPerks from "./ArmourPerks.svelte";
 import CellPicker from "./CellPicker.svelte";
 
 interface ArmourPiecePickerProps {
@@ -17,8 +17,6 @@ interface ArmourPiecePickerProps {
 const { type, selected, onArmourPieceClick, onCellClick }: ArmourPiecePickerProps = $props();
 const armour = $derived(selected.id !== 0 ? $page.data.armours[selected.id] : null);
 const icon = $derived(armour.icon ?? `/icons/${type}.png`);
-const perks = $derived(armourStatsForLevel(armour, selected.level) ?? {});
-const perkSet = $derived(mergePerks(perks, getCellPerks(selected.cells)));
 </script>
 
 {#if armour}
@@ -50,13 +48,7 @@ const perkSet = $derived(mergePerks(perks, getCellPerks(selected.cells)));
         {/each}
     </div>
 
-    <div class="pl-4">
-        <ul class="list-disc p-4">
-            {#each Object.entries(perkSet) as [perkId, amount]}
-                <li class:text-secondary={perkId in getCellPerks(selected.cells)}>{translatableString($page.data.perks[perkId].name)} x{amount}</li>
-            {/each}
-        </ul>
-    </div>
+    <ArmourPerks {selected} />
 {:else}
     <div class="flex flex-row gap-2 min-h-20">
         <button class="card-btn grow" onclick={() => onArmourPieceClick(type)}>

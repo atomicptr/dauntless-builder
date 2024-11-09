@@ -1,7 +1,7 @@
 <script lang="ts">
 import { page } from "$app/stores";
 import type { Build } from "$lib/build/Build";
-import { armourStatsForLevel, getCellPerks, mergePerksArray } from "$lib/data/levels";
+import { armourStatsForLevel, getCellPerks, mergePerksArray, sortPerkSetByName } from "$lib/data/levels";
 import PerkItem from "./PerkItem.svelte";
 
 interface PerkListProps {
@@ -11,24 +11,27 @@ interface PerkListProps {
 const { build }: PerkListProps = $props();
 
 const perkSet = $derived(
-    mergePerksArray([
-        $page.data.armours[build.head.id]
-            ? (armourStatsForLevel($page.data.armours[build.head.id], build.head.level) ?? {})
-            : {},
-        getCellPerks(build.head.cells),
-        $page.data.armours[build.torso.id]
-            ? (armourStatsForLevel($page.data.armours[build.torso.id], build.torso.level) ?? {})
-            : {},
-        getCellPerks(build.torso.cells),
-        $page.data.armours[build.arms.id]
-            ? (armourStatsForLevel($page.data.armours[build.arms.id], build.arms.level) ?? {})
-            : {},
-        getCellPerks(build.arms.cells),
-        $page.data.armours[build.legs.id]
-            ? (armourStatsForLevel($page.data.armours[build.legs.id], build.legs.level) ?? {})
-            : {},
-        getCellPerks(build.legs.cells),
-    ]),
+    sortPerkSetByName(
+        $page.data.perks,
+        mergePerksArray([
+            $page.data.armours[build.head.id]
+                ? (armourStatsForLevel($page.data.armours[build.head.id], build.head.level) ?? {})
+                : {},
+            getCellPerks(build.head.cells),
+            $page.data.armours[build.torso.id]
+                ? (armourStatsForLevel($page.data.armours[build.torso.id], build.torso.level) ?? {})
+                : {},
+            getCellPerks(build.torso.cells),
+            $page.data.armours[build.arms.id]
+                ? (armourStatsForLevel($page.data.armours[build.arms.id], build.arms.level) ?? {})
+                : {},
+            getCellPerks(build.arms.cells),
+            $page.data.armours[build.legs.id]
+                ? (armourStatsForLevel($page.data.armours[build.legs.id], build.legs.level) ?? {})
+                : {},
+            getCellPerks(build.legs.cells),
+        ]),
+    ),
 );
 </script>
 
