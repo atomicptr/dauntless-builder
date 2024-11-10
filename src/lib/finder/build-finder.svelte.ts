@@ -2,12 +2,6 @@ import { deserialize, empty, type Build } from "$lib/build/Build";
 import { page } from "$app/stores";
 import { get } from "svelte/store";
 
-export const findAvailablePerks = (requestedPerks: number[], currentlyAvailablePerks: number[]): number[] => {
-    console.log("FINDER DATA", get(page).data.finderData);
-    console.log("AVAILABLE DATA", requestedPerks, currentlyAvailablePerks);
-    return [1, 2, 3, 5];
-};
-
 export const findBuilds = (requestedPerks: number[]): Build[] => {
     console.log("FINDER DATA", get(page).data.finderData);
     return [
