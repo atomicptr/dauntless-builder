@@ -1,7 +1,6 @@
 import { empty, type Build } from "$lib/build/Build";
 import {
     armourTypeValues,
-    type Armour,
     type FinderBasicArmour2LevelPerkMap,
     type FinderBasicArmour3LevelPerkMap,
     type FinderData,
