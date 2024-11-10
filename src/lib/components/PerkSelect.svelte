@@ -1,9 +1,9 @@
 <script lang="ts">
 import { page } from "$app/stores";
 import type { Perk } from "$lib/data/phalanx-types";
-import { renderTemplate } from "$lib/utils/template-renderer";
 import { translatableString } from "$lib/utils/translatable-string";
 import PerkTooltip from "./PerkTooltip.svelte";
+import Search from "./Search.svelte";
 import ValuesText from "./ValuesText.svelte";
 
 interface Props {
@@ -12,9 +12,13 @@ interface Props {
     onSelect?: (perkId: number) => void;
 }
 
+let search = $state("");
+
 const { perks, disabledPerks, onSelect }: Props = $props();
 const perkGroups = Object.groupBy(Object.values($page.data.perks) as Perk[], (perk) => perk.type);
 </script>
+
+<Search class="mb-4 mt-4" bind:value={search} />
 
 <div class="flex flex-col sm:flex-row gap-2 w-full">
     {#each Object.keys(perkGroups) as perkGroupName}
@@ -26,20 +30,22 @@ const perkGroups = Object.groupBy(Object.values($page.data.perks) as Perk[], (pe
 
             <div class="flex flex-col gap-1">
                 {#each perkGroups[perkGroupName as keyof typeof perkGroups] as Perk[] as perk}
-                    <PerkTooltip perkId={perk.id} class="flex flex-col">
-                        <button
-                            class="card-btn disabled:hidden sm:disabled:flex flex-col" 
-                            class:btn-primary={perks.indexOf(perk.id) > -1}
-                            onclick={onSelect ? () => onSelect(perk.id) : undefined}
-                            disabled={(disabledPerks ?? []).indexOf(perk.id) > -1}
-                        >
-                            {translatableString(perk.name)}
+                    {#if translatableString(perk.name).toLowerCase().indexOf(search.toLowerCase()) >= 0}
+                        <PerkTooltip perkId={perk.id} class="flex flex-col">
+                            <button
+                                class="card-btn disabled:hidden sm:disabled:flex flex-col" 
+                                class:btn-primary={perks.indexOf(perk.id) > -1}
+                                onclick={onSelect ? () => onSelect(perk.id) : undefined}
+                                disabled={(disabledPerks ?? []).indexOf(perk.id) > -1}
+                            >
+                                {translatableString(perk.name)}
 
-                            <div class="text-xs text-base-content/75 mt-2 block sm:hidden">
-                                <ValuesText text={perk.effect} values={perk.values} />
-                            </div>
-                        </button>
-                    </PerkTooltip>
+                                <div class="text-xs text-base-content/75 mt-2 block sm:hidden">
+                                    <ValuesText text={perk.effect} values={perk.values} />
+                                </div>
+                            </button>
+                        </PerkTooltip>
+                    {/if}
                 {/each}
             </div>
         </div>
