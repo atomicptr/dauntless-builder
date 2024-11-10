@@ -39,7 +39,7 @@ const onPerkSelected = (perkId: number): void => {
 
     <PerkSelect perks={selectedPerks} {disabledPerks} onSelect={onPerkSelected} />
 
-    {#if builds.length > 0}
+    {#if builds.length > 0 && selectedPerks.length > 0}
         <h2 class="text-2xl mt-8">Builds</h2>
 
         {#each builds as build}
