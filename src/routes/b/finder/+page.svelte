@@ -35,6 +35,7 @@ const onPerkSelected = (perkId: number): void => {
 
 const clearPerks = (): void => {
     selectedPerks = [];
+    disabledPerks = [];
 };
 </script>
 
@@ -47,7 +48,7 @@ const clearPerks = (): void => {
     />
 
     {#if builds.length > 0 && selectedPerks.length > 0}
-        <h2 class="text-2xl mt-8">Builds</h2>
+        <h2 class="text-2xl mt-8">Builds ({builds.length})</h2>
 
         {#each builds as build}
             <MiniBuild {build} />
