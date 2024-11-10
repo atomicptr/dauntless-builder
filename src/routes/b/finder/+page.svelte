@@ -32,12 +32,19 @@ const onPerkSelected = (perkId: number): void => {
         .filter((perkId) => selectedPerks.indexOf(perkId) === -1)
         .filter((perkId) => availablePerks.indexOf(perkId) === -1);
 };
+
+const clearPerks = (): void => {
+    selectedPerks = [];
+};
 </script>
 
 <div class="flex flex-col gap-2 mb-8 w-full">
-    <h2 class="text-2xl">Perks</h2>
-
-    <PerkSelect perks={selectedPerks} {disabledPerks} onSelect={onPerkSelected} />
+    <PerkSelect 
+        perks={selectedPerks}
+        {disabledPerks}
+        onSelect={onPerkSelected}
+        onClear={clearPerks}
+    />
 
     {#if builds.length > 0 && selectedPerks.length > 0}
         <h2 class="text-2xl mt-8">Builds</h2>
