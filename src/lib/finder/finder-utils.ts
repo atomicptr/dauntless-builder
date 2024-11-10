@@ -1,9 +1,9 @@
 import type { Perk, PerkSet } from "$lib/data/phalanx-types";
 
 export const getCurrentPerkValues = (perkList: number[], allPerks: { [id: string]: Perk }): PerkSet => {
-    let currentPerkValues: { [id: number]: number } = [];
+    const currentPerkValues: { [id: number]: number } = [];
 
-    for (let perk of perkList) {
+    for (const perk of perkList) {
         currentPerkValues[perk] = allPerks[perk].threshold;
     }
 

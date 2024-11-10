@@ -162,10 +162,3 @@ export interface FinderBasicArmour {
     id: number;
     perks: PerkSet;
 }
-
-export interface TempBuild {
-    armourPieces: {
-        [armourType: string]: number;
-    };
-    perks: string[];
-}

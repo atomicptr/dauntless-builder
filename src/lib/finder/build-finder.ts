@@ -6,11 +6,19 @@ import {
     type FinderBasicArmour3LevelPerkMap,
     type FinderData,
     type Perk,
-    type TempBuild,
+    type PerkSet,
 } from "$lib/data/phalanx-types";
+import { armourMaxLevel } from "$lib/data/static-data";
 import { getCurrentPerkValues, increaseCurrentPerkValues, reduceCurrentPerkValues } from "./finder-utils";
 
 const maxEmptyCellSlots = 6;
+
+interface TempBuild {
+    armourPieces: {
+        [armourType: string]: number;
+    };
+    perks: string[];
+}
 
 export const findBuildsImplementation = (
     selectedPerks: number[],
@@ -18,49 +26,38 @@ export const findBuildsImplementation = (
     finderData: FinderData,
     allPerks: { [id: string]: Perk },
 ): Build[] => {
-    let requiredPerks = [...selectedPerks];
-    requiredPerks.sort();
+    selectedPerks = selectedPerks.toSorted();
 
-    let builds = findBuildsInternal(requiredPerks, maxBuilds, finderData, allPerks);
+    const currentPerkValues = getCurrentPerkValues(selectedPerks, allPerks);
+    const tempBuilds: TempBuild[] = [];
 
-    return builds;
-};
-
-const findBuildsInternal = (
-    requiredPerks: number[],
-    maxBuilds: number,
-    finderData: FinderData,
-    allPerks: { [id: string]: Perk },
-): Build[] => {
-    let currentPerkValues = getCurrentPerkValues(requiredPerks, allPerks);
-    let tempBuilds: TempBuild[] = [];
-
-    let tempBuild: TempBuild = {
+    const tempBuild: TempBuild = {
         armourPieces: {},
         perks: [],
     };
 
     let armourType = 0;
-    findArmourPiece(armourType, requiredPerks, maxBuilds, currentPerkValues, tempBuild, tempBuilds, finderData);
+    findArmourPiece(armourType, selectedPerks, maxBuilds, currentPerkValues, tempBuild, tempBuilds, finderData);
 
-    let builds: Build[] = [];
-    for (let tempBuild of tempBuilds) {
-        builds.push(CreateBuild(tempBuild));
+    const builds: Build[] = [];
+    for (const tempBuild of tempBuilds) {
+        builds.push(createBuild(tempBuild));
     }
+
     return builds;
 };
 
-const CreateBuild = (tempBuild: TempBuild): Build => {
-    let build = empty();
+const createBuild = (tempBuild: TempBuild): Build => {
+    const build = empty();
 
     build.head.id = tempBuild.armourPieces["head"];
-    build.head.level = 20;
+    build.head.level = armourMaxLevel;
     if (tempBuild.perks.length > 0) {
         build.head.cells[0] = Number.parseInt(tempBuild.perks.shift() as string);
     }
 
     build.torso.id = tempBuild.armourPieces["torso"];
-    build.torso.level = 20;
+    build.torso.level = armourMaxLevel;
     if (tempBuild.perks.length > 0) {
         build.torso.cells[0] = Number.parseInt(tempBuild.perks.shift() as string);
         if (tempBuild.perks.length > 0) {
@@ -69,13 +66,13 @@ const CreateBuild = (tempBuild: TempBuild): Build => {
     }
 
     build.arms.id = tempBuild.armourPieces["arms"];
-    build.arms.level = 20;
+    build.arms.level = armourMaxLevel;
     if (tempBuild.perks.length > 0) {
         build.arms.cells[0] = Number.parseInt(tempBuild.perks.shift() as string);
     }
 
     build.legs.id = tempBuild.armourPieces["legs"];
-    build.legs.level = 20;
+    build.legs.level = armourMaxLevel;
     if (tempBuild.perks.length > 0) {
         build.legs.cells[0] = Number.parseInt(tempBuild.perks.shift() as string);
         if (tempBuild.perks.length > 0) {
@@ -88,9 +85,9 @@ const CreateBuild = (tempBuild: TempBuild): Build => {
 
 const findArmourPiece = (
     armourType: number,
-    requiredPerks: number[],
+    selectedPerks: number[],
     maxBuilds: number,
-    currentPerkValues: { [id: number]: number },
+    currentPerkValues: PerkSet,
     tempBuild: TempBuild,
     tempBuilds: TempBuild[],
     finderData: FinderData,
@@ -101,7 +98,7 @@ const findArmourPiece = (
     const isDefined = armourType < armourTypeValues.length;
     let totalPerkThreshold = 0;
     let buildComplete = true;
-    for (const requiredPerk of requiredPerks) {
+    for (const requiredPerk of selectedPerks) {
         if (currentPerkValues[requiredPerk] > 0) {
             if (isDefined) {
                 buildComplete = false;
@@ -111,7 +108,7 @@ const findArmourPiece = (
     }
     if (buildComplete && isDefined) {
         tempBuild.armourPieces[armourTypeValues[armourType]] = 0;
-        findArmourPiece(armourType + 1, requiredPerks, maxBuilds, currentPerkValues, tempBuild, tempBuilds, finderData);
+        findArmourPiece(armourType + 1, selectedPerks, maxBuilds, currentPerkValues, tempBuild, tempBuilds, finderData);
         return;
     }
     if (!isDefined) {
@@ -128,7 +125,7 @@ const findArmourPiece = (
         case "arms":
             findArmourPiece3Perks(
                 armourType,
-                requiredPerks,
+                selectedPerks,
                 maxBuilds,
                 currentPerkValues,
                 tempBuild,
@@ -140,7 +137,7 @@ const findArmourPiece = (
         case "legs":
             findArmourPiece2Perks(
                 armourType,
-                requiredPerks,
+                selectedPerks,
                 maxBuilds,
                 currentPerkValues,
                 tempBuild,
@@ -153,29 +150,29 @@ const findArmourPiece = (
 
 const findArmourPiece2Perks = (
     armourType: number,
-    requiredPerks: number[],
+    selectedPerks: number[],
     maxBuilds: number,
-    currentPerkValues: { [id: number]: number },
+    currentPerkValues: PerkSet,
     tempBuild: TempBuild,
     tempBuilds: TempBuild[],
     finderData: FinderData,
 ): void => {
-    let currentData = finderData[armourTypeValues[armourType]] as FinderBasicArmour2LevelPerkMap;
-    for (let i = 0; i < requiredPerks.length; i++) {
-        if (currentPerkValues[requiredPerks[i]] <= 0 || !(requiredPerks[i] in currentData)) {
+    const currentData = finderData[armourTypeValues[armourType]] as FinderBasicArmour2LevelPerkMap;
+    for (let i = 0; i < selectedPerks.length; i++) {
+        if (currentPerkValues[selectedPerks[i]] <= 0 || !(selectedPerks[i] in currentData)) {
             continue;
         }
-        for (let j = i + 1; j < requiredPerks.length; j++) {
-            if (currentPerkValues[requiredPerks[j]] <= 0 || !(requiredPerks[j] in currentData[requiredPerks[i]])) {
+        for (let j = i + 1; j < selectedPerks.length; j++) {
+            if (currentPerkValues[selectedPerks[j]] <= 0 || !(selectedPerks[j] in currentData[selectedPerks[i]])) {
                 continue;
             }
-            for (const armour of currentData[requiredPerks[i]][requiredPerks[j]]) {
+            for (const armour of currentData[selectedPerks[i]][selectedPerks[j]]) {
                 const perks = armour.perks;
                 reduceCurrentPerkValues(perks, currentPerkValues);
                 tempBuild.armourPieces[armourTypeValues[armourType]] = armour.id;
                 findArmourPiece(
                     armourType + 1,
-                    requiredPerks,
+                    selectedPerks,
                     maxBuilds,
                     currentPerkValues,
                     tempBuild,
@@ -187,18 +184,18 @@ const findArmourPiece2Perks = (
         }
     }
 
-    for (let i = 0; i < requiredPerks.length; i++) {
-        if (currentPerkValues[requiredPerks[i]] <= 0 || !(requiredPerks[i] in currentData)) {
+    for (let i = 0; i < selectedPerks.length; i++) {
+        if (currentPerkValues[selectedPerks[i]] <= 0 || !(selectedPerks[i] in currentData)) {
             continue;
         }
 
-        for (const armour of currentData[requiredPerks[i]][0]) {
+        for (const armour of currentData[selectedPerks[i]][0]) {
             const perks = armour.perks;
             reduceCurrentPerkValues(perks, currentPerkValues);
             tempBuild.armourPieces[armourTypeValues[armourType]] = armour.id;
             findArmourPiece(
                 armourType + 1,
-                requiredPerks,
+                selectedPerks,
                 maxBuilds,
                 currentPerkValues,
                 tempBuild,
@@ -210,41 +207,41 @@ const findArmourPiece2Perks = (
     }
 
     tempBuild.armourPieces[armourTypeValues[armourType]] = 0;
-    findArmourPiece(armourType + 1, requiredPerks, maxBuilds, currentPerkValues, tempBuild, tempBuilds, finderData);
+    findArmourPiece(armourType + 1, selectedPerks, maxBuilds, currentPerkValues, tempBuild, tempBuilds, finderData);
 };
 
 const findArmourPiece3Perks = (
     armourType: number,
-    requiredPerks: number[],
+    selectedPerks: number[],
     maxBuilds: number,
-    currentPerkValues: { [id: number]: number },
+    currentPerkValues: PerkSet,
     tempBuild: TempBuild,
     tempBuilds: TempBuild[],
     finderData: FinderData,
 ): void => {
-    let currentData = finderData[armourTypeValues[armourType]] as FinderBasicArmour3LevelPerkMap;
-    for (let i = 0; i < requiredPerks.length; i++) {
-        if (currentPerkValues[requiredPerks[i]] <= 0 || !(requiredPerks[i] in currentData)) {
+    const currentData = finderData[armourTypeValues[armourType]] as FinderBasicArmour3LevelPerkMap;
+    for (let i = 0; i < selectedPerks.length; i++) {
+        if (currentPerkValues[selectedPerks[i]] <= 0 || !(selectedPerks[i] in currentData)) {
             continue;
         }
-        for (let j = i + 1; j < requiredPerks.length; j++) {
-            if (currentPerkValues[requiredPerks[j]] <= 0 || !(requiredPerks[j] in currentData[requiredPerks[i]])) {
+        for (let j = i + 1; j < selectedPerks.length; j++) {
+            if (currentPerkValues[selectedPerks[j]] <= 0 || !(selectedPerks[j] in currentData[selectedPerks[i]])) {
                 continue;
             }
-            for (let k = j + 1; k < requiredPerks.length; k++) {
+            for (let k = j + 1; k < selectedPerks.length; k++) {
                 if (
-                    currentPerkValues[requiredPerks[k]] <= 0 ||
-                    !(requiredPerks[k] in currentData[requiredPerks[i]][requiredPerks[j]])
+                    currentPerkValues[selectedPerks[k]] <= 0 ||
+                    !(selectedPerks[k] in currentData[selectedPerks[i]][selectedPerks[j]])
                 ) {
                     continue;
                 }
-                for (const armour of currentData[requiredPerks[i]][requiredPerks[j]][requiredPerks[k]]) {
+                for (const armour of currentData[selectedPerks[i]][selectedPerks[j]][selectedPerks[k]]) {
                     const perks = armour.perks;
                     reduceCurrentPerkValues(perks, currentPerkValues);
                     tempBuild.armourPieces[armourTypeValues[armourType]] = armour.id;
                     findArmourPiece(
                         armourType + 1,
-                        requiredPerks,
+                        selectedPerks,
                         maxBuilds,
                         currentPerkValues,
                         tempBuild,
@@ -257,21 +254,21 @@ const findArmourPiece3Perks = (
         }
     }
 
-    for (let i = 0; i < requiredPerks.length; i++) {
-        if (currentPerkValues[requiredPerks[i]] <= 0 || !(requiredPerks[i] in currentData)) {
+    for (let i = 0; i < selectedPerks.length; i++) {
+        if (currentPerkValues[selectedPerks[i]] <= 0 || !(selectedPerks[i] in currentData)) {
             continue;
         }
-        for (let j = i + 1; j < requiredPerks.length; j++) {
-            if (currentPerkValues[requiredPerks[j]] <= 0 || !(requiredPerks[j] in currentData[requiredPerks[i]])) {
+        for (let j = i + 1; j < selectedPerks.length; j++) {
+            if (currentPerkValues[selectedPerks[j]] <= 0 || !(selectedPerks[j] in currentData[selectedPerks[i]])) {
                 continue;
             }
-            for (const armour of currentData[requiredPerks[i]][requiredPerks[j]][0]) {
+            for (const armour of currentData[selectedPerks[i]][selectedPerks[j]][0]) {
                 const perks = armour.perks;
                 reduceCurrentPerkValues(perks, currentPerkValues);
                 tempBuild.armourPieces[armourTypeValues[armourType]] = armour.id;
                 findArmourPiece(
                     armourType + 1,
-                    requiredPerks,
+                    selectedPerks,
                     maxBuilds,
                     currentPerkValues,
                     tempBuild,
@@ -283,18 +280,18 @@ const findArmourPiece3Perks = (
         }
     }
 
-    for (let i = 0; i < requiredPerks.length; i++) {
-        if (currentPerkValues[requiredPerks[i]] <= 0 || !(requiredPerks[i] in currentData)) {
+    for (let i = 0; i < selectedPerks.length; i++) {
+        if (currentPerkValues[selectedPerks[i]] <= 0 || !(selectedPerks[i] in currentData)) {
             continue;
         }
 
-        for (const armour of currentData[requiredPerks[i]][0][0]) {
+        for (const armour of currentData[selectedPerks[i]][0][0]) {
             const perks = armour.perks;
             reduceCurrentPerkValues(perks, currentPerkValues);
             tempBuild.armourPieces[armourTypeValues[armourType]] = armour.id;
             findArmourPiece(
                 armourType + 1,
-                requiredPerks,
+                selectedPerks,
                 maxBuilds,
                 currentPerkValues,
                 tempBuild,
@@ -306,13 +303,13 @@ const findArmourPiece3Perks = (
     }
 
     tempBuild.armourPieces[armourTypeValues[armourType]] = 0;
-    findArmourPiece(armourType + 1, requiredPerks, maxBuilds, currentPerkValues, tempBuild, tempBuilds, finderData);
+    findArmourPiece(armourType + 1, selectedPerks, maxBuilds, currentPerkValues, tempBuild, tempBuilds, finderData);
 };
 
 const addBuild = (
     tempBuild: TempBuild,
     tempBuilds: TempBuild[],
-    currentPerkValues: { [id: number]: number },
+    currentPerkValues: PerkSet,
     maxBuilds: number,
     finderData: FinderData,
 ): void => {
@@ -341,17 +338,17 @@ const addBuild = (
         legs.push(tempBuild.armourPieces["legs"]);
     }
 
-    let perks: string[] = [];
-    for (let key in currentPerkValues) {
+    const perks: string[] = [];
+    for (const key in currentPerkValues) {
         for (let i = 0; i < currentPerkValues[key]; i++) {
             perks.push(key);
         }
     }
 
-    for (let head of heads) {
-        for (let torso of torsos) {
-            for (let arm of arms) {
-                for (let leg of legs) {
+    for (const head of heads) {
+        for (const torso of torsos) {
+            for (const arm of arms) {
+                for (const leg of legs) {
                     if (tempBuilds.length >= maxBuilds) {
                         return;
                     }
@@ -362,11 +359,11 @@ const addBuild = (
                                 t.armourPieces["torso"] == torso &&
                                 t.armourPieces["arms"] == arm &&
                                 t.armourPieces["legs"] == leg,
-                        )
+                        ) !== undefined
                     ) {
                         continue;
                     }
-                    let newTempBuild: TempBuild = {
+                    tempBuilds.push({
                         armourPieces: {
                             head: head,
                             torso: torso,
@@ -374,8 +371,7 @@ const addBuild = (
                             legs: leg,
                         },
                         perks: perks,
-                    };
-                    tempBuilds.push(newTempBuild);
+                    });
                 }
             }
         }
