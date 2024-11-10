@@ -1,7 +1,7 @@
 import { expect, inject, test } from "vitest";
 import { findAvailablePerksImplementation } from "./perk-checker";
 
-test("basicTest1", () => {
+test("basicPerkChecker1", () => {
     const finderData = inject("finderData");
     const builderData = inject("builderData");
 
@@ -12,7 +12,7 @@ test("basicTest1", () => {
     ).toStrictEqual(requestedPerks.toSorted());
 });
 
-test("basicTest2", () => {
+test("basicPerkChecker2", () => {
     const finderData = inject("finderData");
     const builderData = inject("builderData");
 
@@ -23,7 +23,7 @@ test("basicTest2", () => {
     ).toStrictEqual(requestedPerks.toSorted());
 });
 
-test("basicTest3", () => {
+test("basicPerkChecker3", () => {
     const finderData = inject("finderData");
     const builderData = inject("builderData");
 
@@ -34,7 +34,7 @@ test("basicTest3", () => {
     ).toStrictEqual([]);
 });
 
-test("requestAll", () => {
+test("requestAllPerks", () => {
     const finderData = inject("finderData");
     const builderData = inject("builderData");
 

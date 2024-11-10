@@ -1,7 +1,7 @@
 import { expect, inject, test } from "vitest";
 import { findBuildsImplementation } from "./build-finder";
 
-test("buildFinder1", () => {
+test("basicBuildFinder1", () => {
     const finderData = inject("finderData");
     const builderData = inject("builderData");
 
@@ -10,7 +10,7 @@ test("buildFinder1", () => {
     expect(findBuildsImplementation(requiredPerks, maxBuilds, finderData, builderData.perks).length).toStrictEqual(47);
 });
 
-test("buildFinder2", () => {
+test("basicBuildFinder2", () => {
     const finderData = inject("finderData");
     const builderData = inject("builderData");
 
@@ -19,7 +19,7 @@ test("buildFinder2", () => {
     expect(findBuildsImplementation(requiredPerks, maxBuilds, finderData, builderData.perks).length).toStrictEqual(27);
 });
 
-test("buildFinder3", () => {
+test("basicBuildFinder3", () => {
     const finderData = inject("finderData");
     const builderData = inject("builderData");
 
