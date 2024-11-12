@@ -369,7 +369,7 @@ const addBuild = (
                             arms: arm,
                             legs: leg,
                         },
-                        perks: perks,
+                        perks: [...perks],
                     });
                 }
             }
