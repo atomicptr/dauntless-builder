@@ -31,17 +31,19 @@ const build = $derived(deserialize(data.build.buildId).unwrapOr(empty()));
         </h1>
 
         {#if data.build.description}
-            <div class="p-4 mb-8 grow">
+            <div class="mb-8 grow">
                 <ValuesText text={{en: data.build.description}} values={[]} classOverwrite={{p: ""}} />
             </div>
         {/if}
 
         {#if data.build.youtube}
-            <div class="p-4 mb-8">
+            <div class="mb-8">
                 <h2 class="text-xl mb-4">
                     Video
                 </h2>
-                <YoutubeEmbed id={data.build.youtube} title="Build Video" />
+                <div class="max-w-lg">
+                    <YoutubeEmbed id={data.build.youtube} title="Build Video" />
+                </div>
             </div>
         {/if}
 
