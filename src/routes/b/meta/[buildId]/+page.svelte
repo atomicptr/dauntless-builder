@@ -4,6 +4,7 @@ import { deserialize, empty } from "$lib/build/Build";
 import ArmourPicker from "$lib/components/ArmourPicker.svelte";
 import LinkIcon from "$lib/components/icons/LinkIcon.svelte";
 import LanternCorePicker from "$lib/components/LanternCorePicker.svelte";
+import Loading from "$lib/components/Loading.svelte";
 import PerkList from "$lib/components/PerkList.svelte";
 import ValuesText from "$lib/components/ValuesText.svelte";
 import WeaponPicker from "$lib/components/WeaponPicker.svelte";
@@ -91,7 +92,5 @@ const build = $derived(deserialize(data.build.buildId).unwrapOr(empty()));
         </div>
     </div>
 {:else}
-    <div class="flex flex-row justify-center align-center w-full">
-        <span class="loading loading-dots loading-lg"></span>
-    </div>
+    <Loading />
 {/if}
