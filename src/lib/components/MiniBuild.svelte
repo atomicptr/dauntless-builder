@@ -82,10 +82,7 @@ const imgClasses = "w-12 h-12";
         {#each Object.entries(perkSet) as [perkId, amount]}
             <div class="badge" class:badge-primary={amount == $page.data.perks[perkId].threshold} class:badge-error={amount > $page.data.perks[perkId].threshold}>
                 {translatableString($page.data.perks[perkId].name)}
-
-                {#if amount !== $page.data.perks[perkId].threshold}
-                    {amount}/{$page.data.perks[perkId].threshold}
-                {/if}
+                {amount}/{$page.data.perks[perkId].threshold}
             </div>
         {/each}
     </div>

@@ -13,7 +13,5 @@ const { perkId, amount }: Props = $props();
 
 <PerkTooltip {perkId}>
     {translatableString($page.data.perks[perkId].name)}
-    {#if amount !== $page.data.perks[perkId].threshold}
-        {amount} / {$page.data.perks[perkId].threshold}
-    {/if}
+    {amount} / {$page.data.perks[perkId].threshold}
 </PerkTooltip>
