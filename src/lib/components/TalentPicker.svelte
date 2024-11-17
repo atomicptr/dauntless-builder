@@ -7,9 +7,10 @@ interface TalentPickerProps {
 }
 
 const { talents, onClick }: TalentPickerProps = $props();
+const disabled = $derived(onClick === undefined);
 </script>
 
-<button class="card-btn sm:max-w-32 grow" onclick={onClick} aria-label="Talents">
+<button class="card-btn sm:max-w-32 grow" onclick={onClick} aria-label="Talents" {disabled}>
     <div class="grid grid-cols-5 gap-1">
         <div class={"w-2 h-2 rounded-sm " + (talents[0][0] ? "bg-primary" : "bg-base-100")}></div>
         <div class={"w-2 h-2 rounded-sm " + (talents[0][1] ? "bg-primary" : "bg-base-100")}></div>

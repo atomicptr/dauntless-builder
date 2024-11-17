@@ -8,9 +8,10 @@ import LazyImage from "./LazyImage.svelte";
 interface Props {
     title?: string;
     build: Build;
+    link?: string;
 }
 
-const { title, build }: Props = $props();
+const { title, build, link }: Props = $props();
 
 const buildId = $derived(serialize(build));
 
@@ -42,7 +43,7 @@ const perkSet = $derived(
 const imgClasses = "w-12 h-12";
 </script>
 
-<a class="flex flex-col card-btn w-full" href={`/b/${buildId.unwrapOr(empty())}`}>
+<a class="flex flex-col card-btn w-full" href={link ?? `/b/${buildId.unwrapOr(empty())}`}>
     <div class="py-2">
         {#if title}
             {title}

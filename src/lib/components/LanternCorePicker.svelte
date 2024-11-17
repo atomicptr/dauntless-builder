@@ -8,17 +8,18 @@ import LazyImage from "./LazyImage.svelte";
 
 interface LanternCorePickerProps {
     selected: BuildLanternCore;
-    onClick: () => void;
+    onClick?: () => void;
 }
 
 const { selected, onClick }: LanternCorePickerProps = $props();
 const lanternCore = $derived(selected.id !== 0 ? $page.data.lantern_cores[selected.id] : null);
 const icon = $derived(lanternCore.icon ?? "/icon.png");
+const disabled = $derived(onClick === undefined);
 </script>
 
 {#if lanternCore}
     <div class="flex flex-col gap-2 min-h-20">
-        <button class="card-btn grow" onclick={() => onClick()}>
+        <button class="card-btn grow" onclick={onClick ? () => onClick() : undefined} {disabled}>
             <LazyImage class={`${itemIconSize} ml-2`} src={icon} alt={translatableString(lanternCore.name)} />
             <div class="grow">
                 {translatableString(lanternCore.name)}
@@ -27,7 +28,7 @@ const icon = $derived(lanternCore.icon ?? "/icon.png");
     </div>
 
     <LanternCoreStats {selected} />
-{:else}
+{:else if !disabled}
     <div class="flex flex-row gap-2 min-h-20">
         <button class="card-btn grow" onclick={onClick}>
             <LazyImage class={`${itemIconSize} ml-2`} src="/icons/lantern.png" alt="Lantern Core" />

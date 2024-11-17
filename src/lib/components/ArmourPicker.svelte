@@ -13,18 +13,19 @@ import Level from "./Level.svelte";
 interface ArmourPiecePickerProps {
     type: ArmourType;
     selected: BuildArmourPiece;
-    onArmourPieceClick: (type: ArmourType) => void;
-    onCellClick: (type: ArmourType, index: number) => void;
+    onArmourPieceClick?: (type: ArmourType) => void;
+    onCellClick?: (type: ArmourType, index: number) => void;
 }
 
 const { type, selected, onArmourPieceClick, onCellClick }: ArmourPiecePickerProps = $props();
 const armour = $derived(selected.id !== 0 ? $page.data.armours[selected.id] : null);
 const icon = $derived(armour.icon ?? `/icons/${type}.png`);
+const disabled = $derived(onArmourPieceClick === undefined);
 </script>
 
 {#if armour}
     <div class="flex flex-col sm:flex-row gap-2 min-h-20">
-        <button class="card-btn grow element-border element-border-{armour.element}" onclick={() => onArmourPieceClick(type)}>
+        <button class="card-btn grow element-border element-border-{armour.element}" onclick={onArmourPieceClick ? () => onArmourPieceClick(type) : undefined} {disabled}>
             <LazyImage class={`${itemIconSize} ml-2`} src={icon} alt={translatableString(armour.name)} />
             <div class="grow">
                 {translatableString(armour.name)}
@@ -38,9 +39,9 @@ const icon = $derived(armour.icon ?? `/icons/${type}.png`);
     </div>
 
     <ArmourPerks {selected} />
-{:else}
+{:else if !disabled}
     <div class="flex flex-row gap-2 min-h-20">
-        <button class="card-btn grow" onclick={() => onArmourPieceClick(type)}>
+        <button class="card-btn grow" onclick={onArmourPieceClick ? () => onArmourPieceClick(type) : undefined}>
             <LazyImage src={`/icons/${type}.png`} alt={type} class={`${itemIconSize} ml-2 invert dark:invert-0`} />
             <div class="grow">
                 Select an armour piece

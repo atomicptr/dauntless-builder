@@ -54,7 +54,7 @@ const version = patch?.version;
     <li></li>
 
     <li>
-        <a href="/b/meta" class="disabled">
+        <a href="/b/meta">
             <MetaBuildsIcon />
             Meta Builds
         </a>

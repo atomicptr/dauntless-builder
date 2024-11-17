@@ -1,5 +1,5 @@
 import { PHALANX_BASE_URL, PHALANX_API_KEY } from "$env/static/private";
-import type { Data, FinderData } from "./phalanx-types";
+import type { BuildsData, Data, FinderData } from "./phalanx-types";
 
 const fetchApi = async <T>(endpoint: string): Promise<T> => {
     const endpointExt = PHALANX_API_KEY === "static" || PHALANX_API_KEY === undefined ? ".json" : "";
@@ -18,5 +18,7 @@ const fetchApi = async <T>(endpoint: string): Promise<T> => {
 };
 
 export const fetchData = async () => fetchApi<Data>("/api/data");
+
+export const fetchBuildsData = async () => fetchApi<BuildsData>("/api/builds");
 
 export const fetchFinderData = async () => fetchApi<FinderData>("/api/finder-data");

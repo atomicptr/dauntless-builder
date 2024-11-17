@@ -137,6 +137,18 @@ export interface LanternCoreAbility {
     values: ValuesType;
 }
 
+export interface BuildsData {
+    meta: Build[];
+}
+
+export interface Build {
+    id: number;
+    name: string | null;
+    buildId: string;
+    description: string | null;
+    youtube: string | null;
+}
+
 export interface FinderData {
     head: FinderBasicArmour3LevelPerkMap;
     torso: FinderBasicArmour2LevelPerkMap;

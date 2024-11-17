@@ -11,18 +11,19 @@ import WeaponPower from "./WeaponPower.svelte";
 
 interface WeaponPickerProps {
     selected: BuildWeapon;
-    onWeaponClick: () => void;
-    onTalentClick: () => void;
+    onWeaponClick?: () => void;
+    onTalentClick?: () => void;
 }
 
 const { selected, onWeaponClick, onTalentClick }: WeaponPickerProps = $props();
 const weapon = $derived(selected.id !== 0 ? $page.data.weapons[selected.id] : null);
 const icon = $derived(weapon.icon ?? "/icon.png");
+const disabled = $derived(onWeaponClick === undefined);
 </script>
 
 {#if weapon}
     <div class="flex flex-col sm:flex-row gap-2 min-h-20">
-        <button class="card-btn grow element-border element-border-{weapon.element}" onclick={onWeaponClick}>
+        <button class="card-btn grow element-border element-border-{weapon.element}" onclick={onWeaponClick} {disabled}>
             <LazyImage class={`${itemIconSize} ml-2`} src={icon} alt={translatableString(weapon.name)} />
             <div class="grow">
                 {translatableString(weapon.name)}
@@ -34,7 +35,7 @@ const icon = $derived(weapon.icon ?? "/icon.png");
     </div>
 
     <TalentList {selected} />
-{:else}
+{:else if !disabled}
     <div class="flex flex-row gap-2 min-h-20">
         <button class="card-btn grow" onclick={onWeaponClick}>
             <LazyImage class={`${itemIconSize} ml-2`} src="/icons/weapons.png" alt="Weapon" />

@@ -13,9 +13,10 @@ interface CellPickerProps {
 
 const { type, selected, index, onClick }: CellPickerProps = $props();
 const perk = $derived(selected !== 0 ? $page.data.perks[selected] : null);
+const disabled = $derived(onClick === undefined);
 </script>
 
-<button class="card-btn sm:max-w-32 grow flex flex-col" onclick={onClick ? () => onClick(type, index) : undefined}>
+<button class="card-btn sm:max-w-32 grow flex flex-col" onclick={onClick ? () => onClick(type, index) : undefined} {disabled}>
     {#if perk}
         <LazyImage class="w-8 h-8" src={`/icons/${perk.type}.png`} alt={translatableString(perk.name)} />
         <div>{translatableString(perk.name)}</div>
