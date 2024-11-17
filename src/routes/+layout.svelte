@@ -29,7 +29,7 @@ afterNavigate(() => {
         <div class="drawer-content flex flex-col">
             <Navbar />
 
-            <div class="p-2">
+            <div class="p-2 mb-8">
                 <Container>
                     {@render children()}
                 </Container>

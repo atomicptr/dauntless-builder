@@ -19,6 +19,10 @@ a.disabled {
     @apply btn p-2;
     height: unset;
 
+    &:disabled {
+        @apply text-base-content;
+    }
+
     &.btn-primary {
         @apply text-primary-content;
     }
