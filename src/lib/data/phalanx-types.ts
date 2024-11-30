@@ -1,4 +1,7 @@
 export interface Data {
+    __meta: {
+        buildTime: number;
+    };
     patch: Patch;
     armours: {
         [id: string]: Armour;
