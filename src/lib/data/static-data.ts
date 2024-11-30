@@ -4,10 +4,10 @@ import type { Element } from "./phalanx-types";
 export const weaponMaxLevel = 60;
 export const armourMaxLevel = 20;
 
-const unknownLevel = (category: string, level: number) => () =>{
+const unknownLevel = (category: string, level: number) => () => {
     console.error(`${category}: Unknown level selected ${level}`);
     return 0;
-}
+};
 
 export const powerLevel = (level: number): number =>
     match(level)
