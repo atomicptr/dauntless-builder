@@ -23,6 +23,16 @@ $ npm run dev
 
 Dauntless Builder should now run at: http://localhost:5173
 
+## Data Access
+
+The data used by Dauntless Builder is available via endpoints like /api/data.json and /api/builds.json
+
+See:
+
+- [PHP Dauntless Builder SDK](https://github.com/atomicptr/php-dauntless-builder-sdk)
+
+for how to access the data properly
+
 ## Assets
 
 All Dauntless related assets are the property of Phoenix Labs.
