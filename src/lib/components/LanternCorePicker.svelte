@@ -13,7 +13,7 @@ interface LanternCorePickerProps {
 
 const { selected, onClick }: LanternCorePickerProps = $props();
 const lanternCore = $derived(selected.id !== 0 ? $page.data.lantern_cores[selected.id] : null);
-const icon = $derived(lanternCore.icon ?? "/icon.png");
+const icon = $derived(lanternCore?.icon ?? "/icon.png");
 const disabled = $derived(onClick === undefined);
 </script>
 

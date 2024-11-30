@@ -19,7 +19,7 @@ interface ArmourPiecePickerProps {
 
 const { type, selected, onArmourPieceClick, onCellClick }: ArmourPiecePickerProps = $props();
 const armour = $derived(selected.id !== 0 ? $page.data.armours[selected.id] : null);
-const icon = $derived(armour.icon ?? `/icons/${type}.png`);
+const icon = $derived(armour?.icon ?? `/icons/${type}.png`);
 const disabled = $derived(onArmourPieceClick === undefined);
 </script>
 

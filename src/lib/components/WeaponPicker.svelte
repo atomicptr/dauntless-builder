@@ -17,7 +17,7 @@ interface WeaponPickerProps {
 
 const { selected, onWeaponClick, onTalentClick }: WeaponPickerProps = $props();
 const weapon = $derived(selected.id !== 0 ? $page.data.weapons[selected.id] : null);
-const icon = $derived(weapon.icon ?? "/icon.png");
+const icon = $derived(weapon?.icon ?? "/icon.png");
 const disabled = $derived(onWeaponClick === undefined);
 </script>
 
