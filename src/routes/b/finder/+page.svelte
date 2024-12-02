@@ -9,12 +9,27 @@ import { findBuilds, findAvailablePerks, type WhitelistedItems } from "$lib/find
 // TODO: determine pre selected perk ids from url
 let selectedPerks = $state([] as number[]);
 let disabledPerks = $state([] as number[]);
-let whitelistedItems = $state([] as number[]);
-let whitelistInverted = $state(false);
 
-const whitelist: WhitelistedItems = $derived({ items: whitelistedItems, inverted: whitelistInverted });
+let whitelistedHeads = $state([] as number[]);
+let whitelistedTorsos = $state([] as number[]);
+let whitelistedArms = $state([] as number[]);
+let whitelistedLegs = $state([] as number[]);
 
-const builds = $derived(findBuilds(selectedPerks, whitelist));
+const whitelist: WhitelistedItems = $derived({
+    heads: whitelistedHeads,
+    torsos: whitelistedTorsos,
+    arms: whitelistedArms,
+    legs: whitelistedLegs,
+});
+
+const builds = $derived(
+    findBuilds(selectedPerks, {
+        heads: whitelistedHeads,
+        torsos: whitelistedTorsos,
+        arms: whitelistedArms,
+        legs: whitelistedLegs,
+    }),
+);
 
 const onPerkSelected = (perkId: number): void => {
     if (selectedPerks.indexOf(perkId) > -1) {
@@ -46,7 +61,7 @@ const clearPerks = (): void => {
 </script>
 
 <div class="flex flex-col gap-2 mb-8 w-full">
-    <FinderItemFilter bind:whitelist={whitelistedItems} bind:inverted={whitelistInverted} />
+    <FinderItemFilter bind:heads={whitelistedHeads} bind:torsos={whitelistedTorsos} bind:arms={whitelistedArms} bind:legs={whitelistedLegs} />
 
     <PerkSelect 
         perks={selectedPerks}

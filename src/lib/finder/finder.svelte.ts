@@ -2,6 +2,7 @@ import { type Build } from "$lib/build/Build";
 import { page } from "$app/stores";
 import { get } from "svelte/store";
 import type {
+    ArmourType,
     FinderBasicArmour,
     FinderBasicArmour2LevelPerkMap,
     FinderBasicArmour3LevelPerkMap,
@@ -10,21 +11,32 @@ import type {
 } from "$lib/data/phalanx-types";
 import { findAvailablePerksImplementation } from "./perk-checker";
 import { findBuildsImplementation } from "./build-finder";
+import { match } from "ts-pattern";
 
 export interface WhitelistedItems {
-    items: number[];
-    inverted: boolean;
+    heads: number[];
+    torsos: number[];
+    arms: number[];
+    legs: number[];
 }
 
 const filterWhitelistedItems = (finderData: FinderData, whitelist?: WhitelistedItems): FinderData => {
-    if (whitelist === undefined || whitelist.items.length === 0) {
+    if (whitelist === undefined) {
         return finderData;
     }
 
-    const filterFunc = (item: FinderBasicArmour) =>
-        whitelist.inverted ? whitelist.items.indexOf(item.id) === -1 : whitelist.items.indexOf(item.id) > -1;
+    const filterFunc = (armourType: ArmourType, item: FinderBasicArmour): boolean =>
+        match(armourType)
+            .with("head", () => whitelist.heads.indexOf(item.id) > -1)
+            .with("torso", () => whitelist.torsos.indexOf(item.id) > -1)
+            .with("arms", () => whitelist.arms.indexOf(item.id) > -1)
+            .with("legs", () => whitelist.legs.indexOf(item.id) > -1)
+            .run();
 
-    const filterCloneLevel3 = (map: FinderBasicArmour3LevelPerkMap): FinderBasicArmour3LevelPerkMap => {
+    const filterCloneLevel3 = (
+        armourType: ArmourType,
+        map: FinderBasicArmour3LevelPerkMap,
+    ): FinderBasicArmour3LevelPerkMap => {
         const newMap: FinderBasicArmour3LevelPerkMap = {};
 
         for (const level1Key in map) {
@@ -38,7 +50,9 @@ const filterWhitelistedItems = (finderData: FinderData, whitelist?: WhitelistedI
                 }
 
                 for (const level3Key in map[level1Key][level2Key]) {
-                    newMap[level1Key][level2Key][level3Key] = map[level1Key][level2Key][level3Key].filter(filterFunc);
+                    newMap[level1Key][level2Key][level3Key] = map[level1Key][level2Key][level3Key].filter((item) =>
+                        filterFunc(armourType, item),
+                    );
                 }
             }
         }
@@ -46,7 +60,10 @@ const filterWhitelistedItems = (finderData: FinderData, whitelist?: WhitelistedI
         return newMap;
     };
 
-    const filterCloneLevel2 = (map: FinderBasicArmour2LevelPerkMap): FinderBasicArmour2LevelPerkMap => {
+    const filterCloneLevel2 = (
+        armourType: ArmourType,
+        map: FinderBasicArmour2LevelPerkMap,
+    ): FinderBasicArmour2LevelPerkMap => {
         const newMap: FinderBasicArmour2LevelPerkMap = {};
 
         for (const level1Key in map) {
@@ -55,7 +72,7 @@ const filterWhitelistedItems = (finderData: FinderData, whitelist?: WhitelistedI
             }
 
             for (const level2Key in map[level1Key]) {
-                newMap[level1Key][level2Key] = map[level1Key][level2Key].filter(filterFunc);
+                newMap[level1Key][level2Key] = map[level1Key][level2Key].filter((item) => filterFunc(armourType, item));
             }
         }
 
@@ -63,10 +80,10 @@ const filterWhitelistedItems = (finderData: FinderData, whitelist?: WhitelistedI
     };
 
     return {
-        head: filterCloneLevel3(finderData.head),
-        torso: filterCloneLevel2(finderData.torso),
-        arms: filterCloneLevel3(finderData.arms),
-        legs: filterCloneLevel2(finderData.legs),
+        head: whitelist.heads.length === 0 ? finderData.head : filterCloneLevel3("head", finderData.head),
+        torso: whitelist.torsos.length === 0 ? finderData.torso : filterCloneLevel2("torso", finderData.torso),
+        arms: whitelist.arms.length === 0 ? finderData.arms : filterCloneLevel3("arms", finderData.arms),
+        legs: whitelist.legs.length === 0 ? finderData.legs : filterCloneLevel2("legs", finderData.legs),
     };
 };
 
