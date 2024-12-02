@@ -76,7 +76,7 @@ export const powerLevel = (level: number): number =>
 export const elementPowerLevel = (level: number): [number, number] => {
     const val = Math.min(Math.max(level, 1), weaponMaxLevel);
     return [val, Math.ceil(val / 2.0)];
-}
+};
 
 export const resistanceLevel = (level: number): number =>
     match(level)

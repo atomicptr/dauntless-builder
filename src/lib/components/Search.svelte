@@ -1,14 +1,21 @@
 <script lang="ts">
+import CloseIcon from "./icons/CloseIcon.svelte";
+
 interface Props {
     value?: string;
     class?: string;
 }
 
 let { value = $bindable(), ...rest }: Props = $props();
+
+const clear = () => (value = "");
 </script>
 
 <label class={"input input-bordered flex items-center gap-2 " + rest.class}>
     <input type="text" class="grow" placeholder="Search" bind:value={value} />
+    <button class="btn btn-xs btn-ghost" class:hidden={value?.length === 0} onclick={clear}>
+        <CloseIcon />
+    </button>
     <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 16 16"
