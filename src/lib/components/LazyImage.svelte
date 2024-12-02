@@ -40,7 +40,7 @@ onMount(() => {
 
 <div bind:this={element}>
     {#if load}
-        <img {src} {alt} class={rest.class} />
+        <img {src} {alt} title={alt} class={rest.class} />
     {:else}
         <div class={"skeleton " + (rest.class ?? "")}></div>
     {/if}
