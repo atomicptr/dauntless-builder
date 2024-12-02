@@ -1,15 +1,20 @@
 <script lang="ts">
 import { page } from "$app/stores";
+import FinderItemFilter from "$lib/components/FinderItemFilter.svelte";
 import MiniBuild from "$lib/components/MiniBuild.svelte";
 import PerkSelect from "$lib/components/PerkSelect.svelte";
 import type { Perk } from "$lib/data/phalanx-types";
-import { findBuilds, findAvailablePerks } from "$lib/finder/finder.svelte";
+import { findBuilds, findAvailablePerks, type WhitelistedItems } from "$lib/finder/finder.svelte";
 
 // TODO: determine pre selected perk ids from url
 let selectedPerks = $state([] as number[]);
 let disabledPerks = $state([] as number[]);
+let whitelistedItems = $state([] as number[]);
+let whitelistInverted = $state(false);
 
-const builds = $derived(findBuilds(selectedPerks));
+const whitelist: WhitelistedItems = $derived({ items: whitelistedItems, inverted: whitelistInverted });
+
+const builds = $derived(findBuilds(selectedPerks, whitelist));
 
 const onPerkSelected = (perkId: number): void => {
     if (selectedPerks.indexOf(perkId) > -1) {
@@ -26,6 +31,7 @@ const onPerkSelected = (perkId: number): void => {
         allPerks
             .filter((perkId) => selectedPerks.indexOf(perkId) === -1)
             .filter((perkId) => disabledPerks.indexOf(perkId) === -1),
+        whitelist,
     );
 
     disabledPerks = allPerks
@@ -40,6 +46,8 @@ const clearPerks = (): void => {
 </script>
 
 <div class="flex flex-col gap-2 mb-8 w-full">
+    <FinderItemFilter bind:whitelist={whitelistedItems} bind:inverted={whitelistInverted} />
+
     <PerkSelect 
         perks={selectedPerks}
         {disabledPerks}
