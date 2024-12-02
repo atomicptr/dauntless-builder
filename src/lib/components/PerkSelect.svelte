@@ -25,7 +25,7 @@ const perkGroups = Object.groupBy(Object.values($page.data.perks) as Perk[], (pe
         <h2 class="text-2xl">
             Perks
         </h2>
-        {#if onClear}
+        {#if onClear && perks.length > 0}
             <button class="btn btn-ghost" onclick={onClear}>
                 <CloseIcon />
                 Clear All
