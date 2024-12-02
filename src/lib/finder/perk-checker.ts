@@ -117,7 +117,7 @@ const findArmourPiece2Perks = (
             continue;
         }
 
-        if (currentData[selectedPerks[i]][0].length == 0) {
+        if (currentData[selectedPerks[i]][0].length === 0) {
             continue;
         }
         const armour = currentData[selectedPerks[i]][0][0];
@@ -213,7 +213,7 @@ const findArmourPiece3Perks = (
             continue;
         }
 
-        if (currentData[selectedPerks[i]][0][0].length == 0) {
+        if (currentData[selectedPerks[i]][0][0].length === 0) {
             continue;
         }
         const armour = currentData[selectedPerks[i]][0][0][0];
