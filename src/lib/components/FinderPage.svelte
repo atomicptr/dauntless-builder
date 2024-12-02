@@ -40,14 +40,7 @@ const builds = $derived(
     }),
 );
 
-const onPerkSelected = (perkId: number): void => {
-    if (selectedPerks.indexOf(perkId) > -1) {
-        selectedPerks = selectedPerks.filter((perk) => perk !== perkId);
-        disabledPerks = [];
-    } else {
-        selectedPerks.push(perkId);
-    }
-
+const calculateDisabledPerks = () => {
     const allPerks = Object.values<Perk>($page.data.perks).map((perk) => perk.id);
 
     const availablePerks = findAvailablePerks(
@@ -58,9 +51,20 @@ const onPerkSelected = (perkId: number): void => {
         whitelist,
     );
 
-    disabledPerks = allPerks
+    return allPerks
         .filter((perkId) => selectedPerks.indexOf(perkId) === -1)
         .filter((perkId) => availablePerks.indexOf(perkId) === -1);
+};
+
+const onPerkSelected = (perkId: number): void => {
+    if (selectedPerks.indexOf(perkId) > -1) {
+        selectedPerks = selectedPerks.filter((perk) => perk !== perkId);
+        disabledPerks = [];
+    } else {
+        selectedPerks.push(perkId);
+    }
+
+    disabledPerks = calculateDisabledPerks();
 };
 
 const clearPerks = (): void => {
@@ -68,26 +72,26 @@ const clearPerks = (): void => {
     disabledPerks = [];
 };
 
-const packData = (): FinderInitialData => ({
-    perks: selectedPerks,
-    items: {
-        head: whitelistedHeads,
-        torso: whitelistedTorsos,
-        arms: whitelistedArms,
-        legs: whitelistedLegs,
-    },
-});
-
 onMount(() => {
-    disabledPerks = [];
-    selectedPerks = initialFinderData.perks;
     whitelistedHeads = initialFinderData.items.head;
     whitelistedTorsos = initialFinderData.items.torso;
     whitelistedArms = initialFinderData.items.arms;
     whitelistedLegs = initialFinderData.items.legs;
+    selectedPerks = initialFinderData.perks;
+    disabledPerks = calculateDisabledPerks();
 });
 
 $effect(() => {
+    const packData = (): FinderInitialData => ({
+        perks: selectedPerks,
+        items: {
+            head: whitelistedHeads,
+            torso: whitelistedTorsos,
+            arms: whitelistedArms,
+            legs: whitelistedLegs,
+        },
+    });
+
     goto(`/b/finder/${finderPageDataSerialize(packData())}`);
 });
 </script>
