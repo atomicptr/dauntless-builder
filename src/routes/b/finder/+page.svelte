@@ -1,6 +1,7 @@
 <script lang="ts">
 import { page } from "$app/stores";
 import FinderItemFilter from "$lib/components/FinderItemFilter.svelte";
+import ExclamationTriangle from "$lib/components/icons/ExclamationTriangle.svelte";
 import MiniBuild from "$lib/components/MiniBuild.svelte";
 import PerkSelect from "$lib/components/PerkSelect.svelte";
 import type { Perk } from "$lib/data/phalanx-types";
@@ -76,5 +77,19 @@ const clearPerks = (): void => {
         {#each builds as build}
             <MiniBuild {build} />
         {/each}
+    {/if}
+
+    {#if selectedPerks.length === 0}
+        <div class="alert alert-warning mt-4">
+            <ExclamationTriangle />
+            No perks have been selected, please select one above.
+        </div>
+    {/if}
+
+    {#if selectedPerks.length > 0 && builds.length === 0}
+        <div class="alert alert-warning mt-4">
+            <ExclamationTriangle />
+            No builds have been found, please change your filter options.
+        </div>
     {/if}
 </div>
