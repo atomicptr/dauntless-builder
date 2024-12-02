@@ -1,6 +1,6 @@
 <script lang="ts">
 import type { Element } from "$lib/data/phalanx-types";
-import { elementResistanceLevel, oppositeElement, powerLevel } from "$lib/data/static-data";
+import { elementPowerLevel, oppositeElement, powerLevel } from "$lib/data/static-data";
 
 interface Props {
     level: number;
@@ -16,10 +16,10 @@ const { level, element }: Props = $props();
             {powerLevel(level)}
         </div>
         <div class="element-text-{oppositeElement(element)}">
-            +{elementResistanceLevel(level)}
+            +{elementPowerLevel(level)[0]}
         </div>
         <div class="element-text-{element}">
-            -{elementResistanceLevel(level)}
+            -{elementPowerLevel(level)[1]}
         </div>
     </div>
 {/if}
