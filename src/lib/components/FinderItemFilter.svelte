@@ -6,6 +6,8 @@ import { match } from "ts-pattern";
 import LazyImage from "./LazyImage.svelte";
 import Search from "./Search.svelte";
 import { onMount } from "svelte";
+import CloseIcon from "./icons/CloseIcon.svelte";
+import CheckCircle from "./icons/CheckCircle.svelte";
 
 interface Props {
     heads: number[];
@@ -67,6 +69,40 @@ const toggleWhitelisted = (type: ArmourType, id: number) => {
     }
 };
 
+const selectAllByType = (armourType: ArmourType) => {
+    switch (armourType) {
+        case "head":
+            heads = armours.filter((item) => item.type === armourType).map((item) => item.id);
+            break;
+        case "torso":
+            torsos = armours.filter((item) => item.type === armourType).map((item) => item.id);
+            break;
+        case "arms":
+            arms = armours.filter((item) => item.type === armourType).map((item) => item.id);
+            break;
+        case "legs":
+            legs = armours.filter((item) => item.type === armourType).map((item) => item.id);
+            break;
+    }
+};
+
+const unselectAllByType = (armourType: ArmourType) => {
+    switch (armourType) {
+        case "head":
+            heads = [];
+            break;
+        case "torso":
+            torsos = [];
+            break;
+        case "arms":
+            arms = [];
+            break;
+        case "legs":
+            legs = [];
+            break;
+    }
+};
+
 onMount(() => {
     if (filtersCount > 0) {
         filtersOpen = true;
@@ -95,7 +131,16 @@ onMount(() => {
     <div class="flex flex-col lg:flex-row gap-2">
         {#each armourTypeValues as armourType}
             <div class="flex flex-col gap-2 grow">
-                <div class="text-xl">{armourType.slice(0, 1).toUpperCase() + armourType.slice(1)}</div>
+                <div class="flex flex-row gap-2 items-center">
+                    <div class="text-xl">{armourType.slice(0, 1).toUpperCase() + armourType.slice(1)}</div>
+                    <button class="btn btn-ghost" title="Check all" onclick={() => selectAllByType(armourType)}>
+                        <CheckCircle />
+                    </button>
+                    <button class="btn btn-ghost" title="Unselect all" class:hidden={collectionByType(armourType).length === 0} onclick={() => unselectAllByType(armourType)}>
+                        <CloseIcon />
+                    </button>
+                </div>
+
                 {#each armoursByType[armourType] ?? [] as armour}
                     <div class="form-control" class:hidden={translatableString(armour.name).toLowerCase().indexOf(filtersSearch.toLowerCase()) === -1}>
                         <label class="label cursor-pointer">
