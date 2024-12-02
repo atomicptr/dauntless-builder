@@ -45,7 +45,10 @@ afterNavigate(() => {
 
             <label for="drawer" class="drawer-overlay"></label>
 
-            <DrawerMenu patch={$page.data.patch}/>
+            <DrawerMenu
+                patch={$page.data.patch}
+                buildsData={$page.data.buildsData}
+            />
         </div>
     </div>
 </main>

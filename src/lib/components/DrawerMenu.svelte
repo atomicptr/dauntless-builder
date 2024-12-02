@@ -15,9 +15,9 @@ import XIcon from "$lib/components/icons/XIcon.svelte";
 import SupportUsIcon from "$lib/components/icons/SupportUsIcon.svelte";
 import { discordLink, githubLink, supportUsLink, xcomLink } from "$lib/constants";
 import PatchIcon from "./icons/PatchIcon.svelte";
-import type { Patch } from "$lib/data/phalanx-types";
+import type { BuildsData, Patch } from "$lib/data/phalanx-types";
 
-const { patch }: { patch: Patch } = $props();
+const { patch, buildsData }: { patch: Patch; buildsData: BuildsData } = $props();
 
 const version = patch?.version;
 </script>
@@ -42,6 +42,7 @@ const version = patch?.version;
         <a href="/b/favorites" class="disabled">
             <MyBuildsIcon />
             My Builds
+            <span class="badge badge-ghost">soon&trade;</span>
         </a>
     </li>
     <li>
@@ -54,7 +55,7 @@ const version = patch?.version;
     <li></li>
 
     <li>
-        <a href="/b/meta">
+        <a href="/b/meta" class:disabled={Object.keys(buildsData?.meta ?? {}).length === 0}>
             <MetaBuildsIcon />
             Meta Builds
         </a>
@@ -63,12 +64,14 @@ const version = patch?.version;
         <a href="/b/progression" class="disabled">
             <ProgressionBuildsIcon />
             Progression Builds
+            <span class="badge badge-ghost">soon&trade;</span>
         </a>
     </li>
     <li>
         <a href="/b/trials" class="disabled">
             <TrialBuildsIcon />
             Trial Builds
+            <span class="badge badge-ghost">soon&trade;</span>
         </a>
     </li>
 
@@ -78,18 +81,21 @@ const version = patch?.version;
         <a href="/about" class="disabled">
             <AboutIcon />
             About
+            <span class="badge badge-ghost">soon&trade;</span>
         </a>
     </li>
     <li>
         <a href="/privacy" class="disabled">
             <PrivacyIcon />
             Privacy
+            <span class="badge badge-ghost">soon&trade;</span>
         </a>
     </li>
     <li>
         <a href="/settings" class="disabled">
             <SettingsIcon />
             Settings
+            <span class="badge badge-ghost">soon&trade;</span>
         </a>
     </li>
 
