@@ -143,9 +143,9 @@ onMount(() => {
 
                 {#each armoursByType[armourType] ?? [] as armour}
                     <div class="form-control" class:hidden={translatableString(armour.name).toLowerCase().indexOf(filtersSearch.toLowerCase()) === -1}>
-                        <label class="label cursor-pointer">
+                        <label class="label cursor-pointer h-12">
                             <input type="checkbox" checked={isWhitelisted(armourType, armour.id)} class="checkbox" onchange={() => toggleWhitelisted(armourType, armour.id)} />
-                            <div class="flex flex-row gap-2 grow ml-4">
+                            <div class="flex flex-row gap-2 grow ml-4 items-center">
                                 <LazyImage class="w-6 h-6" src={armour.icon ?? `/icons/${armourType}.png`} />
                                 <div class="label-text">{translatableString(armour.name)}</div>
                             </div>
