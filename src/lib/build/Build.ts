@@ -1,10 +1,6 @@
 import { ok, err, type Result } from "neverthrow";
-import Sqids from "sqids";
 import { talentEmpty, talentParse, talentSerialize, type TalentGrid } from "./talents";
-
-const sqids = new Sqids({
-    alphabet: "tr1GwdIv2NFgTOLso3zfJ95QbenZACWDqiRl@y8haYE7K-cHx6uUPmVX4BkS_0pjM",
-});
+import { sqids } from "$lib/sqids";
 
 export const CURRENT_BUILD_VERSION = 10;
 
