@@ -60,7 +60,7 @@ const metaDescription = $derived(
 </script>
 
 <svelte:head>
-    <buildTitle>{buildTitle} - Dauntless Builder</buildTitle>
+    <title>{buildTitle} - Dauntless Builder</title>
 
     <meta
         content="Dauntless Builder"
@@ -69,7 +69,7 @@ const metaDescription = $derived(
 
     <meta
         content={buildTitle}
-        property="og:buildTitle"
+        property="og:title"
     />
 
     <meta
