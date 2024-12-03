@@ -123,6 +123,31 @@ const onDialogClosed = () => {
 const elementClass = (item: FilterItem): string =>
     "element" in item ? `element-border element-border-${item.element}` : "";
 
+const isCopyButtonVisible = () => {
+    const perks = mergePerksArray([
+        $page.data.armours[data.build.head.id]
+            ? (armourStatsForLevel($page.data.armours[data.build.head.id], data.build.head.level) ?? {})
+            : {},
+        getCellPerks(data.build.head.cells),
+        $page.data.armours[data.build.torso.id]
+            ? (armourStatsForLevel($page.data.armours[data.build.torso.id], data.build.torso.level) ?? {})
+            : {},
+        getCellPerks(data.build.torso.cells),
+        $page.data.armours[data.build.arms.id]
+            ? (armourStatsForLevel($page.data.armours[data.build.arms.id], data.build.arms.level) ?? {})
+            : {},
+        getCellPerks(data.build.arms.cells),
+        $page.data.armours[data.build.legs.id]
+            ? (armourStatsForLevel($page.data.armours[data.build.legs.id], data.build.legs.level) ?? {})
+            : {},
+        getCellPerks(data.build.legs.cells),
+    ]);
+
+    return Object.entries(perks)
+        .filter(([perkId, amount]) => $page.data.perks[perkId].threshold <= amount)
+        .length > 0;
+}
+
 const gotoFinderPageUsingCurrentPerks = () => {
     const finderData = finderDefaultData();
 
@@ -198,13 +223,16 @@ const gotoFinderPageUsingCurrentPerks = () => {
             onClick={onLanternCorePickerClicked}
         />
     </div>
-    <div class="w-1/3 p-4">
+    <div class="w-1/3 p-4 flex flex-col gap-2">
         <PerkList build={data.build} />
 
-        <button class="btn btn-primary btn-outline mt-4" onclick={gotoFinderPageUsingCurrentPerks}>
-            <BuildFinderIcon />
-            Copy perks to finder
-        </button>
+        {#if isCopyButtonVisible()}
+            <hr class="h-px my-4 bg-gray-200 border-0 dark:bg-gray-700">
+            <button class="btn btn-primary btn-outline" onclick={gotoFinderPageUsingCurrentPerks}>
+                <BuildFinderIcon />
+                Copy perks to finder
+            </button>
+        {/if}
     </div>
 </div>
 
