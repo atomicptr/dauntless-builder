@@ -7,12 +7,14 @@ import { talentEmpty, talentSet } from "$lib/build/talents.js";
 import ArmourPerks from "$lib/components/ArmourPerks.svelte";
 import ArmourPicker from "$lib/components/ArmourPicker.svelte";
 import ArmourResistance from "$lib/components/ArmourResistance.svelte";
+import BuildTitle from "$lib/components/BuildTitle.svelte";
 import FinderItemFilter from "$lib/components/FinderItemFilter.svelte";
 import BuildFinderIcon from "$lib/components/icons/BuildFinderIcon.svelte";
 import LanternCorePicker from "$lib/components/LanternCorePicker.svelte";
 import LanternCoreStats from "$lib/components/LanternCoreStats.svelte";
 import LazyImage from "$lib/components/LazyImage.svelte";
 import Level from "$lib/components/Level.svelte";
+import PageTitle from "$lib/components/PageTitle.svelte";
 import PerkList from "$lib/components/PerkList.svelte";
 import PickerModal from "$lib/components/PickerModal.svelte";
 import TalentModal from "$lib/components/TalentModal.svelte";
@@ -143,10 +145,8 @@ const isCopyButtonVisible = () => {
         getCellPerks(data.build.legs.cells),
     ]);
 
-    return Object.entries(perks)
-        .filter(([perkId, amount]) => $page.data.perks[perkId].threshold <= amount)
-        .length > 0;
-}
+    return Object.entries(perks).filter(([perkId, amount]) => $page.data.perks[perkId].threshold <= amount).length > 0;
+};
 
 const gotoFinderPageUsingCurrentPerks = () => {
     const finderData = finderDefaultData();
@@ -178,9 +178,7 @@ const gotoFinderPageUsingCurrentPerks = () => {
 };
 </script>
 
-<svelte:head>
-    <title>Dauntless Builder</title>
-</svelte:head>
+<BuildTitle buildId={serialize(data.build).unwrapOr("")} hidden />
 
 <div class="flex flex-col sm:flex-row">
     <div class="flex flex-col gap-2 sm:w-2/3">

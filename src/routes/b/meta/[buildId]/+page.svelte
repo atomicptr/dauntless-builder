@@ -1,47 +1,23 @@
 <script lang="ts">
-import { page } from "$app/stores";
 import { deserialize, empty } from "$lib/build/Build";
 import ArmourPicker from "$lib/components/ArmourPicker.svelte";
+import BuildTitle from "$lib/components/BuildTitle.svelte";
 import LinkIcon from "$lib/components/icons/LinkIcon.svelte";
 import LanternCorePicker from "$lib/components/LanternCorePicker.svelte";
 import Loading from "$lib/components/Loading.svelte";
-import PageTitle from "$lib/components/PageTitle.svelte";
 import PerkList from "$lib/components/PerkList.svelte";
 import ValuesText from "$lib/components/ValuesText.svelte";
 import WeaponPicker from "$lib/components/WeaponPicker.svelte";
 import YoutubeEmbed from "$lib/components/YoutubeEmbed.svelte";
-import { translatableString } from "$lib/utils/translatable-string.js";
 
 const { data } = $props();
 
 const build = $derived(deserialize(data.build.buildId).unwrapOr(empty()));
-
-const getBuildTitle = () => {
-    if (data.build.name) {
-        return data.build.name;
-    }
-
-    let res = "";
-
-    if (build.weapon1.id !== 0) {
-        res += translatableString($page.data.weapons[build.weapon1.id].name);
-    }
-
-    if (build.weapon1.id !== 0 && build.weapon2.id !== 0) {
-        res += " / ";
-    }
-
-    if (build.weapon2.id !== 0) {
-        res += translatableString($page.data.weapons[build.weapon2.id].name);
-    }
-
-    return res;
-};
 </script>
 
 {#if data.build}
     <div class="flex flex-col gap-2">
-        <PageTitle title={getBuildTitle()} />
+        <BuildTitle title={data.build?.name ?? undefined} buildId={data.build.buildId} />
 
         {#if data.build.description}
             <div class="mb-8 grow">
