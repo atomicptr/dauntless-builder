@@ -42,7 +42,7 @@ let dialog: DialogProps = $state({ open: null, filters: {} });
 const updateBuild = () => {
     const buildId = serialize(data.build).unwrapOr(empty());
     console.log(buildId, data.build);
-    goto(`/b/${buildId}`);
+    goto(`/b/${buildId}`, {noScroll: true});
 };
 
 const onWeaponPickerClicked = (picker: 1 | 2) => () => {
