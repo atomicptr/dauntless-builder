@@ -5,6 +5,7 @@ import ArmourPicker from "$lib/components/ArmourPicker.svelte";
 import LinkIcon from "$lib/components/icons/LinkIcon.svelte";
 import LanternCorePicker from "$lib/components/LanternCorePicker.svelte";
 import Loading from "$lib/components/Loading.svelte";
+import PageTitle from "$lib/components/PageTitle.svelte";
 import PerkList from "$lib/components/PerkList.svelte";
 import ValuesText from "$lib/components/ValuesText.svelte";
 import WeaponPicker from "$lib/components/WeaponPicker.svelte";
@@ -14,21 +15,33 @@ import { translatableString } from "$lib/utils/translatable-string.js";
 const { data } = $props();
 
 const build = $derived(deserialize(data.build.buildId).unwrapOr(empty()));
+
+const getBuildTitle = () => {
+    if (data.build.name) {
+        return data.build.name;
+    }
+
+    let res = "";
+
+    if (build.weapon1.id !== 0) {
+        res += translatableString($page.data.weapons[build.weapon1.id].name);
+    }
+
+    if (build.weapon1.id !== 0 && build.weapon2.id !== 0) {
+        res += " / ";
+    }
+
+    if (build.weapon2.id !== 0) {
+        res += translatableString($page.data.weapons[build.weapon2.id].name);
+    }
+
+    return res;
+};
 </script>
 
 {#if data.build}
     <div class="flex flex-col gap-2">
-        <h1 class="text-2xl mb-8">
-            {#if data.build.name}
-                {data.build.name}
-            {:else if build.weapon1.id !== 0 || build.weapon2.id !== 0}
-                {translatableString($page.data.weapons[build.weapon1.id].name)}
-                {#if build.weapon1.id !== 0 && build.weapon2.id !== 0}
-                    &nbsp;/&nbsp;
-                {/if}
-                {translatableString($page.data.weapons[build.weapon2.id].name)}
-            {/if}
-        </h1>
+        <PageTitle title={getBuildTitle()} />
 
         {#if data.build.description}
             <div class="mb-8 grow">

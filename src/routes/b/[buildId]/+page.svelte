@@ -153,6 +153,10 @@ const gotoFinderPageUsingCurrentPerks = () => {
 };
 </script>
 
+<svelte:head>
+    <title>Dauntless Builder</title>
+</svelte:head>
+
 <div class="flex flex-col sm:flex-row">
     <div class="flex flex-col gap-2 sm:w-2/3">
         <WeaponPicker
