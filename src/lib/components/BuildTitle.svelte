@@ -52,7 +52,7 @@ const metaDescription = $derived(
             build.torso.id !== 0 ? translatableString($page.data.armours[build.torso.id].name) : null,
             build.arms.id !== 0 ? translatableString($page.data.armours[build.arms.id].name) : null,
             build.legs.id !== 0 ? translatableString($page.data.armours[build.legs.id].name) : null,
-            build.lanternCore.id !== 0 ? translatableString($page.data.lantern_cores[build.legs.id].name) : null,
+            build.lanternCore.id !== 0 ? translatableString($page.data.lantern_cores[build.lanternCore.id].name) : null,
         ]
             .filter((p) => !!p)
             .join(", "),
