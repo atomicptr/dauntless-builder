@@ -47,4 +47,8 @@ const filteredItems = $derived(applyAll(items, [...(filters ?? []), filterName(s
             {/each}
         </div>
     </div>
+
+    <form method="dialog" class="modal-backdrop">
+        <button class="cursor-default" onclick={onClose}>close</button>
+    </form>
 </dialog>

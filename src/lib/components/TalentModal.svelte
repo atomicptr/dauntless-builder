@@ -58,4 +58,8 @@ const cellIconShape = (colIndex: number): "square" | "pentagon" | "hexagon" | "o
             {/each}
         </div>
     </div>
+
+    <form method="dialog" class="modal-backdrop">
+        <button class="cursor-default" onclick={onClose}>close</button>
+    </form>
 </dialog>
