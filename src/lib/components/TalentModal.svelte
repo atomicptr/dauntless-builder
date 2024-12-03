@@ -28,10 +28,12 @@ const cellIconShape = (colIndex: number): "square" | "pentagon" | "hexagon" | "o
 </script>
 
 <dialog class="modal bg-base-300/80" open>
-    <div class="modal-box w-5xl max-w-5xl">
-        <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onclick={onClose ? () => onClose() : undefined}>✕</button>
-
-        <div class="mt-8"></div>
+    <div class="modal-box w-5xl max-w-5xl pt-0">
+        <div class="sticky top-0 left-0 right-0 z-30 pt-2 pb-4 bg-base-100 bg-opacity-90 backdrop-blur">
+            <div class="flex flex-row justify-end">
+                <button class="btn btn-sm btn-circle btn-ghost" onclick={onClose ? () => onClose() : undefined}>✕</button>
+            </div>
+        </div>
 
         <div class="grid sm:grid-cols-5 gap-2">
             {#each weapon.talents as row, rowIndex}

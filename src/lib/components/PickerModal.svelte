@@ -34,12 +34,13 @@ const filteredItems = $derived(applyAll(items, [...(filters ?? []), filterName(s
 {/snippet}
 
 <dialog class="modal bg-base-300/80" open>
-    <div class="modal-box w-5xl max-w-5xl">
-        <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onclick={onClose ? () => onClose() : undefined}>✕</button>
-
-        <div class="mt-8"></div>
-
-        <Search bind:value={search} />
+    <div class="modal-box w-5xl max-w-5xl pt-0">
+        <div class="sticky top-0 left-0 right-0 z-30 pt-2 pb-4 bg-base-100 bg-opacity-90 backdrop-blur">
+            <div class="flex flex-row justify-end mb-4">
+                <button class="btn btn-sm btn-circle btn-ghost" onclick={onClose ? () => onClose() : undefined}>✕</button>
+            </div>
+            <Search bind:value={search} />
+        </div>
 
         <div class="flex flex-col gap-2 mt-4">
             {#each filteredItems as item}
