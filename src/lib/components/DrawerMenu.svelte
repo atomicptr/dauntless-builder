@@ -78,6 +78,12 @@ const version = patch?.version;
     <li></li>
 
     <li>
+        <a href="/settings">
+            <SettingsIcon />
+            Settings
+        </a>
+    </li>
+    <li>
         <a href="/about" class="disabled">
             <AboutIcon />
             About
@@ -88,13 +94,6 @@ const version = patch?.version;
         <a href="/privacy" class="disabled">
             <PrivacyIcon />
             Privacy
-            <span class="badge badge-ghost">soon&trade;</span>
-        </a>
-    </li>
-    <li>
-        <a href="/settings" class="disabled">
-            <SettingsIcon />
-            Settings
             <span class="badge badge-ghost">soon&trade;</span>
         </a>
     </li>

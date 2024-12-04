@@ -5,7 +5,7 @@ import DrawerMenu from "$lib/components/DrawerMenu.svelte";
 import Navbar from "$lib/components/Navbar.svelte";
 import Container from "$lib/components/Container.svelte";
 import { page } from "$app/stores";
-import { drawerOpen } from "$lib/state.svelte";
+import { drawerOpen, theme } from "$lib/state.svelte";
 import { afterNavigate } from "$app/navigation";
 
 const { children } = $props();
@@ -22,7 +22,7 @@ afterNavigate(() => {
     <title>Dauntless Builder</title>
 </svelte:head>
 
-<main data-theme="dark">
+<main data-theme={$theme}>
     <div class="drawer lg:drawer-open">
         <input id="drawer" type="checkbox" class="drawer-toggle" checked={$drawerOpen} />
         
