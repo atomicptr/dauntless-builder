@@ -2,7 +2,7 @@
 import { goto } from "$app/navigation";
 import { page } from "$app/stores";
 import { empty, serialize } from "$lib/build/Build.js";
-import { filterArmourType, filterPerkByPerkType, type FilterItem } from "$lib/build/filters";
+import { filterArmourType, filterPerkByPerkType, filterWeaponType, type FilterItem } from "$lib/build/filters";
 import { talentEmpty, talentSet } from "$lib/build/talents.js";
 import ArmourPerks from "$lib/components/ArmourPerks.svelte";
 import ArmourPicker from "$lib/components/ArmourPicker.svelte";
@@ -29,6 +29,8 @@ import {
     type Perk,
     type PerkType,
     type Weapon,
+    type WeaponType,
+    weaponTypeValues,
 } from "$lib/data/phalanx-types.js";
 import { armourMaxLevel, weaponMaxLevel } from "$lib/data/static-data.js";
 import { finderDefaultData, finderPageDataSerialize } from "$lib/finder/initial";
@@ -54,7 +56,7 @@ const onWeaponPickerClicked = (picker: 1 | 2) => () => {
     dialog = {
         open: "weapon",
         initialLevel: data.build[`weapon${picker}`].level,
-        filters: { picker },
+        filters: { picker, weaponType: null },
     };
 };
 
@@ -257,6 +259,9 @@ const gotoFinderPageUsingCurrentPerks = () => {
 {#if dialog.open === "weapon"}
     <PickerModal
         items={Object.values(data.weapons)}
+        filters={[
+            dialog.filters.weaponType ? filterWeaponType(dialog.filters.weaponType as WeaponType) : null
+        ]}
         filterData={dialog.filters}
         onSelected={onItemSelected}
         onClose={onDialogClosed}
@@ -274,6 +279,15 @@ const gotoFinderPageUsingCurrentPerks = () => {
                     </div>
                     <WeaponPower level={itemData.level ?? weaponMaxLevel} element={(item as Armour).element} />
                 </button>
+            </div>
+        {/snippet}
+        {#snippet itemFilters(filterData: FilterData, updateFilter?: (filterData: FilterData) => void)}
+            <div class="join w-full">
+                {#each weaponTypeValues as weaponType}
+                    <button class="btn join-item grow hover:btn-secondary" class:btn-primary={filterData.weaponType === weaponType} onclick={updateFilter ? () => updateFilter({weaponType: filterData.weaponType === weaponType ? null : weaponType}) : undefined}>
+                        <LazyImage class="w-6 h-6" src={`/icons/${weaponType}.png`} alt={weaponType} />
+                    </button>
+                {/each}
             </div>
         {/snippet}
     </PickerModal>

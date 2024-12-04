@@ -62,6 +62,15 @@ export type WeaponType =
     | "chain_blades"
     | "ostian_repeaters"
     | "aether_strikers";
+export const weaponTypeValues: WeaponType[] = [
+    "sword",
+    "axe",
+    "hammer",
+    "war_pike",
+    "chain_blades",
+    "ostian_repeaters",
+    "aether_strikers",
+];
 
 export interface Weapon {
     id: number;
