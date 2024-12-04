@@ -20,7 +20,7 @@ const { option, compact, ...rest }: Props = $props();
         />
     {:else if option.type === 'stat'}
         <div>
-            You have {option.value} additional point held of {option.stat.toUpperCase()}
+            You have {option.value} additional point of held {option.stat.toUpperCase()}.
         </div>
     {/if}
 </div>
