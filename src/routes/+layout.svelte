@@ -7,7 +7,8 @@ import Container from "$lib/components/Container.svelte";
 import { page } from "$app/stores";
 import { drawerOpen, theme } from "$lib/state.svelte";
 import { afterNavigate } from "$app/navigation";
-    import { onMount } from "svelte";
+import { onMount } from "svelte";
+import { browser } from "$app/environment";
 
 const { children } = $props();
 
@@ -19,10 +20,12 @@ afterNavigate(() => {
 });
 
 onMount(() => {
+    if (!browser) return;
     document.documentElement.dataset["theme"] = $theme;
 });
 
-theme.subscribe(theme => {
+theme.subscribe((theme) => {
+    if (!browser) return;
     document.documentElement.dataset["theme"] = theme;
 });
 </script>
@@ -34,7 +37,7 @@ theme.subscribe(theme => {
 <main data-theme={$theme}>
     <div class="drawer lg:drawer-open">
         <input id="drawer" type="checkbox" class="drawer-toggle" checked={$drawerOpen} />
-        
+
         <div class="drawer-content flex flex-col">
             <Navbar />
 
@@ -52,7 +55,7 @@ theme.subscribe(theme => {
                 </div>
             </div>
 
-            <label for="drawer" class="drawer-overlay"></label>
+            <button class="drawer-overlay" onclick={() => drawerOpen.set(false)} aria-label="close drawer"></button>
 
             <DrawerMenu
                 patch={$page.data.patch}
