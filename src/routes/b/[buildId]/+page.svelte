@@ -65,7 +65,7 @@ const updateBuild = () => {
 const onWeaponPickerClicked = (picker: 1 | 2) => () => {
     dialog = {
         open: "weapon",
-        initialLevel: data.build[`weapon${picker}`].level,
+        initialLevel: data.build[`weapon${picker}`].id === 0 ? weaponMaxLevel : data.build[`weapon${picker}`].level,
         filters: { picker, weaponType: null, element: null },
     };
 };
@@ -80,7 +80,7 @@ const onWeaponTalentPickerClicked = (picker: 1 | 2) => () => {
 const onArmourPieceClickerClicked = (type: ArmourType) => {
     dialog = {
         open: "armour",
-        initialLevel: data.build[type].level,
+        initialLevel: data.build[type].id === 0 ? armourMaxLevel : data.build[type].level,
         filters: { type, element: null, perkType: null },
     };
 };
