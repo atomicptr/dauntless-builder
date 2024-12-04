@@ -11,7 +11,7 @@ interface Props {
 
 const { title, buildId, hidden }: Props = $props();
 
-const defaultIconPath = "https://www.dauntless-builder.com/icon.png";
+const defaultIconPath = "https://next.dauntless-builder.com/icon.png"; // TODO: change this after launch
 
 const build = $derived(deserialize(buildId).unwrapOr(empty()));
 

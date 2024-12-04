@@ -9,7 +9,6 @@ import { drawerOpen, theme } from "$lib/state.svelte";
 import { afterNavigate } from "$app/navigation";
 import { onMount } from "svelte";
 import { browser } from "$app/environment";
-import { pwaInfo } from "virtual:pwa-info";
 
 const { children } = $props();
 
@@ -29,13 +28,10 @@ theme.subscribe((theme) => {
     if (!browser) return;
     document.documentElement.dataset["theme"] = theme;
 });
-
-let webManifestLink = $derived(pwaInfo ? pwaInfo.webManifest.linkTag : "");
 </script>
 
 <svelte:head>
     <title>Dauntless Builder</title>
-    {@html webManifestLink} 
 </svelte:head>
 
 <main data-theme={$theme}>

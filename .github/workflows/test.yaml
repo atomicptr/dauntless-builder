@@ -21,13 +21,13 @@ jobs:
       - run: npm install
       - name: Lint & Sanity Checks
         env:
-          PHALANX_BASE_URL: https://www.dauntless-builder.com
+          PHALANX_BASE_URL: https://next.dauntless-builder.com
           PHALANX_API_KEY: static
         run: |
           npm run check # TODO: add biome lint
       - name: Tests
         env:
-          PHALANX_BASE_URL: https://www.dauntless-builder.com
+          PHALANX_BASE_URL: https://next.dauntless-builder.com
           PHALANX_API_KEY: static
         run: |
           npm run test
