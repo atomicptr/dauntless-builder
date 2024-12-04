@@ -7,6 +7,7 @@ import Container from "$lib/components/Container.svelte";
 import { page } from "$app/stores";
 import { drawerOpen, theme } from "$lib/state.svelte";
 import { afterNavigate } from "$app/navigation";
+    import { onMount } from "svelte";
 
 const { children } = $props();
 
@@ -15,6 +16,14 @@ afterNavigate(() => {
         return;
     }
     drawerOpen.set(false);
+});
+
+onMount(() => {
+    document.documentElement.dataset["theme"] = $theme;
+});
+
+theme.subscribe(theme => {
+    document.documentElement.dataset["theme"] = theme;
 });
 </script>
 
