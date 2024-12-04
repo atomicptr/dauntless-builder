@@ -17,7 +17,7 @@ const determineThemePreference = () => {
     }
 
     return "dark";
-}
+};
 
 export let drawerOpen = writable(false);
 export let theme = writable(determineThemePreference());

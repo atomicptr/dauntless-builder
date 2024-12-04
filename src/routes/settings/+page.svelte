@@ -5,8 +5,7 @@ import { theme } from "$lib/state.svelte";
 const onThemeChanged = () => {
     theme.set($theme === "dark" ? "light" : "dark");
     localStorage.setItem("theme", $theme);
-}
-
+};
 </script>
 
 <PageTitle title="Settings" />

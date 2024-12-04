@@ -11,10 +11,12 @@ interface Props {
 const { filterData, updateFilter }: Props = $props();
 </script>
 
-<div class="join w-full">
-    {#each perkTypeValues as perkType}
-        <button class="btn join-item grow hover:btn-secondary" class:btn-primary={filterData.perkType === perkType} onclick={updateFilter ? () => updateFilter({perkType: filterData.perkType === perkType ? null : perkType}) : undefined}>
-            <LazyImage class="w-6 h-6 light:invert" src={`/icons/${perkType}.png`} alt={perkType} />
-        </button>
-    {/each}
+<div class="overflow-x-auto">
+    <div class="join w-full">
+        {#each perkTypeValues as perkType}
+            <button class="btn join-item grow hover:btn-secondary" class:btn-primary={filterData.perkType === perkType} onclick={updateFilter ? () => updateFilter({perkType: filterData.perkType === perkType ? null : perkType}) : undefined}>
+                <LazyImage class="w-6 h-6 light:invert" src={`/icons/${perkType}.png`} alt={perkType} />
+            </button>
+        {/each}
+    </div>
 </div>

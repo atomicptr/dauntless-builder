@@ -282,7 +282,7 @@ const gotoFinderPageUsingCurrentPerks = () => {
     >
         {#snippet listItem(item, itemData, onclick)}
             <div class="flex flex-col w-full">
-                <button class={"card-btn grow " + elementClass(item)} {onclick}>
+                <button class={"flex flex-col sm:flex-row card-btn grow " + elementClass(item)} {onclick}>
                     <LazyImage class={`${itemIconSize} ml-2`} src={(item as Weapon).icon ?? `/icons/${(item as Weapon).type}.png`} alt={translatableString(item.name)} />
                     <div class="grow">
                         {translatableString(item.name)}
@@ -320,7 +320,7 @@ const gotoFinderPageUsingCurrentPerks = () => {
     >
         {#snippet listItem(item, itemData, onclick)}
             <div class="flex flex-col w-full">
-                <button class={"card-btn grow " + elementClass(item)} {onclick}>
+                <button class={"flex flex-col sm:flex-row card-btn grow " + elementClass(item)} {onclick}>
                     <LazyImage class={`${itemIconSize} ml-2`} src={(item as Armour).icon ?? `/icons/${(item as Armour).type}.png`} alt={translatableString(item.name)} />
                     <div class="grow">
                         {translatableString(item.name)}

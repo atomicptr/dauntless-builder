@@ -11,7 +11,7 @@ const { level, element }: Props = $props();
 </script>
 
 {#if resistanceLevel(level) > 0}
-    <div class="mr-4 flex flex-col align-center">
+    <div class="sm:mr-4 flex flex-col align-center">
         <div class="text-xl">
             {resistanceLevel(level)}
         </div>
