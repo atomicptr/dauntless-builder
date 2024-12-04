@@ -3,8 +3,8 @@ import { sqids } from "$lib/sqids";
 export interface FinderInitialData {
     perks: number[];
     items: {
-        head: number[];
-        torso: number[];
+        heads: number[];
+        torsos: number[];
         arms: number[];
         legs: number[];
     };
@@ -13,8 +13,8 @@ export interface FinderInitialData {
 export const finderDefaultData = (): FinderInitialData => ({
     perks: [],
     items: {
-        head: [],
-        torso: [],
+        heads: [],
+        torsos: [],
         arms: [],
         legs: [],
     },
@@ -24,10 +24,10 @@ export const finderPageDataSerialize = (pageData: FinderInitialData) =>
     sqids.encode([
         pageData.perks.length,
         ...pageData.perks,
-        pageData.items.head.length,
-        ...pageData.items.head,
-        pageData.items.torso.length,
-        ...pageData.items.torso,
+        pageData.items.heads.length,
+        ...pageData.items.heads,
+        pageData.items.torsos.length,
+        ...pageData.items.torsos,
         pageData.items.arms.length,
         ...pageData.items.arms,
         pageData.items.legs.length,
@@ -46,12 +46,12 @@ export const finderPageDataDeserialize = (data: string) => {
 
     const headLen = res.shift() as number;
     for (let i = 0; i < headLen; i++) {
-        finderData.items.head.push(res.shift() as number);
+        finderData.items.heads.push(res.shift() as number);
     }
 
     const torsoLen = res.shift() as number;
     for (let i = 0; i < torsoLen; i++) {
-        finderData.items.torso.push(res.shift() as number);
+        finderData.items.torsos.push(res.shift() as number);
     }
 
     const armsLen = res.shift() as number;

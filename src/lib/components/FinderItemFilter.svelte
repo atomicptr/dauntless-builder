@@ -9,15 +9,17 @@ import { onMount } from "svelte";
 import CloseIcon from "./icons/CloseIcon.svelte";
 import CheckCircle from "./icons/CheckCircle.svelte";
 import { filterItemCompare } from "$lib/build/filters";
+import type { WhitelistedItems } from "$lib/finder/finder.svelte";
 
 interface Props {
     heads: number[];
     torsos: number[];
     arms: number[];
     legs: number[];
+    onChange: (items: WhitelistedItems) => void;
 }
 
-let { heads = $bindable(), torsos = $bindable(), arms = $bindable(), legs = $bindable() }: Props = $props();
+let { heads, torsos, arms, legs, onChange }: Props = $props();
 
 const filtersCount = $derived(heads.length + torsos.length + arms.length + legs.length);
 
@@ -40,32 +42,36 @@ const isWhitelisted = (type: ArmourType, id: number) => collectionByType(type).i
 const toggleWhitelisted = (type: ArmourType, id: number) => {
     switch (type) {
         case "head":
-            if (isWhitelisted(type, id)) {
-                heads = heads.filter((item) => item !== id);
-            } else {
-                heads.push(id);
-            }
+            onChange({
+                heads: isWhitelisted(type, id) ? heads.filter((item) => item !== id) : [...heads, id],
+                torsos,
+                arms,
+                legs,
+            });
             break;
         case "torso":
-            if (isWhitelisted(type, id)) {
-                torsos = torsos.filter((item) => item !== id);
-            } else {
-                torsos.push(id);
-            }
+            onChange({
+                heads,
+                torsos: isWhitelisted(type, id) ? torsos.filter((item) => item !== id) : [...torsos, id],
+                arms,
+                legs,
+            });
             break;
         case "arms":
-            if (isWhitelisted(type, id)) {
-                arms = arms.filter((item) => item !== id);
-            } else {
-                arms.push(id);
-            }
+            onChange({
+                heads,
+                torsos,
+                arms: isWhitelisted(type, id) ? arms.filter((item) => item !== id) : [...arms, id],
+                legs,
+            });
             break;
         case "legs":
-            if (isWhitelisted(type, id)) {
-                legs = legs.filter((item) => item !== id);
-            } else {
-                legs.push(id);
-            }
+            onChange({
+                heads,
+                torsos,
+                arms,
+                legs: isWhitelisted(type, id) ? legs.filter((item) => item !== id) : [...legs, id],
+            });
             break;
     }
 };
@@ -73,16 +79,36 @@ const toggleWhitelisted = (type: ArmourType, id: number) => {
 const selectAllByType = (armourType: ArmourType) => {
     switch (armourType) {
         case "head":
-            heads = armours.filter((item) => item.type === armourType).map((item) => item.id);
+            onChange({
+                heads: armours.filter((item) => item.type === armourType).map((item) => item.id),
+                torsos,
+                arms,
+                legs,
+            });
             break;
         case "torso":
-            torsos = armours.filter((item) => item.type === armourType).map((item) => item.id);
+            onChange({
+                heads,
+                torsos: armours.filter((item) => item.type === armourType).map((item) => item.id),
+                arms,
+                legs,
+            });
             break;
         case "arms":
-            arms = armours.filter((item) => item.type === armourType).map((item) => item.id);
+            onChange({
+                heads,
+                torsos,
+                arms: armours.filter((item) => item.type === armourType).map((item) => item.id),
+                legs,
+            });
             break;
         case "legs":
-            legs = armours.filter((item) => item.type === armourType).map((item) => item.id);
+            onChange({
+                heads,
+                torsos,
+                arms,
+                legs: armours.filter((item) => item.type === armourType).map((item) => item.id),
+            });
             break;
     }
 };
@@ -90,16 +116,16 @@ const selectAllByType = (armourType: ArmourType) => {
 const unselectAllByType = (armourType: ArmourType) => {
     switch (armourType) {
         case "head":
-            heads = [];
+            onChange({ heads: [], torsos, arms, legs });
             break;
         case "torso":
-            torsos = [];
+            onChange({ heads, torsos: [], arms, legs });
             break;
         case "arms":
-            arms = [];
+            onChange({ heads, torsos, arms: [], legs });
             break;
         case "legs":
-            legs = [];
+            onChange({ heads, torsos, arms, legs: [] });
             break;
     }
 };
