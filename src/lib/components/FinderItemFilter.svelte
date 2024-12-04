@@ -8,6 +8,7 @@ import Search from "./Search.svelte";
 import { onMount } from "svelte";
 import CloseIcon from "./icons/CloseIcon.svelte";
 import CheckCircle from "./icons/CheckCircle.svelte";
+import { filterItemCompare } from "$lib/build/filters";
 
 interface Props {
     heads: number[];
@@ -141,7 +142,7 @@ onMount(() => {
                     </button>
                 </div>
 
-                {#each armoursByType[armourType] ?? [] as armour}
+                {#each armoursByType[armourType]?.toSorted(filterItemCompare) ?? [] as armour}
                     <div class="form-control" class:hidden={translatableString(armour.name).toLowerCase().indexOf(filtersSearch.toLowerCase()) === -1}>
                         <label class="label cursor-pointer h-12">
                             <input type="checkbox" checked={isWhitelisted(armourType, armour.id)} class="checkbox" onchange={() => toggleWhitelisted(armourType, armour.id)} />

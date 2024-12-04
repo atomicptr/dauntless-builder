@@ -1,5 +1,12 @@
 <script lang="ts">
-import { applyAll, filterName, type FilterFunc, type FilterItem, type GenericItem } from "$lib/build/filters";
+import {
+    applyAll,
+    filterItemCompare,
+    filterName,
+    type FilterFunc,
+    type FilterItem,
+    type GenericItem,
+} from "$lib/build/filters";
 import { itemIconSize } from "$lib/constants";
 import { translatableString } from "$lib/utils/translatable-string";
 import { onMount, type Snippet } from "svelte";
@@ -47,9 +54,7 @@ const elementClass = (item: FilterItem): string =>
     "element" in item ? `element-border element-border-${item.element}` : "";
 
 const filteredItems = $derived(
-    applyAll(items, [...(filters?.filter((fn) => fn !== null) ?? []), filterName(search)]).toSorted((a, b) =>
-        translatableString(a.name).localeCompare(translatableString(b.name)),
-    ),
+    applyAll(items, [...(filters?.filter((fn) => fn !== null) ?? []), filterName(search)]).toSorted(filterItemCompare),
 );
 
 onMount(() => {

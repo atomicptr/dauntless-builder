@@ -38,3 +38,6 @@ export const filterPerkByPerkType = (perkType: PerkType) => (item: FilterItem) =
 
 export const filterArmourByPerk = (perkId: number) => (item: FilterItem) =>
     (item as Armour).stats.some((stats) => perkId in stats.perks);
+
+export const filterItemCompare = (a: FilterItem, b: FilterItem) =>
+    translatableString(a.name).localeCompare(translatableString(b.name));
