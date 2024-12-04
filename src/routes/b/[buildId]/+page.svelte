@@ -231,7 +231,7 @@ const gotoFinderPageUsingCurrentPerks = () => {
             onClick={onLanternCorePickerClicked}
         />
     </div>
-    <div class="w-1/3 p-4 flex flex-col gap-2">
+    <div class="w-full sm:w-1/3 p-4 flex flex-col gap-2">
         <PerkList build={data.build} />
 
         {#if isCopyButtonVisible()}

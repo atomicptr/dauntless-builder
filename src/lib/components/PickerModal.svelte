@@ -63,9 +63,9 @@ onMount(() => {
             {/each}
         </div>
 
-        <div class="sticky bottom-0 left-0 right-0 z-30 py-2 mt-4 bg-base-100 bg-opacity-90 backdrop-blur flex flex-row gap-2">
+        <div class="sticky bottom-0 left-0 right-0 z-30 py-2 mt-4 bg-base-100 bg-opacity-90 backdrop-blur flex flex-col sm:flex-row gap-2">
             {#if maxLevel !== undefined}
-                <div class="flex flex-row gap-2 items-center w-[30%]">
+                <div class="flex flex-row gap-2 items-center py-2 sm:py-0 w-full sm:w-[30%]">
                     <div>
                         Level
                     </div>
@@ -78,13 +78,15 @@ onMount(() => {
             
             <div class="grow"></div>
 
-            <button class="btn" onclick={onSelected ? () => onSelected(0, { level: currentLevel }) : undefined}>
-                Unselect item
-            </button>
+            <div class="flex flex-row gap-2">
+                <button class="btn grow" onclick={onSelected ? () => onSelected(0, { level: currentLevel }) : undefined}>
+                    Unselect item
+                </button>
 
-            <button class="btn" onclick={onClose}>
-                Cancel
-            </button>
+                <button class="btn grow" onclick={onClose}>
+                    Cancel
+                </button>
+            </div>
         </div>
     </div>
 

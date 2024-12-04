@@ -69,7 +69,7 @@ const build = $derived(deserialize(data.build.buildId).unwrapOr(empty()));
                         selected={build.lanternCore}
                     />
                 </div>
-                <div class="w-1/3 p-4">
+                <div class="w-full sm:w-1/3 p-4">
                     <PerkList build={build} />
                 </div>
             </div>
