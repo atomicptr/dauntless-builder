@@ -1,5 +1,5 @@
 <script lang="ts">
-import { afterNavigate, goto, onNavigate } from "$app/navigation";
+import { afterNavigate, goto } from "$app/navigation";
 import { page } from "$app/stores";
 import FinderItemFilter from "$lib/components/FinderItemFilter.svelte";
 import ExclamationTriangle from "$lib/components/icons/ExclamationTriangle.svelte";
@@ -12,7 +12,7 @@ import { onMount } from "svelte";
 
 const { data } = $props();
 
-const selectedPerks = $derived(Object.values(data.finderPageData.perks));
+const selectedPerks = $derived(data.finderPageData.perks);
 let disabledPerks = $state([] as number[]);
 
 const whitelist: WhitelistedItems = $derived({
