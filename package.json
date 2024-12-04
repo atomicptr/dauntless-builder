@@ -17,6 +17,7 @@
 		"@sveltejs/kit": "^2.9.0",
 		"@sveltejs/vite-plugin-svelte": "^4.0.1",
 		"@types/showdown": "^2.0.6",
+		"@vite-pwa/sveltekit": "^0.6.6",
 		"autoprefixer": "^10.4.20",
 		"daisyui": "^4.12.14",
 		"neverthrow": "^8.1.1",

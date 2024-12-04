@@ -73,9 +73,6 @@ onMount(() => {
     </button>
 {/snippet}
 
-{#snippet itemFiltersGeneric(filterData: FilterData, updateFilter?: (filterData: FilterData) => void)}
-{/snippet}
-
 <dialog class="modal bg-base-300/80" open>
     <div class="modal-box w-5xl max-w-5xl py-0">
         <div class="sticky top-0 left-0 right-0 z-30 pt-2 pb-4 bg-base-100 bg-opacity-90 backdrop-blur">
@@ -85,7 +82,9 @@ onMount(() => {
 
             <div class="flex flex-col gap-2">
                 <Search bind:value={search} />
-                {@render (itemFilters ?? itemFiltersGeneric)(filterData ?? {},onFilterDataUpdated)}
+                {#if itemFilters}
+                    {@render itemFilters(filterData ?? {},onFilterDataUpdated)}
+                {/if}
             </div>
         </div>
 

@@ -4,6 +4,8 @@ Create and share Dauntless builds with your friends!
 
 See also: [phalanx](https://github.com/atomicptr/phalanx)
 
+![Screenshot](.github/screenshot.png)
+
 ## Setup
 
 ```bash

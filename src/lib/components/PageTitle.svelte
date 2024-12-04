@@ -7,7 +7,7 @@ interface Props {
 
 const { title, hidden, remove }: Props = $props();
 
-const iconPath = "https://next.dauntless-builder.com/icon.png"; // TODO: change this after launch
+const iconPath = "https://www.dauntless-builder.com/icon.png";
 const metaDescription = "Create and share Dauntless builds with your friends!";
 </script>
 
