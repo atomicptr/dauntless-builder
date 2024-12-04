@@ -31,7 +31,7 @@ const disabled = $derived(onClick === undefined);
 {:else if !disabled}
     <div class="flex flex-row gap-2 min-h-20">
         <button class="card-btn grow" onclick={onClick}>
-            <LazyImage class={`${itemIconSize} ml-2`} src="/icons/lantern.png" alt="Lantern Core" />
+            <LazyImage class={`${itemIconSize} ml-2 light:invert`} src="/icons/lantern.png" alt="Lantern Core" />
             <div class="grow">
                 Select a lantern core
             </div>

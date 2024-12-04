@@ -42,7 +42,7 @@ const disabled = $derived(onArmourPieceClick === undefined);
 {:else if !disabled}
     <div class="flex flex-row gap-2 min-h-20">
         <button class="card-btn grow" onclick={onArmourPieceClick ? () => onArmourPieceClick(type) : undefined}>
-            <LazyImage src={`/icons/${type}.png`} alt={type} class={`${itemIconSize} ml-2 invert dark:invert-0`} />
+            <LazyImage src={`/icons/${type}.png`} alt={type} class={`${itemIconSize} ml-2 light:invert`} />
             <div class="grow">
                 Select an armour piece
             </div>

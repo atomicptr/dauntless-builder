@@ -368,7 +368,7 @@ const gotoFinderPageUsingCurrentPerks = () => {
         {#snippet listItem(item, _itemData, onclick)}
             <div class="flex flex-col w-full">
                 <button class={"card-btn grow"} {onclick}>
-                    <LazyImage class={`${itemIconSize} ml-2`} src={`/icons/${(item as Perk).type}.png`} alt={translatableString(item.name)} />
+                    <LazyImage class={`${itemIconSize} ml-2 light:invert`} src={`/icons/${(item as Perk).type}.png`} alt={translatableString(item.name)} />
                     <div class="grow">
                         {translatableString(item.name)}
                     </div>

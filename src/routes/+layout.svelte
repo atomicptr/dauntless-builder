@@ -22,7 +22,7 @@ afterNavigate(() => {
     <title>Dauntless Builder</title>
 </svelte:head>
 
-<main>
+<main data-theme="dark">
     <div class="drawer lg:drawer-open">
         <input id="drawer" type="checkbox" class="drawer-toggle" checked={$drawerOpen} />
         

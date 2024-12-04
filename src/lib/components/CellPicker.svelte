@@ -18,9 +18,9 @@ const disabled = $derived(onClick === undefined);
 
 <button class="card-btn sm:w-24 grow flex flex-col" onclick={onClick ? () => onClick(type, index) : undefined} {disabled}>
     {#if perk}
-        <LazyImage class="w-8 h-8" src={`/icons/${perk.type}.png`} alt={translatableString(perk.name)} />
+        <LazyImage class="w-8 h-8 light:invert" src={`/icons/${perk.type}.png`} alt={translatableString(perk.name)} />
         <div>{translatableString(perk.name)}</div>
     {:else}
-        <LazyImage class="w-8 h-8" src={`/icons/prismatic.png`} alt="None" />
+        <LazyImage class="w-8 h-8 light:invert" src={`/icons/prismatic.png`} alt="None" />
     {/if}
 </button>

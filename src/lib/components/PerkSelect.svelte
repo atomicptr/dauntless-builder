@@ -39,7 +39,7 @@ const perkGroups = Object.groupBy(Object.values($page.data.perks) as Perk[], (pe
         {#each Object.keys(perkGroups) as perkGroupName}
             <div class="flex flex-col gap-2 grow basis-0">
                 <div class="flex flex-col items-center gap-2">
-                    <img class="w-8 h-8" src={`/icons/${perkGroupName}.png`} alt={perkGroupName} />
+                    <img class="w-8 h-8 light:invert" src={`/icons/${perkGroupName}.png`} alt={perkGroupName} />
                     <div>{perkGroupName[0].toUpperCase() + perkGroupName.slice(1)}</div>
                 </div>
 
