@@ -31,7 +31,7 @@ import ValuesText from "$lib/components/ValuesText.svelte";
 import WeaponPicker from "$lib/components/WeaponPicker.svelte";
 import WeaponPower from "$lib/components/WeaponPower.svelte";
 import { itemIconSize } from "$lib/constants";
-import { armourStatsForLevel, getCellPerks, mergePerksArray, sortPerkSetByName } from "$lib/data/levels";
+import { armourStatsForLevel, getCellPerks, mergePerksArray } from "$lib/data/levels";
 import {
     type Armour,
     type ArmourType,

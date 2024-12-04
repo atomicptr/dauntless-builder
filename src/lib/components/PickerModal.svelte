@@ -46,7 +46,11 @@ const {
 const elementClass = (item: FilterItem): string =>
     "element" in item ? `element-border element-border-${item.element}` : "";
 
-const filteredItems = $derived(applyAll(items, [...(filters?.filter((fn) => fn !== null) ?? []), filterName(search)]));
+const filteredItems = $derived(
+    applyAll(items, [...(filters?.filter((fn) => fn !== null) ?? []), filterName(search)]).toSorted((a, b) =>
+        translatableString(a.name).localeCompare(translatableString(b.name)),
+    ),
+);
 
 onMount(() => {
     if (maxLevel !== undefined) {
