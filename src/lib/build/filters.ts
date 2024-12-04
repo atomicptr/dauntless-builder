@@ -35,3 +35,6 @@ export const filterElementType = (element: Element) => (item: FilterItem) =>
     (item as Weapon | Armour).element === element;
 
 export const filterPerkByPerkType = (perkType: PerkType) => (item: FilterItem) => (item as Perk).type === perkType;
+
+export const filterArmourByPerk = (perkId: number) => (item: FilterItem) =>
+    (item as Armour).stats.some((stats) => perkId in stats.perks);

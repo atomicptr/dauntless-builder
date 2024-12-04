@@ -3,6 +3,7 @@ import { goto } from "$app/navigation";
 import { page } from "$app/stores";
 import { empty, serialize } from "$lib/build/Build.js";
 import {
+    filterArmourByPerk,
     filterArmourType,
     filterElementType,
     filterPerkByPerkType,
@@ -14,6 +15,7 @@ import ArmourPerks from "$lib/components/ArmourPerks.svelte";
 import ArmourPicker from "$lib/components/ArmourPicker.svelte";
 import ArmourResistance from "$lib/components/ArmourResistance.svelte";
 import BuildTitle from "$lib/components/BuildTitle.svelte";
+import ArmourPerkFilter from "$lib/components/filters/ArmourPerkFilter.svelte";
 import CellPerkTypeFilter from "$lib/components/filters/CellPerkTypeFilter.svelte";
 import ElementFilter from "$lib/components/filters/ElementFilter.svelte";
 import WeaponTypeFilter from "$lib/components/filters/WeaponTypeFilter.svelte";
@@ -79,7 +81,7 @@ const onArmourPieceClickerClicked = (type: ArmourType) => {
     dialog = {
         open: "armour",
         initialLevel: data.build[type].level,
-        filters: { type, element: null },
+        filters: { type, element: null, perkType: null },
     };
 };
 
@@ -306,7 +308,8 @@ const gotoFinderPageUsingCurrentPerks = () => {
         items={Object.values(data.armours)}
         filters={[
             filterArmourType(dialog.filters.type as ArmourType),
-            dialog.filters.element ? filterElementType(dialog.filters.element as Element) : null
+            dialog.filters.perkType ? filterArmourByPerk(dialog.filters.perkType as number) : null,
+            dialog.filters.element ? filterElementType(dialog.filters.element as Element) : null,
         ]}
         filterData={dialog.filters}
         onSelected={onItemSelected}
@@ -329,6 +332,7 @@ const gotoFinderPageUsingCurrentPerks = () => {
             </div>
         {/snippet}
         {#snippet itemFilters(filterData: FilterData, updateFilter?: (filterData: FilterData) => void)}
+            <ArmourPerkFilter {filterData} {updateFilter} />
             <ElementFilter {filterData} {updateFilter} />
         {/snippet}
     </PickerModal>
