@@ -84,8 +84,15 @@ const onLanternCorePickerClicked = () => {
 const onItemSelected = (id: number, itemData: ListItemData) => {
     switch (dialog.open) {
         case "weapon":
+            const other = dialog.filters.picker === 1 ? 2 : 1;
+
+            // if the weapon we just selected is in the other slot
+            if (data.build[`weapon${other}`].id === id) {
+                data.build[`weapon${other}`].id = data.build[`weapon${dialog.filters.picker as 1 | 2}`].id;
+                data.build[`weapon${other}`].talents = data.build[`weapon${dialog.filters.picker as 1 | 2}`].talents;
+            }
+
             data.build[`weapon${dialog.filters.picker as 1 | 2}`] = {
-                // TODO: if weapon is already in other slot move
                 id,
                 level: itemData.level ?? weaponMaxLevel,
                 talents: talentEmpty(),
