@@ -75,7 +75,11 @@ export interface Weapon {
     talents: WeaponTalent[];
 }
 
-export type WeaponAbility = {};
+export interface WeaponAbility {
+    name: TranslatableString;
+    description: TranslatableString;
+    values: ValuesType[];
+}
 
 export interface WeaponTalent {
     name: TranslatableString | null;

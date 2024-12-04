@@ -7,6 +7,7 @@ import LazyImage from "./LazyImage.svelte";
 import Level from "./Level.svelte";
 import TalentList from "./TalentList.svelte";
 import TalentPicker from "./TalentPicker.svelte";
+import WeaponAbilityList from "./WeaponAbilityList.svelte";
 import WeaponPower from "./WeaponPower.svelte";
 
 interface WeaponPickerProps {
@@ -34,7 +35,10 @@ const disabled = $derived(onWeaponClick === undefined);
         <TalentPicker talents={selected.talents} onClick={onTalentClick} />
     </div>
 
-    <TalentList {selected} />
+    <div class="flex flex-col gap-2">
+        <WeaponAbilityList {selected} />
+        <TalentList {selected} />
+    </div>
 {:else if !disabled}
     <div class="flex flex-row gap-2 min-h-20">
         <button class="card-btn grow" onclick={onWeaponClick}>

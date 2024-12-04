@@ -14,7 +14,10 @@ const available = $derived(selected.talents.some((options) => options.some((v) =
 </script>
 
 {#if available}
-    <div class="my-4">
+    <div>
+        <div class="text-xl mb-4">
+            Talents
+        </div>
         {#each selected.talents as row, rowIndex}
             {#if selected.talents[rowIndex].some(v => v)}
                 <ul class="list-disc pl-4">
