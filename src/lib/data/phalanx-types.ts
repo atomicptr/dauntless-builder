@@ -103,6 +103,7 @@ export interface WeaponTalentOptionCustom {
 }
 
 export type PerkType = "alacrity" | "brutality" | "finesse" | "fortitude" | "insight";
+export const perkTypeValues: PerkType[] = ["alacrity", "brutality", "finesse", "fortitude", "insight"];
 
 export interface Perk {
     id: number;

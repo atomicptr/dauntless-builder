@@ -6,29 +6,47 @@ import { onMount, type Snippet } from "svelte";
 import LazyImage from "./LazyImage.svelte";
 import Search from "./Search.svelte";
 
+export interface FilterData {
+    [item: string]: string | number | null;
+}
+
 export interface ListItemData {
     level?: number;
 }
 
 interface PickerModalProps {
     items: FilterItem[];
-    filters?: FilterFunc[];
+    filters?: (FilterFunc | null)[];
+    filterData?: FilterData;
     onSelected?: (id: number, itemData: ListItemData) => void;
     onClose?: () => void;
-    listItem?: Snippet<[FilterItem, ListItemData, (() => void) | undefined]>;
+    onFilterDataUpdated?: (filterData: FilterData) => void;
     initialLevel?: number;
     maxLevel?: number;
+    listItem?: Snippet<[FilterItem, ListItemData, (() => void) | undefined]>;
+    itemFilters?: Snippet<[FilterData, ((filterData: FilterData) => void) | undefined]>;
 }
 
 let search = $state("");
 let currentLevel = $state(1);
 
-const { items, filters, onSelected, onClose, listItem, initialLevel, maxLevel }: PickerModalProps = $props();
+const {
+    items,
+    filters,
+    filterData,
+    onSelected,
+    onClose,
+    onFilterDataUpdated,
+    initialLevel,
+    maxLevel,
+    listItem,
+    itemFilters,
+}: PickerModalProps = $props();
 
 const elementClass = (item: FilterItem): string =>
     "element" in item ? `element-border element-border-${item.element}` : "";
 
-const filteredItems = $derived(applyAll(items, [...(filters ?? []), filterName(search)]));
+const filteredItems = $derived(applyAll(items, [...(filters?.filter((fn) => fn !== null) ?? []), filterName(search)]));
 
 onMount(() => {
     if (maxLevel !== undefined) {
@@ -46,13 +64,20 @@ onMount(() => {
     </button>
 {/snippet}
 
+{#snippet itemFiltersGeneric(filterData: FilterData, updateFilter?: (filterData: FilterData) => void)}
+{/snippet}
+
 <dialog class="modal bg-base-300/80" open>
     <div class="modal-box w-5xl max-w-5xl py-0">
         <div class="sticky top-0 left-0 right-0 z-30 pt-2 pb-4 bg-base-100 bg-opacity-90 backdrop-blur">
             <div class="flex flex-row justify-end mb-4">
                 <button class="btn btn-sm btn-circle btn-ghost" onclick={onClose ? () => onClose() : undefined}>✕</button>
             </div>
-            <Search bind:value={search} />
+
+            <div class="flex flex-col gap-2">
+                <Search bind:value={search} />
+                {@render (itemFilters ?? itemFiltersGeneric)(filterData ?? {},onFilterDataUpdated)}
+            </div>
         </div>
 
         <div class="flex flex-col gap-2 mt-4">

@@ -2,7 +2,7 @@
 import { goto } from "$app/navigation";
 import { page } from "$app/stores";
 import { empty, serialize } from "$lib/build/Build.js";
-import { filterArmourType, type FilterItem } from "$lib/build/filters";
+import { filterArmourType, filterPerkByPerkType, type FilterItem } from "$lib/build/filters";
 import { talentEmpty, talentSet } from "$lib/build/talents.js";
 import ArmourPerks from "$lib/components/ArmourPerks.svelte";
 import ArmourPicker from "$lib/components/ArmourPicker.svelte";
@@ -14,14 +14,22 @@ import LanternCoreStats from "$lib/components/LanternCoreStats.svelte";
 import LazyImage from "$lib/components/LazyImage.svelte";
 import Level from "$lib/components/Level.svelte";
 import PerkList from "$lib/components/PerkList.svelte";
-import PickerModal, { type ListItemData } from "$lib/components/PickerModal.svelte";
+import PickerModal, { type FilterData, type ListItemData } from "$lib/components/PickerModal.svelte";
 import TalentModal from "$lib/components/TalentModal.svelte";
 import ValuesText from "$lib/components/ValuesText.svelte";
 import WeaponPicker from "$lib/components/WeaponPicker.svelte";
 import WeaponPower from "$lib/components/WeaponPower.svelte";
 import { itemIconSize } from "$lib/constants";
 import { armourStatsForLevel, getCellPerks, mergePerksArray, sortPerkSetByName } from "$lib/data/levels";
-import type { Armour, ArmourType, LanternCore, Perk, Weapon } from "$lib/data/phalanx-types.js";
+import {
+    perkTypeValues,
+    type Armour,
+    type ArmourType,
+    type LanternCore,
+    type Perk,
+    type PerkType,
+    type Weapon,
+} from "$lib/data/phalanx-types.js";
 import { armourMaxLevel, weaponMaxLevel } from "$lib/data/static-data.js";
 import { finderDefaultData, finderPageDataSerialize } from "$lib/finder/initial";
 import { translatableString } from "$lib/utils/translatable-string.js";
@@ -31,9 +39,7 @@ const { data } = $props();
 interface DialogProps {
     open: "weapon" | "weapon_talent" | "armour" | "lantern_core" | "cells" | null;
     initialLevel?: number;
-    filters: {
-        [name: string]: string | number;
-    };
+    filters: FilterData;
 }
 
 let dialog: DialogProps = $state({ open: null, filters: {} });
@@ -70,7 +76,7 @@ const onArmourPieceClickerClicked = (type: ArmourType) => {
 const onArmourCellPickerClicked = (type: ArmourType, index: number) => {
     dialog = {
         open: "cells",
-        filters: { type, index },
+        filters: { type, index, perkType: null },
     };
 };
 
@@ -79,6 +85,10 @@ const onLanternCorePickerClicked = () => {
         open: "lantern_core",
         filters: {},
     };
+};
+
+const onFilterUpdated = (newFilterData: FilterData) => {
+    dialog.filters = { ...dialog.filters, ...newFilterData };
 };
 
 const onItemSelected = (id: number, itemData: ListItemData) => {
@@ -247,8 +257,10 @@ const gotoFinderPageUsingCurrentPerks = () => {
 {#if dialog.open === "weapon"}
     <PickerModal
         items={Object.values(data.weapons)}
+        filterData={dialog.filters}
         onSelected={onItemSelected}
         onClose={onDialogClosed}
+        onFilterDataUpdated={onFilterUpdated}
         initialLevel={dialog.initialLevel}
         maxLevel={weaponMaxLevel}
     >
@@ -277,8 +289,10 @@ const gotoFinderPageUsingCurrentPerks = () => {
         filters={[
             filterArmourType(dialog.filters.type as ArmourType),
         ]}
+        filterData={dialog.filters}
         onSelected={onItemSelected}
         onClose={onDialogClosed}
+        onFilterDataUpdated={onFilterUpdated}
         initialLevel={dialog.initialLevel}
         maxLevel={armourMaxLevel}
     >
@@ -317,8 +331,13 @@ const gotoFinderPageUsingCurrentPerks = () => {
 {:else if dialog.open === "cells"}
     <PickerModal
         items={Object.values(data.perks)}
+        filters={[
+            dialog.filters.perkType ? filterPerkByPerkType(dialog.filters.perkType as PerkType) : null
+        ]}
+        filterData={dialog.filters}
         onSelected={onItemSelected}
         onClose={onDialogClosed}
+        onFilterDataUpdated={onFilterUpdated}
     >
         {#snippet listItem(item, _itemData, onclick)}
             <div class="flex flex-col w-full">
@@ -330,6 +349,16 @@ const gotoFinderPageUsingCurrentPerks = () => {
                 </button>
 
                 <ValuesText class="my-4" text={(item as Perk).effect} values={(item as Perk).values} classOverwrite={{p: ""}} />
+            </div>
+        {/snippet}
+
+        {#snippet itemFilters(filterData: FilterData, updateFilter?: (filterData: FilterData) => void)}
+            <div class="join w-full">
+                {#each perkTypeValues as perkType}
+                    <button class="btn join-item grow hover:btn-secondary" class:btn-primary={filterData.perkType === perkType} onclick={updateFilter ? () => updateFilter({perkType: filterData.perkType === perkType ? null : perkType}) : undefined}>
+                        <LazyImage class="w-6 h-6" src={`/icons/${perkType}.png`} alt={perkType} />
+                    </button>
+                {/each}
             </div>
         {/snippet}
     </PickerModal>

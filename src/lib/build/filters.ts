@@ -4,6 +4,7 @@ import type {
     Element,
     LanternCore,
     Perk,
+    PerkType,
     TranslatableString,
     Weapon,
     WeaponType,
@@ -32,3 +33,5 @@ export const filterArmourType = (armourType: ArmourType) => (item: FilterItem) =
 
 export const filterElementType = (element: Element) => (item: FilterItem) =>
     (item as Weapon | Armour).element === element;
+
+export const filterPerkByPerkType = (perkType: PerkType) => (item: FilterItem) => (item as Perk).type === perkType;
