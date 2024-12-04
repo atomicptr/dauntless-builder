@@ -34,6 +34,7 @@ export type ArmourType = "head" | "torso" | "arms" | "legs";
 export const armourTypeValues: ArmourType[] = ["head", "torso", "arms", "legs"];
 
 export type Element = "blaze" | "frost" | "shock" | "terra" | "umbral" | "radiant";
+export const elementValues: Element[] = ["blaze", "frost", "shock", "terra", "umbral", "radiant"];
 
 export type Stat = "might" | "critical" | "speed" | "vitality" | "defense" | "endurance";
 

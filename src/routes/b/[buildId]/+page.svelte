@@ -2,12 +2,21 @@
 import { goto } from "$app/navigation";
 import { page } from "$app/stores";
 import { empty, serialize } from "$lib/build/Build.js";
-import { filterArmourType, filterPerkByPerkType, filterWeaponType, type FilterItem } from "$lib/build/filters";
+import {
+    filterArmourType,
+    filterElementType,
+    filterPerkByPerkType,
+    filterWeaponType,
+    type FilterItem,
+} from "$lib/build/filters";
 import { talentEmpty, talentSet } from "$lib/build/talents.js";
 import ArmourPerks from "$lib/components/ArmourPerks.svelte";
 import ArmourPicker from "$lib/components/ArmourPicker.svelte";
 import ArmourResistance from "$lib/components/ArmourResistance.svelte";
 import BuildTitle from "$lib/components/BuildTitle.svelte";
+import CellPerkTypeFilter from "$lib/components/filters/CellPerkTypeFilter.svelte";
+import ElementFilter from "$lib/components/filters/ElementFilter.svelte";
+import WeaponTypeFilter from "$lib/components/filters/WeaponTypeFilter.svelte";
 import BuildFinderIcon from "$lib/components/icons/BuildFinderIcon.svelte";
 import LanternCorePicker from "$lib/components/LanternCorePicker.svelte";
 import LanternCoreStats from "$lib/components/LanternCoreStats.svelte";
@@ -22,7 +31,6 @@ import WeaponPower from "$lib/components/WeaponPower.svelte";
 import { itemIconSize } from "$lib/constants";
 import { armourStatsForLevel, getCellPerks, mergePerksArray, sortPerkSetByName } from "$lib/data/levels";
 import {
-    perkTypeValues,
     type Armour,
     type ArmourType,
     type LanternCore,
@@ -30,7 +38,7 @@ import {
     type PerkType,
     type Weapon,
     type WeaponType,
-    weaponTypeValues,
+    type Element,
 } from "$lib/data/phalanx-types.js";
 import { armourMaxLevel, weaponMaxLevel } from "$lib/data/static-data.js";
 import { finderDefaultData, finderPageDataSerialize } from "$lib/finder/initial";
@@ -56,7 +64,7 @@ const onWeaponPickerClicked = (picker: 1 | 2) => () => {
     dialog = {
         open: "weapon",
         initialLevel: data.build[`weapon${picker}`].level,
-        filters: { picker, weaponType: null },
+        filters: { picker, weaponType: null, element: null },
     };
 };
 
@@ -71,7 +79,7 @@ const onArmourPieceClickerClicked = (type: ArmourType) => {
     dialog = {
         open: "armour",
         initialLevel: data.build[type].level,
-        filters: { type },
+        filters: { type, element: null },
     };
 };
 
@@ -194,7 +202,7 @@ const gotoFinderPageUsingCurrentPerks = () => {
 
     finderData.perks = Object.entries(perks)
         .filter(([perkId, amount]) => $page.data.perks[perkId].threshold <= amount)
-        .map(([perkId, amount]) => Number(perkId));
+        .map(([perkId, _]) => Number(perkId));
 
     goto(`/b/finder/${finderPageDataSerialize(finderData)}`);
 };
@@ -260,7 +268,8 @@ const gotoFinderPageUsingCurrentPerks = () => {
     <PickerModal
         items={Object.values(data.weapons)}
         filters={[
-            dialog.filters.weaponType ? filterWeaponType(dialog.filters.weaponType as WeaponType) : null
+            dialog.filters.weaponType ? filterWeaponType(dialog.filters.weaponType as WeaponType) : null,
+            dialog.filters.element ? filterElementType(dialog.filters.element as Element) : null
         ]}
         filterData={dialog.filters}
         onSelected={onItemSelected}
@@ -282,13 +291,8 @@ const gotoFinderPageUsingCurrentPerks = () => {
             </div>
         {/snippet}
         {#snippet itemFilters(filterData: FilterData, updateFilter?: (filterData: FilterData) => void)}
-            <div class="join w-full">
-                {#each weaponTypeValues as weaponType}
-                    <button class="btn join-item grow hover:btn-secondary" class:btn-primary={filterData.weaponType === weaponType} onclick={updateFilter ? () => updateFilter({weaponType: filterData.weaponType === weaponType ? null : weaponType}) : undefined}>
-                        <LazyImage class="w-6 h-6" src={`/icons/${weaponType}.png`} alt={weaponType} />
-                    </button>
-                {/each}
-            </div>
+            <WeaponTypeFilter {filterData} {updateFilter} />
+            <ElementFilter {filterData} {updateFilter} />
         {/snippet}
     </PickerModal>
 {:else if dialog.open === "weapon_talent"}
@@ -302,6 +306,7 @@ const gotoFinderPageUsingCurrentPerks = () => {
         items={Object.values(data.armours)}
         filters={[
             filterArmourType(dialog.filters.type as ArmourType),
+            dialog.filters.element ? filterElementType(dialog.filters.element as Element) : null
         ]}
         filterData={dialog.filters}
         onSelected={onItemSelected}
@@ -322,6 +327,9 @@ const gotoFinderPageUsingCurrentPerks = () => {
                 </button>
                 <ArmourPerks selected={{id: item.id, level: armourMaxLevel, cells: data.build[(item as Armour).type].cells}} />
             </div>
+        {/snippet}
+        {#snippet itemFilters(filterData: FilterData, updateFilter?: (filterData: FilterData) => void)}
+            <ElementFilter {filterData} {updateFilter} />
         {/snippet}
     </PickerModal>
 {:else if dialog.open === "lantern_core"}
@@ -367,13 +375,7 @@ const gotoFinderPageUsingCurrentPerks = () => {
         {/snippet}
 
         {#snippet itemFilters(filterData: FilterData, updateFilter?: (filterData: FilterData) => void)}
-            <div class="join w-full">
-                {#each perkTypeValues as perkType}
-                    <button class="btn join-item grow hover:btn-secondary" class:btn-primary={filterData.perkType === perkType} onclick={updateFilter ? () => updateFilter({perkType: filterData.perkType === perkType ? null : perkType}) : undefined}>
-                        <LazyImage class="w-6 h-6" src={`/icons/${perkType}.png`} alt={perkType} />
-                    </button>
-                {/each}
-            </div>
+            <CellPerkTypeFilter {filterData} {updateFilter} />
         {/snippet}
     </PickerModal>
 {/if}
