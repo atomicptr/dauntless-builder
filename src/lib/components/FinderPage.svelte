@@ -92,7 +92,7 @@ $effect(() => {
         },
     });
 
-    goto(`/b/finder/${finderPageDataSerialize(packData())}`, {noScroll: true});
+    goto(`/b/finder/${finderPageDataSerialize(packData())}`, { noScroll: true });
 });
 </script>
 

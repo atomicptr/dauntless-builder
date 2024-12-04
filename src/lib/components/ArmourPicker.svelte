@@ -24,7 +24,7 @@ const disabled = $derived(onArmourPieceClick === undefined);
 </script>
 
 {#if armour}
-    <div class="flex flex-col sm:flex-row gap-2 min-h-20">
+    <div class="flex flex-col sm:flex-row gap-2 min-h-20 flex-wrap">
         <button class="card-btn grow element-border element-border-{armour.element}" onclick={onArmourPieceClick ? () => onArmourPieceClick(type) : undefined} {disabled}>
             <LazyImage class={`${itemIconSize} ml-2`} src={icon} alt={translatableString(armour.name)} />
             <div class="grow">

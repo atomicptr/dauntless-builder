@@ -8,13 +8,11 @@ import ArmourPerks from "$lib/components/ArmourPerks.svelte";
 import ArmourPicker from "$lib/components/ArmourPicker.svelte";
 import ArmourResistance from "$lib/components/ArmourResistance.svelte";
 import BuildTitle from "$lib/components/BuildTitle.svelte";
-import FinderItemFilter from "$lib/components/FinderItemFilter.svelte";
 import BuildFinderIcon from "$lib/components/icons/BuildFinderIcon.svelte";
 import LanternCorePicker from "$lib/components/LanternCorePicker.svelte";
 import LanternCoreStats from "$lib/components/LanternCoreStats.svelte";
 import LazyImage from "$lib/components/LazyImage.svelte";
 import Level from "$lib/components/Level.svelte";
-import PageTitle from "$lib/components/PageTitle.svelte";
 import PerkList from "$lib/components/PerkList.svelte";
 import PickerModal from "$lib/components/PickerModal.svelte";
 import TalentModal from "$lib/components/TalentModal.svelte";
@@ -27,6 +25,7 @@ import type { Armour, ArmourType, LanternCore, Perk, Weapon } from "$lib/data/ph
 import { armourMaxLevel, weaponMaxLevel } from "$lib/data/static-data.js";
 import { finderDefaultData, finderPageDataSerialize } from "$lib/finder/initial";
 import { translatableString } from "$lib/utils/translatable-string.js";
+import { match } from "ts-pattern";
 
 const { data } = $props();
 
@@ -42,7 +41,7 @@ let dialog: DialogProps = $state({ open: null, filters: {} });
 const updateBuild = () => {
     const buildId = serialize(data.build).unwrapOr(empty());
     console.log(buildId, data.build);
-    goto(`/b/${buildId}`, {noScroll: true});
+    goto(`/b/${buildId}`, { noScroll: true });
 };
 
 const onWeaponPickerClicked = (picker: 1 | 2) => () => {
@@ -91,10 +90,12 @@ const onItemSelected = (id: number) => {
             };
             break;
         case "armour":
+            const prevCells = data.build[dialog.filters.type as ArmourType].cells;
+
             data.build[dialog.filters.type as ArmourType] = {
                 id,
                 level: armourMaxLevel, // TODO: add level picker
-                cells: Array(data.armours[id].cell_slots).fill(0), // TODO: keep cells selected previously
+                cells: prevCells,
             };
             break;
         case "lantern_core":

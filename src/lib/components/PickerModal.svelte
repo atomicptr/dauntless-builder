@@ -34,7 +34,7 @@ const filteredItems = $derived(applyAll(items, [...(filters ?? []), filterName(s
 {/snippet}
 
 <dialog class="modal bg-base-300/80" open>
-    <div class="modal-box w-5xl max-w-5xl pt-0">
+    <div class="modal-box w-5xl max-w-5xl py-0">
         <div class="sticky top-0 left-0 right-0 z-30 pt-2 pb-4 bg-base-100 bg-opacity-90 backdrop-blur">
             <div class="flex flex-row justify-end mb-4">
                 <button class="btn btn-sm btn-circle btn-ghost" onclick={onClose ? () => onClose() : undefined}>✕</button>
@@ -46,6 +46,18 @@ const filteredItems = $derived(applyAll(items, [...(filters ?? []), filterName(s
             {#each filteredItems as item}
                 {@render (listItem ?? listItemGeneric)(item, onSelected ? () => onSelected(item.id) : undefined)}
             {/each}
+        </div>
+
+        <div class="sticky bottom-0 left-0 right-0 z-30 py-2 mt-4 bg-base-100 bg-opacity-90 backdrop-blur flex flex-row gap-2">
+            <div class="grow"></div>
+
+            <button class="btn" onclick={onSelected ? () => onSelected(0) : undefined}>
+                Unselect item
+            </button>
+
+            <button class="btn" onclick={onClose}>
+                Cancel
+            </button>
         </div>
     </div>
 
