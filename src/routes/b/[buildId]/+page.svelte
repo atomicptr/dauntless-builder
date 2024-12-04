@@ -14,7 +14,7 @@ import LanternCoreStats from "$lib/components/LanternCoreStats.svelte";
 import LazyImage from "$lib/components/LazyImage.svelte";
 import Level from "$lib/components/Level.svelte";
 import PerkList from "$lib/components/PerkList.svelte";
-import PickerModal from "$lib/components/PickerModal.svelte";
+import PickerModal, { type ListItemData } from "$lib/components/PickerModal.svelte";
 import TalentModal from "$lib/components/TalentModal.svelte";
 import ValuesText from "$lib/components/ValuesText.svelte";
 import WeaponPicker from "$lib/components/WeaponPicker.svelte";
@@ -25,12 +25,12 @@ import type { Armour, ArmourType, LanternCore, Perk, Weapon } from "$lib/data/ph
 import { armourMaxLevel, weaponMaxLevel } from "$lib/data/static-data.js";
 import { finderDefaultData, finderPageDataSerialize } from "$lib/finder/initial";
 import { translatableString } from "$lib/utils/translatable-string.js";
-import { match } from "ts-pattern";
 
 const { data } = $props();
 
 interface DialogProps {
     open: "weapon" | "weapon_talent" | "armour" | "lantern_core" | "cells" | null;
+    initialLevel?: number;
     filters: {
         [name: string]: string | number;
     };
@@ -47,6 +47,7 @@ const updateBuild = () => {
 const onWeaponPickerClicked = (picker: 1 | 2) => () => {
     dialog = {
         open: "weapon",
+        initialLevel: data.build[`weapon${picker}`].level,
         filters: { picker },
     };
 };
@@ -61,6 +62,7 @@ const onWeaponTalentPickerClicked = (picker: 1 | 2) => () => {
 const onArmourPieceClickerClicked = (type: ArmourType) => {
     dialog = {
         open: "armour",
+        initialLevel: data.build[type].level,
         filters: { type },
     };
 };
@@ -79,14 +81,14 @@ const onLanternCorePickerClicked = () => {
     };
 };
 
-const onItemSelected = (id: number) => {
+const onItemSelected = (id: number, itemData: ListItemData) => {
     switch (dialog.open) {
         case "weapon":
             data.build[`weapon${dialog.filters.picker as 1 | 2}`] = {
                 // TODO: if weapon is already in other slot move
                 id,
-                level: weaponMaxLevel, // TODO: add level picker
-                talents: talentEmpty(), // TODO: add talents
+                level: itemData.level ?? weaponMaxLevel,
+                talents: talentEmpty(),
             };
             break;
         case "armour":
@@ -94,7 +96,7 @@ const onItemSelected = (id: number) => {
 
             data.build[dialog.filters.type as ArmourType] = {
                 id,
-                level: armourMaxLevel, // TODO: add level picker
+                level: itemData.level ?? armourMaxLevel,
                 cells: prevCells,
             };
             break;
@@ -240,16 +242,18 @@ const gotoFinderPageUsingCurrentPerks = () => {
         items={Object.values(data.weapons)}
         onSelected={onItemSelected}
         onClose={onDialogClosed}
+        initialLevel={dialog.initialLevel}
+        maxLevel={weaponMaxLevel}
     >
-        {#snippet listItem(item, onclick)}
+        {#snippet listItem(item, itemData, onclick)}
             <div class="flex flex-col w-full">
                 <button class={"card-btn grow " + elementClass(item)} {onclick}>
                     <LazyImage class={`${itemIconSize} ml-2`} src={(item as Weapon).icon ?? `/icons/${(item as Weapon).type}.png`} alt={translatableString(item.name)} />
                     <div class="grow">
                         {translatableString(item.name)}
-                        <Level level={weaponMaxLevel} />
+                        <Level level={itemData.level ?? weaponMaxLevel} />
                     </div>
-                    <WeaponPower level={weaponMaxLevel} element={(item as Armour).element} />
+                    <WeaponPower level={itemData.level ?? weaponMaxLevel} element={(item as Armour).element} />
                 </button>
             </div>
         {/snippet}
@@ -268,16 +272,18 @@ const gotoFinderPageUsingCurrentPerks = () => {
         ]}
         onSelected={onItemSelected}
         onClose={onDialogClosed}
+        initialLevel={dialog.initialLevel}
+        maxLevel={armourMaxLevel}
     >
-        {#snippet listItem(item, onclick)}
+        {#snippet listItem(item, itemData, onclick)}
             <div class="flex flex-col w-full">
                 <button class={"card-btn grow " + elementClass(item)} {onclick}>
                     <LazyImage class={`${itemIconSize} ml-2`} src={(item as Armour).icon ?? `/icons/${(item as Armour).type}.png`} alt={translatableString(item.name)} />
                     <div class="grow">
                         {translatableString(item.name)}
-                        <Level level={armourMaxLevel} />
+                        <Level level={itemData.level ?? armourMaxLevel} />
                     </div>
-                    <ArmourResistance level={armourMaxLevel} element={(item as Armour).element} />
+                    <ArmourResistance level={itemData.level ?? armourMaxLevel} element={(item as Armour).element} />
                 </button>
                 <ArmourPerks selected={{id: item.id, level: armourMaxLevel, cells: data.build[(item as Armour).type].cells}} />
             </div>
@@ -289,7 +295,7 @@ const gotoFinderPageUsingCurrentPerks = () => {
         onSelected={onItemSelected}
         onClose={onDialogClosed}
     >
-        {#snippet listItem(item, onclick)}
+        {#snippet listItem(item, _itemData, onclick)}
             <div class="flex flex-col w-full">
                 <button class={"card-btn grow"} {onclick}>
                     <LazyImage class={`${itemIconSize} ml-2`} src={(item as LanternCore).icon ?? `/icons/lantern.png`} alt={translatableString(item.name)} />
@@ -307,7 +313,7 @@ const gotoFinderPageUsingCurrentPerks = () => {
         onSelected={onItemSelected}
         onClose={onDialogClosed}
     >
-        {#snippet listItem(item, onclick)}
+        {#snippet listItem(item, _itemData, onclick)}
             <div class="flex flex-col w-full">
                 <button class={"card-btn grow"} {onclick}>
                     <LazyImage class={`${itemIconSize} ml-2`} src={`/icons/${(item as Perk).type}.png`} alt={translatableString(item.name)} />
