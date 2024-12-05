@@ -15,6 +15,6 @@ const { perkId, children, ...rest }: Props = $props();
 const perk = $derived($page.data.perks[perkId]);
 </script>
 
-<div class={"tooltip tooltip-bottom " + rest.class} data-tip={renderTemplate(translatableString(perk.effect), perk.values)}>
+<div class={"sm:tooltip sm:tooltip-bottom " + rest.class} data-tip={renderTemplate(translatableString(perk.effect), perk.values)}>
     {@render children()}
 </div>

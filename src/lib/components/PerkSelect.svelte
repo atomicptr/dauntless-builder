@@ -48,14 +48,17 @@ const perkGroups = Object.groupBy(Object.values($page.data.perks) as Perk[], (pe
                         {#if translatableString(perk.name).toLowerCase().indexOf(search.toLowerCase()) >= 0}
                             <PerkTooltip perkId={perk.id} class="flex flex-col">
                                 <button
-                                    class="card-btn disabled:hidden sm:disabled:flex flex-col" 
+                                    class="card-btn disabled:hidden sm:disabled:flex flex-col w-full" 
                                     class:btn-primary={perks.indexOf(perk.id) > -1}
                                     onclick={onSelect ? () => onSelect(perk.id) : undefined}
                                     disabled={(disabledPerks ?? []).indexOf(perk.id) > -1}
                                 >
                                     {translatableString(perk.name)}
 
-                                    <div class="text-xs text-base-content/75 mt-2 block sm:hidden">
+                                    <div
+                                        class="text-xs text-base-content/75 mt-2 block sm:hidden"
+                                        class:text-primary-content={perks.indexOf(perk.id) > -1}
+                                    >
                                         <ValuesText text={perk.effect} values={perk.values} />
                                     </div>
                                 </button>
