@@ -14,7 +14,7 @@ const { filterData, updateFilter }: Props = $props();
 <div class="overflow-x-auto">
     <div class="join w-full">
         {#each elementValues as element}
-            <button class="btn join-item grow hover:btn-secondary" class:btn-primary={filterData.element === element} onclick={updateFilter ? () => updateFilter({element: filterData.element === element ? null : element}) : undefined}>
+            <button class="btn join-item grow" class:btn-primary={filterData.element === element} onclick={updateFilter ? () => updateFilter({element: filterData.element === element ? null : element}) : undefined}>
                 <LazyImage class="w-4 h-4" src={`/icons/${element}.png`} alt={element} />
             </button>
         {/each}
