@@ -53,7 +53,7 @@ const perkGroups = Object.groupBy(Object.values($page.data.perks) as Perk[], (pe
                                     onclick={onSelect ? () => onSelect(perk.id) : undefined}
                                     disabled={(disabledPerks ?? []).indexOf(perk.id) > -1}
                                 >
-                                    {translatableString(perk.name)}
+                                    {translatableString(perk.name)} ({perk.threshold})
 
                                     <div
                                         class="text-xs text-base-content/75 mt-2 block sm:hidden"
