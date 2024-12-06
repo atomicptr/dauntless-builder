@@ -18,6 +18,7 @@ let search = $state("");
 
 const { perks, disabledPerks, onSelect, onClear }: Props = $props();
 const perkGroups = Object.groupBy(Object.values($page.data.perks) as Perk[], (perk) => perk.type);
+const inSearch = (perk: Perk) => translatableString(perk.name).toLowerCase().indexOf(search.toLowerCase()) >= 0;
 </script>
 
 <div class="flex flex-col w-full gap-2">
@@ -38,32 +39,32 @@ const perkGroups = Object.groupBy(Object.values($page.data.perks) as Perk[], (pe
     <div class="flex flex-col sm:flex-row gap-2 w-full">
         {#each Object.keys(perkGroups) as perkGroupName}
             <div class="flex flex-col gap-2 grow basis-0">
-                <div class="flex flex-col items-center gap-2">
-                    <img class="w-8 h-8 light:invert" src={`/icons/${perkGroupName}.png`} alt={perkGroupName} />
-                    <div>{perkGroupName[0].toUpperCase() + perkGroupName.slice(1)}</div>
-                </div>
+                {#if (perkGroups[perkGroupName as keyof typeof perkGroups] as Perk[]).filter(inSearch).length > 0}
+                    <div class="flex flex-col items-center gap-2">
+                        <img class="w-8 h-8 light:invert" src={`/icons/${perkGroupName}.png`} alt={perkGroupName} />
+                        <div>{perkGroupName[0].toUpperCase() + perkGroupName.slice(1)}</div>
+                    </div>
+                {/if}
 
                 <div class="flex flex-col gap-1">
-                    {#each perkGroups[perkGroupName as keyof typeof perkGroups] as Perk[] as perk}
-                        {#if translatableString(perk.name).toLowerCase().indexOf(search.toLowerCase()) >= 0}
-                            <PerkTooltip perkId={perk.id} class="flex flex-col">
-                                <button
-                                    class="card-btn disabled:hidden sm:disabled:flex flex-col w-full" 
-                                    class:btn-primary={perks.indexOf(perk.id) > -1}
-                                    onclick={onSelect ? () => onSelect(perk.id) : undefined}
-                                    disabled={(disabledPerks ?? []).indexOf(perk.id) > -1}
-                                >
-                                    {translatableString(perk.name)} ({perk.threshold})
+                    {#each (perkGroups[perkGroupName as keyof typeof perkGroups] as Perk[]).filter(inSearch) as perk}
+                        <PerkTooltip perkId={perk.id} class="flex flex-col">
+                            <button
+                                class="card-btn disabled:hidden sm:disabled:flex flex-col w-full" 
+                                class:btn-primary={perks.indexOf(perk.id) > -1}
+                                onclick={onSelect ? () => onSelect(perk.id) : undefined}
+                                disabled={(disabledPerks ?? []).indexOf(perk.id) > -1}
+                            >
+                                {translatableString(perk.name)} ({perk.threshold})
 
-                                    <div
-                                        class="text-xs text-base-content/75 mt-2 block sm:hidden"
-                                        class:text-primary-content={perks.indexOf(perk.id) > -1}
-                                    >
-                                        <ValuesText text={perk.effect} values={perk.values} />
-                                    </div>
-                                </button>
-                            </PerkTooltip>
-                        {/if}
+                                <div
+                                    class="text-xs text-base-content/75 mt-2 block sm:hidden"
+                                    class:text-primary-content={perks.indexOf(perk.id) > -1}
+                                >
+                                    <ValuesText text={perk.effect} values={perk.values} />
+                                </div>
+                            </button>
+                        </PerkTooltip>
                     {/each}
                 </div>
             </div>
