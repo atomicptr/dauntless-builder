@@ -39,7 +39,7 @@ test("requestAllPerks", () => {
     const builderData = inject("builderData");
 
     const selectedPerks: number[] = [];
-    const requestedPerks = [...Array(81).keys()].slice(1);
+    const requestedPerks = Object.values(builderData.perks).map((perk) => perk.id);
     expect(
         findAvailablePerksImplementation(selectedPerks, requestedPerks, finderData, builderData.perks).toSorted(),
     ).toStrictEqual(requestedPerks.toSorted());
@@ -50,7 +50,7 @@ test("largeQuantityPerkChecker", () => {
     const builderData = inject("builderData");
 
     const selectedPerks = [5, 8, 17, 24, 30];
-    let requestedPerks = [...Array(81).keys()].slice(1);
+    let requestedPerks = Object.values(builderData.perks).map((perk) => perk.id);
     requestedPerks = requestedPerks.filter((perk) => selectedPerks.indexOf(perk) === -1);
     expect(
         findAvailablePerksImplementation(selectedPerks, requestedPerks, finderData, builderData.perks).toSorted(),
@@ -145,10 +145,10 @@ test("limitedBuildTest", () => {
     const builderData = inject("builderData");
 
     const selectedPerks = [32, 57];
-    const requestedPerks = [8, 20, 26, 38, 41, 42, 46, 48, 50, 51, 55, 67];
+    const requestedPerks = [8, 20, 26, 38, 41, 42, 46, 48, 81, 51, 55, 67];
     expect(
         findAvailablePerksImplementation(selectedPerks, requestedPerks, finderData, builderData.perks).toSorted(),
-    ).toStrictEqual([8, 20, 26, 38, 41, 42, 46, 48, 50, 51, 55, 67].toSorted());
+    ).toStrictEqual([8, 20, 26, 38, 41, 42, 46, 48, 81, 51, 55, 67].toSorted());
 });
 
 test("oppositeLimitedBuildTest", () => {
@@ -156,8 +156,8 @@ test("oppositeLimitedBuildTest", () => {
     const builderData = inject("builderData");
 
     const selectedPerks = [32, 57];
-    let requestedPerks = [...Array(81).keys()].slice(1);
-    const removePerks = [8, 20, 26, 32, 38, 41, 42, 46, 48, 50, 51, 55, 57, 67];
+    let requestedPerks = Object.values(builderData.perks).map((perk) => perk.id);
+    const removePerks = [8, 20, 26, 32, 38, 41, 42, 46, 48, 81, 51, 55, 57, 67];
     requestedPerks = requestedPerks.filter((perk) => removePerks.indexOf(perk) === -1);
     expect(
         findAvailablePerksImplementation(selectedPerks, requestedPerks, finderData, builderData.perks).toSorted(),
