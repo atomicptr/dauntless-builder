@@ -18,7 +18,11 @@ let search = $state("");
 
 const { perks, disabledPerks, onSelect, onClear }: Props = $props();
 const perkGroups = Object.groupBy(Object.values($page.data.perks) as Perk[], (perk) => perk.type);
+
+const getPerksByCategoryName = (category: string) => perkGroups[category as keyof typeof perkGroups] as Perk[];
+
 const inSearch = (perk: Perk) => translatableString(perk.name).toLowerCase().indexOf(search.toLowerCase()) >= 0;
+const sort = (a: Perk, b: Perk) => translatableString(a.name).localeCompare(translatableString(b.name));
 </script>
 
 <div class="flex flex-col w-full gap-2">
@@ -39,7 +43,7 @@ const inSearch = (perk: Perk) => translatableString(perk.name).toLowerCase().ind
     <div class="flex flex-col sm:flex-row gap-2 w-full">
         {#each Object.keys(perkGroups) as perkGroupName}
             <div class="flex flex-col gap-2 grow basis-0">
-                {#if (perkGroups[perkGroupName as keyof typeof perkGroups] as Perk[]).filter(inSearch).length > 0}
+                {#if getPerksByCategoryName(perkGroupName).filter(inSearch).sort(sort).length > 0}
                     <div class="flex flex-col items-center gap-2">
                         <img class="w-8 h-8 light:invert" src={`/icons/${perkGroupName}.png`} alt={perkGroupName} />
                         <div>{perkGroupName[0].toUpperCase() + perkGroupName.slice(1)}</div>
@@ -47,7 +51,7 @@ const inSearch = (perk: Perk) => translatableString(perk.name).toLowerCase().ind
                 {/if}
 
                 <div class="flex flex-col gap-1">
-                    {#each (perkGroups[perkGroupName as keyof typeof perkGroups] as Perk[]).filter(inSearch) as perk}
+                    {#each getPerksByCategoryName(perkGroupName).filter(inSearch).sort(sort) as perk}
                         <PerkTooltip perkId={perk.id} class="flex flex-col">
                             <button
                                 class="card-btn disabled:hidden sm:disabled:flex flex-col w-full" 
