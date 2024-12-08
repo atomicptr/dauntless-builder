@@ -6,7 +6,7 @@ const config = {
     preprocess: vitePreprocess(),
 
     kit: {
-        adapter: adapter({ fallback: "index.html" }),
+        adapter: adapter({ fallback: "app.html" }),
         paths: {
             relative: false,
         },
