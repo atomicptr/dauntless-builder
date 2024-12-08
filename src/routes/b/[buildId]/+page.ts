@@ -1,8 +1,9 @@
 import { deserialize, empty, serialize } from "$lib/build/Build";
 import { redirect } from "@sveltejs/kit";
 import type { PageLoad } from "./$types";
+import { validate } from "$lib/build/validate";
 
-export const load: PageLoad = ({ params }) => {
+export const load: PageLoad = async ({ parent, params }) => {
     const buildId = params.buildId;
 
     const build = deserialize(buildId);
@@ -16,7 +17,9 @@ export const load: PageLoad = ({ params }) => {
         return redirect(302, `/b/${newBuildId}`);
     }
 
+    const data = await parent();
+
     return {
-        build: build.unwrapOr(empty()),
+        build: validate(build.unwrapOr(empty()), data),
     };
 };

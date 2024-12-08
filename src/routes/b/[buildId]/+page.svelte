@@ -11,6 +11,7 @@ import {
     type FilterItem,
 } from "$lib/build/filters";
 import { talentEmpty, talentSet } from "$lib/build/talents.js";
+import { buildIsValid } from "$lib/build/validate";
 import ArmourPerks from "$lib/components/ArmourPerks.svelte";
 import ArmourPicker from "$lib/components/ArmourPicker.svelte";
 import ArmourResistance from "$lib/components/ArmourResistance.svelte";
@@ -20,6 +21,7 @@ import CellPerkTypeFilter from "$lib/components/filters/CellPerkTypeFilter.svelt
 import ElementFilter from "$lib/components/filters/ElementFilter.svelte";
 import WeaponTypeFilter from "$lib/components/filters/WeaponTypeFilter.svelte";
 import BuildFinderIcon from "$lib/components/icons/BuildFinderIcon.svelte";
+import ExclamationTriangle from "$lib/components/icons/ExclamationTriangle.svelte";
 import LanternCorePicker from "$lib/components/LanternCorePicker.svelte";
 import LanternCoreStats from "$lib/components/LanternCoreStats.svelte";
 import LazyImage from "$lib/components/LazyImage.svelte";
@@ -57,6 +59,7 @@ interface DialogProps {
 let dialog: DialogProps = $state({ open: null, filters: {} });
 
 const updateBuild = () => {
+    data.build.flags = 0; // reset flags when user changes something
     const buildId = serialize(data.build).unwrapOr(empty());
     console.log(buildId, data.build);
     goto(`/b/${buildId}`, { noScroll: true });
@@ -211,6 +214,13 @@ const gotoFinderPageUsingCurrentPerks = () => {
 </script>
 
 <BuildTitle buildId={serialize(data.build).unwrapOr("")} hidden />
+
+{#if !buildIsValid(data.build)}
+    <div class="alert alert-error mb-4">
+        <ExclamationTriangle />
+        This build contained invalid items which have been removed automatically.
+    </div>
+{/if}
 
 <div class="flex flex-col sm:flex-row">
     <div class="flex flex-col gap-2 sm:w-2/3">
