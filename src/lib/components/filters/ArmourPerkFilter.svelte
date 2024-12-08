@@ -11,11 +11,13 @@ interface Props {
 
 const { filterData, updateFilter }: Props = $props();
 
-const perks = Object.values<Perk>($page.data.perks).filter((perk) =>
-    Object.values<Armour>($page.data.armours)
-        .filter((armour) => armour.type === filterData.type)
-        .some((armour) => armour.stats.some((stats) => perk.id in stats.perks)),
-);
+const perks = Object.values<Perk>($page.data.perks)
+    .filter((perk) =>
+        Object.values<Armour>($page.data.armours)
+            .filter((armour) => armour.type === filterData.type)
+            .some((armour) => armour.stats.some((stats) => perk.id in stats.perks)),
+    )
+    .sort((a, b) => translatableString(a.name).localeCompare(translatableString(b.name)));
 </script>
 
 <select class="select select-bordered" onchange={updateFilter ? (ev) => updateFilter({perkType: (ev.target as HTMLSelectElement).value}) : undefined}>
