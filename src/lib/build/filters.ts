@@ -9,6 +9,7 @@ import type {
     Weapon,
     WeaponType,
 } from "$lib/data/phalanx-types";
+import { searchInTranslatableStrings } from "$lib/utils/search";
 import { translatableString } from "$lib/utils/translatable-string";
 
 export interface GenericItem {
@@ -24,8 +25,7 @@ export type FilterFunc = (item: FilterItem) => boolean;
 export const applyAll = (items: FilterItem[], funcs: FilterFunc[]) =>
     items.filter((item) => funcs.every((f) => f(item)));
 
-export const filterName = (search: string) => (item: FilterItem) =>
-    translatableString(item.name).toLowerCase().indexOf(search.toLowerCase()) > -1;
+export const filterName = (search: string) => (item: FilterItem) => searchInTranslatableStrings(search, [item.name]);
 
 export const filterWeaponType = (weaponType: WeaponType) => (item: FilterItem) => (item as Weapon).type === weaponType;
 
