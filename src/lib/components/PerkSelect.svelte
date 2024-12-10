@@ -1,6 +1,7 @@
 <script lang="ts">
 import { page } from "$app/stores";
-import type { Perk } from "$lib/data/phalanx-types";
+import type { Perk, PerkType } from "$lib/data/phalanx-types";
+import { perkNameMap } from "$lib/data/static-data";
 import { searchInTranslatableStrings } from "$lib/utils/search";
 import { translatableString } from "$lib/utils/translatable-string";
 import CloseIcon from "./icons/CloseIcon.svelte";
@@ -42,12 +43,12 @@ const sort = (a: Perk, b: Perk) => translatableString(a.name).localeCompare(tran
     <Search class="my-2" bind:value={search} />
 
     <div class="flex flex-col sm:flex-row gap-1 w-full">
-        {#each Object.keys(perkGroups) as perkGroupName}
+        {#each Object.keys(perkGroups).sort((a, b) => perkNameMap[a as PerkType].localeCompare(perkNameMap[b as PerkType])) as perkGroupName}
             <div class="flex flex-col gap-2 grow basis-0">
-                {#if getPerksByCategoryName(perkGroupName).filter(inSearch).sort(sort).length > 0}
+                {#if getPerksByCategoryName(perkGroupName).filter(inSearch).length > 0}
                     <div class="flex flex-col items-center gap-2">
                         <img class="w-8 h-8 light:invert" src={`/icons/${perkGroupName}.png`} alt={perkGroupName} />
-                        <div>{perkGroupName[0].toUpperCase() + perkGroupName.slice(1)}</div>
+                        <div>{perkNameMap[perkGroupName as PerkType]}</div>
                     </div>
                 {/if}
 

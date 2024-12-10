@@ -1,5 +1,5 @@
 import { match } from "ts-pattern";
-import type { Element } from "./phalanx-types";
+import type { Element, PerkType } from "./phalanx-types";
 
 export const weaponMaxLevel = 60;
 export const armourMaxLevel = 20;
@@ -135,3 +135,11 @@ export const oppositeElement = (element: Element) =>
         .with("umbral", () => "radiant")
         .with("radiant", () => "umbral")
         .run();
+
+export const perkNameMap: { [perkType in PerkType]: string } = {
+    alacrity: "Mobility",
+    brutality: "Power",
+    finesse: "Technique",
+    fortitude: "Defense",
+    insight: "Utility",
+};
