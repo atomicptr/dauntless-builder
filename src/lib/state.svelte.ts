@@ -41,3 +41,4 @@ const storagable = <T>(key: string, defaultValue: T): Writable<T> => {
 };
 
 export let configViewWeaponAbilities = storagable<boolean>("config.builder.view-weapon-abilities", true);
+export let configViewWeaponTalents = storagable<boolean>("config.builder.view-weapon-talents", true);
