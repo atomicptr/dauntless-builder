@@ -1,11 +1,12 @@
 <script lang="ts">
 interface Props {
     title: string;
+    description?: string;
     hidden?: boolean;
     remove?: boolean;
 }
 
-const { title, hidden, remove }: Props = $props();
+const { title, description, hidden, remove }: Props = $props();
 
 const iconPath = "https://dauntless-builder.com/icon.png";
 const metaDescription = "Create and share Dauntless builds with your friends!";
@@ -25,12 +26,12 @@ const metaDescription = "Create and share Dauntless builds with your friends!";
     />
 
     <meta
-        content={metaDescription}
+        content={description ?? metaDescription}
         name="description"
     />
 
     <meta
-        content={metaDescription}
+        content={description ?? metaDescription}
         property="og:description"
     />
 

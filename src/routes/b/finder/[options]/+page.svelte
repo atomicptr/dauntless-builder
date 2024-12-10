@@ -4,10 +4,12 @@ import { page } from "$app/stores";
 import FinderItemFilter from "$lib/components/FinderItemFilter.svelte";
 import ExclamationTriangle from "$lib/components/icons/ExclamationTriangle.svelte";
 import MiniBuild from "$lib/components/MiniBuild.svelte";
+import PageTitle from "$lib/components/PageTitle.svelte";
 import PerkSelect from "$lib/components/PerkSelect.svelte";
 import type { Perk } from "$lib/data/phalanx-types";
 import { findBuilds, findAvailablePerks, type WhitelistedItems } from "$lib/finder/finder.svelte";
 import { finderPageDataSerialize, type FinderInitialData } from "$lib/finder/initial";
+import { translatableString } from "$lib/utils/translatable-string.js";
 import { onMount } from "svelte";
 
 const { data } = $props();
@@ -21,6 +23,15 @@ const whitelist: WhitelistedItems = $derived({
     arms: data.finderPageData.items.arms,
     legs: data.finderPageData.items.legs,
 });
+
+const metaDescription = $derived(
+    selectedPerks
+        .filter((perk) => perk in $page.data.perks)
+        .map((perk) => $page.data.perks[perk] as Perk)
+        .map((perk) => translatableString(perk.name))
+        .sort((a, b) => a.localeCompare(b))
+        .join(", "),
+);
 
 const updateFinderState = (perks: number[], whitelist: WhitelistedItems) => {
     const packData = (): FinderInitialData => ({
@@ -75,6 +86,8 @@ afterNavigate(() => {
     disabledPerks = calculateDisabledPerks();
 });
 </script>
+
+<PageTitle title={"Finder"} description={metaDescription} hidden />
 
 <div class="flex flex-col gap-2 mb-8 w-full">
     <FinderItemFilter heads={whitelist.heads} torsos={whitelist.torsos} arms={whitelist.arms} legs={whitelist.legs} onChange={onItemFilterChange} />
