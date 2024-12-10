@@ -41,7 +41,7 @@ const sort = (a: Perk, b: Perk) => translatableString(a.name).localeCompare(tran
     
     <Search class="my-2" bind:value={search} />
 
-    <div class="flex flex-col sm:flex-row gap-2 w-full">
+    <div class="flex flex-col sm:flex-row gap-1 w-full">
         {#each Object.keys(perkGroups) as perkGroupName}
             <div class="flex flex-col gap-2 grow basis-0">
                 {#if getPerksByCategoryName(perkGroupName).filter(inSearch).sort(sort).length > 0}
@@ -51,11 +51,11 @@ const sort = (a: Perk, b: Perk) => translatableString(a.name).localeCompare(tran
                     </div>
                 {/if}
 
-                <div class="flex flex-col gap-1">
+                <div class="flex flex-col sm:gap-1">
                     {#each getPerksByCategoryName(perkGroupName).filter(inSearch).sort(sort) as perk}
                         <PerkTooltip perkId={perk.id} class="flex flex-col">
                             <button
-                                class="card-btn disabled:hidden sm:disabled:flex flex-col w-full" 
+                                class="card-btn disabled:hidden sm:disabled:flex flex-col w-full my-1 sm:my-0" 
                                 class:btn-primary={perks.indexOf(perk.id) > -1}
                                 onclick={onSelect ? () => onSelect(perk.id) : undefined}
                                 disabled={(disabledPerks ?? []).indexOf(perk.id) > -1}
