@@ -1,5 +1,5 @@
 import { browser } from "$app/environment";
-import { writable } from "svelte/store";
+import { writable, type Writable } from "svelte/store";
 
 const determineThemePreference = () => {
     if (!browser) {
@@ -21,3 +21,23 @@ const determineThemePreference = () => {
 
 export let drawerOpen = writable(false);
 export let theme = writable(determineThemePreference());
+
+const storagable = <T>(key: string, defaultValue: T): Writable<T> => {
+    const value = browser
+        ? key in localStorage
+            ? JSON.parse(localStorage.getItem(key) ?? JSON.stringify(defaultValue))
+            : defaultValue
+        : defaultValue;
+
+    const store = writable<T>(value);
+
+    store.subscribe((newValue) => {
+        if (browser) {
+            localStorage.setItem(key, JSON.stringify(newValue));
+        }
+    });
+
+    return store;
+};
+
+export let configViewWeaponAbilities = storagable<boolean>("config.builder.view-weapon-abilities", true);
