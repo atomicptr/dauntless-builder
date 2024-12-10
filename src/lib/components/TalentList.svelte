@@ -20,36 +20,39 @@ const toggleOpen = () => {
 
 {#if available}
     <div>
-        <div class="flex flex-row justify-between text-xl mt-4">
+        <div class="flex flex-row justify-between text-xl ml-2">
             <div>Talents</div>
             <button class="btn btn-xs btn-ghost" onclick={toggleOpen}>
                 {#if $configViewWeaponTalents}-{:else}+{/if}
             </button>
         </div>
-        {#if $configViewWeaponTalents}
-            {#each selected.talents as row, rowIndex}
-                {#if selected.talents[rowIndex].some(v => v)}
-                    <ul class="list-disc pl-4">
-                        <li class="font-bold">
-                            {#if weaponData.talents[rowIndex].name}
-                                {translatableString(weaponData.talents[rowIndex].name)}
-                            {:else}
-                                Talent #{rowIndex + 1}
-                            {/if}
-                        </li>
 
+        {#if $configViewWeaponTalents}
+            <div class="ml-8 mt-2">
+                {#each selected.talents as row, rowIndex}
+                    {#if selected.talents[rowIndex].some(v => v)}
                         <ul class="list-disc pl-4">
-                            {#each row as col, colIndex}
-                                {#if col}
-                                    <li>
-                                        <TalentOptionText option={weaponData.talents[rowIndex].options[colIndex]} compact />
-                                    </li>
+                            <li class="font-bold">
+                                {#if weaponData.talents[rowIndex].name}
+                                    {translatableString(weaponData.talents[rowIndex].name)}
+                                {:else}
+                                    Talent #{rowIndex + 1}
                                 {/if}
-                            {/each}
+                            </li>
+
+                            <ul class="list-disc pl-4">
+                                {#each row as col, colIndex}
+                                    {#if col}
+                                        <li>
+                                            <TalentOptionText option={weaponData.talents[rowIndex].options[colIndex]} compact />
+                                        </li>
+                                    {/if}
+                                {/each}
+                            </ul>
                         </ul>
-                    </ul>
-                {/if}
-            {/each}
+                    {/if}
+                {/each}
+            </div>
         {/if}
     </div>
 {/if}
