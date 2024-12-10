@@ -1,6 +1,7 @@
 <script lang="ts">
 import { page } from "$app/stores";
 import type { Perk } from "$lib/data/phalanx-types";
+import { searchInTranslatableStrings } from "$lib/utils/search";
 import { translatableString } from "$lib/utils/translatable-string";
 import CloseIcon from "./icons/CloseIcon.svelte";
 import PerkTooltip from "./PerkTooltip.svelte";
@@ -21,7 +22,7 @@ const perkGroups = Object.groupBy(Object.values($page.data.perks) as Perk[], (pe
 
 const getPerksByCategoryName = (category: string) => perkGroups[category as keyof typeof perkGroups] as Perk[];
 
-const inSearch = (perk: Perk) => translatableString(perk.name).toLowerCase().indexOf(search.toLowerCase()) >= 0;
+const inSearch = (perk: Perk) => searchInTranslatableStrings(search, [perk.name, perk.effect]);
 const sort = (a: Perk, b: Perk) => translatableString(a.name).localeCompare(translatableString(b.name));
 </script>
 
