@@ -6,8 +6,8 @@ export const entries: EntryGenerator = async () => {
     return Object.values(buildsData.meta).map((build) => ({ buildId: build.id.toString() }));
 };
 
-export const load: PageServerLoad = async ({ params }) => {
-    const buildsData = await fetchBuildsData();
+export const load: PageServerLoad = async ({ parent, params }) => {
+    const { buildsData } = await parent();
     const build = buildsData.meta.filter((b) => b.id.toString() === params.buildId)[0];
     return { build };
 };
