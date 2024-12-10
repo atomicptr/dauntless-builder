@@ -87,7 +87,7 @@ afterNavigate(() => {
 });
 </script>
 
-<PageTitle title={"Finder"} description={metaDescription} hidden />
+<PageTitle title={"Finder"} description={metaDescription.length === 0 ? undefined : metaDescription} hidden />
 
 <div class="flex flex-col gap-2 mb-8 w-full">
     <FinderItemFilter heads={whitelist.heads} torsos={whitelist.torsos} arms={whitelist.arms} legs={whitelist.legs} onChange={onItemFilterChange} />
