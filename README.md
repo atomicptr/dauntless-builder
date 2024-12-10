@@ -25,13 +25,13 @@ Dauntless Builder should now run at: http://localhost:5173
 
 ## Data Access
 
-The data used by Dauntless Builder is available via endpoints like /api/data.json and /api/builds.json
+The data used by Dauntless Builder is available via endpoints like [dauntless-builder.com/api/data.json](https://dauntless-builder.com/api/data.json) and [dauntless-builder.com/api/builds.json](https://dauntless-builder.com/api/builds.json)
 
-See:
+See also:
 
 - [PHP Dauntless Builder SDK](https://github.com/atomicptr/php-dauntless-builder-sdk)
 
-for how to access the data properly
+for how to access the data, parse build strings or make your own.
 
 ## Assets
 
