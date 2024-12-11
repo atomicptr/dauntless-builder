@@ -11,11 +11,14 @@ interface Props {
 }
 
 const { filterData, updateFilter }: Props = $props();
+const lanternCores = Object.values<LanternCore>($page.data.lantern_cores).sort((a, b) =>
+    translatableString(a.name).localeCompare(translatableString(b.name)),
+);
 </script>
 
 <div class="overflow-x-auto">
     <div class="join w-full">
-        {#each Object.values($page.data.lantern_cores) as LanternCore[] as lanternCore}
+        {#each lanternCores as lanternCore}
             <button class="btn join-item grow" class:btn-primary={filterData.lanternCore === lanternCore.id} onclick={updateFilter ? () => updateFilter({lanternCore: filterData.lanternCore === lanternCore.id ? null : lanternCore.id}) : undefined}>
                 <LazyImage class="w-6 h-6" src={lanternCore.icon ?? "/icons/lantern.png"} alt={translatableString(lanternCore.name)} />
             </button>
