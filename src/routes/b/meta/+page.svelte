@@ -6,28 +6,41 @@ import MiniBuild from "$lib/components/MiniBuild.svelte";
 import WeaponTypeFilter from "$lib/components/filters/WeaponTypeFilter.svelte";
 import type { FilterData } from "$lib/components/PickerModal.svelte";
 import type { Build } from "$lib/data/phalanx-types";
+import LanternCoreFilter from "$lib/components/filters/LanternCoreFilter.svelte";
 
 let filterData = $state<FilterData>({
     weaponType: null,
+    lanternCore: null,
 });
 
 const builds = $derived(
-    ($page.data.buildsData.meta as Build[]).filter((build) => {
-        if (filterData.weaponType === null) {
-            return true;
-        }
+    ($page.data.buildsData.meta as Build[])
+        .filter((build) => {
+            if (!filterData.weaponType) {
+                return true;
+            }
 
-        const b = deserialize(build.buildId).unwrapOr(empty());
-        const w1 = b.weapon1.id in $page.data.weapons ? $page.data.weapons[b.weapon1.id] : null;
-        const w2 = b.weapon2.id in $page.data.weapons ? $page.data.weapons[b.weapon2.id] : null;
-        return w1?.type === filterData.weaponType || w2?.type === filterData.weaponType;
-    }),
+            const b = deserialize(build.buildId).unwrapOr(empty());
+            const w1 = b.weapon1.id in $page.data.weapons ? $page.data.weapons[b.weapon1.id] : null;
+            const w2 = b.weapon2.id in $page.data.weapons ? $page.data.weapons[b.weapon2.id] : null;
+            return w1?.type === filterData.weaponType || w2?.type === filterData.weaponType;
+        })
+        .filter((build) => {
+            if (!filterData.lanternCore) {
+                return true;
+            }
+            const b = deserialize(build.buildId).unwrapOr(empty());
+            return b.lanternCore.id === filterData.lanternCore;
+        }),
 );
 </script>
 
 <PageTitle title="Meta Builds" />
 
-<WeaponTypeFilter {filterData} updateFilter={fd => filterData = fd} />
+<div class="flex flex-col gap-2">
+    <WeaponTypeFilter {filterData} updateFilter={fd => filterData = fd} />
+    <LanternCoreFilter {filterData} updateFilter={fd => filterData = fd} />
+</div>
 
 <div class="flex flex-col gap-2 mt-4">
     {#each builds as {id, name, buildId}}
