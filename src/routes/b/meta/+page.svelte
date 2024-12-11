@@ -7,6 +7,7 @@ import WeaponTypeFilter from "$lib/components/filters/WeaponTypeFilter.svelte";
 import type { FilterData } from "$lib/components/PickerModal.svelte";
 import type { Build } from "$lib/data/phalanx-types";
 import LanternCoreFilter from "$lib/components/filters/LanternCoreFilter.svelte";
+import ExclamationTriangle from "$lib/components/icons/ExclamationTriangle.svelte";
 
 let filterData = $state<FilterData>({
     weaponType: null,
@@ -42,8 +43,15 @@ const builds = $derived(
     <LanternCoreFilter {filterData} updateFilter={fd => filterData = fd} />
 </div>
 
-<div class="flex flex-col gap-2 mt-4">
+<div class="flex flex-col gap-2 mt-2">
     {#each builds as {id, name, buildId}}
         <MiniBuild title={name ?? undefined} build={deserialize(buildId).unwrapOr(empty())} link={`/b/meta/${id}`} />
     {/each}
+
+    {#if builds.length === 0}
+        <div class="alert alert-warning mt-2">
+            <ExclamationTriangle />
+            No builds found
+        </div>
+    {/if}
 </div>
