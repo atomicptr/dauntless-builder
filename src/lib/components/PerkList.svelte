@@ -36,19 +36,23 @@ const perkSet = $derived(
 </script>
 
 {#if Object.values(perkSet).length > 0}
-    <div class="text-xl mb-4 pl-4">
-        Perks
-    </div>
+<div class="card shadow bg-base-200">
+    <div class="card-body">
+        <div class="card-title">
+            Perks
+        </div>
 
-    <ul class="list-disc pl-8">
-        {#each Object.entries(perkSet) as [perkId, amount]}
-            <li
-                class="ml-4"
-                class:text-error={amount > $page.data.perks[perkId].threshold}
-                class:text-gray-500={amount < $page.data.perks[perkId].threshold}
-            >
-                <PerkItem {perkId} {amount} />
-            </li>
-        {/each}
-    </ul>
+        <ul class="list-disc pl-8">
+            {#each Object.entries(perkSet) as [perkId, amount]}
+                <li
+                    class="ml-4"
+                    class:text-error={amount > $page.data.perks[perkId].threshold}
+                    class:text-gray-500={amount < $page.data.perks[perkId].threshold}
+                >
+                    <PerkItem {perkId} {amount} />
+                </li>
+            {/each}
+        </ul>
+    </div>
+</div>
 {/if}

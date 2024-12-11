@@ -11,6 +11,7 @@ const unknownLevel = (category: string, level: number) => () => {
 
 export const powerLevel = (level: number): number =>
     match(level)
+        .with(0, () => 0)
         .with(1, () => 10)
         .with(2, () => 30)
         .with(3, () => 50)
@@ -80,6 +81,7 @@ export const elementPowerLevel = (level: number): [number, number] => {
 
 export const resistanceLevel = (level: number): number =>
     match(level)
+        .with(0, () => 0)
         .with(1, () => 10)
         .with(2, () => 20)
         .with(3, () => 30)
@@ -104,6 +106,7 @@ export const resistanceLevel = (level: number): number =>
 
 export const elementResistanceLevel = (level: number): number =>
     match(level)
+        .with(0, () => 0)
         .with(1, () => 2)
         .with(2, () => 3)
         .with(3, () => 5)
