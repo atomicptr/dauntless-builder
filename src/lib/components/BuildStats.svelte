@@ -25,7 +25,7 @@ const armourResistance = $derived(
 );
 </script>
 
-<div class="stats stats-vertical sm:stats-horizontal bg-base-200 shadow">
+<div class="stats stats-vertical sm:stats-horizontal bg-base-200/75 shadow">
     {#if hasWeapon}
         <div class="stat">
             <div class="stat-value">{weaponPower}</div>
