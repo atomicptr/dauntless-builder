@@ -40,7 +40,7 @@ const perkSet = $derived(
 </script>
 
 {#if Object.values(perkSet).length > 0}
-    <div class="card bg-base-200/75 shadow">
+    <div class="card bg-base-200/50 shadow">
         <div class="card-body">
             <div class="card-title">
                 Perks
@@ -57,7 +57,7 @@ const perkSet = $derived(
                             <div>
                                 <LazyImage class="w-6 h-6" src={`/icons/${perk.type}.png`} />
                             </div>
-                            <div class="grow">
+                            <div class="grow text-left">
                                 {translatableString(perk.name)}
                             </div>
                             <div class="flex flex-row gap-1">

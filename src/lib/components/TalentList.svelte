@@ -3,6 +3,8 @@ import { page } from "$app/stores";
 import type { BuildWeapon } from "$lib/build/Build";
 import { configViewWeaponTalents } from "$lib/state.svelte";
 import { translatableString } from "$lib/utils/translatable-string";
+import MinusIcon from "./icons/MinusIcon.svelte";
+import PlusIcon from "./icons/PlusIcon.svelte";
 import TalentOptionText from "./TalentOptionText.svelte";
 
 interface Props {
@@ -19,16 +21,20 @@ const toggleOpen = () => {
 </script>
 
 {#if available}
-    <div>
-        <div class="flex flex-row justify-between text-xl ml-2">
-            <div>Talents</div>
-            <button class="btn btn-xs btn-ghost" onclick={toggleOpen}>
-                {#if $configViewWeaponTalents}-{:else}+{/if}
-            </button>
-        </div>
+    <div class="card bg-base-200/50 shadow">
+        <div class="card-body">
+            <div class="card-title flex flex-row justify-between">
+                <div>Talents</div>
+                <button class="btn btn-xs btn-ghost" onclick={toggleOpen}>
+                    {#if $configViewWeaponTalents}
+                        <MinusIcon />
+                    {:else}
+                        <PlusIcon />
+                    {/if}
+                </button>
+            </div>
 
-        {#if $configViewWeaponTalents}
-            <div class="ml-8 mt-2">
+            {#if $configViewWeaponTalents}
                 {#each selected.talents as row, rowIndex}
                     {#if selected.talents[rowIndex].some(v => v)}
                         <ul class="list-disc pl-4">
@@ -52,7 +58,7 @@ const toggleOpen = () => {
                         </ul>
                     {/if}
                 {/each}
-            </div>
-        {/if}
+            {/if}
+        </div>
     </div>
 {/if}

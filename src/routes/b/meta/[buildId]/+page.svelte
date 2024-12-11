@@ -1,6 +1,7 @@
 <script lang="ts">
 import { deserialize, empty } from "$lib/build/Build";
 import ArmourPicker from "$lib/components/ArmourPicker.svelte";
+import BuildStats from "$lib/components/BuildStats.svelte";
 import BuildTitle from "$lib/components/BuildTitle.svelte";
 import LinkIcon from "$lib/components/icons/LinkIcon.svelte";
 import LanternCorePicker from "$lib/components/LanternCorePicker.svelte";
@@ -69,7 +70,9 @@ const build = $derived(deserialize(data.build.buildId).unwrapOr(empty()));
                         selected={build.lanternCore}
                     />
                 </div>
-                <div class="w-full sm:w-1/3 p-4">
+                <div class="w-full sm:w-1/3 px-2 flex flex-col gap-2">
+                    <BuildStats build={build} />
+
                     <PerkList build={build} />
                 </div>
             </div>

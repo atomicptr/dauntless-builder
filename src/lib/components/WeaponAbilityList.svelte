@@ -5,6 +5,8 @@ import type { TranslatableString, ValuesType, Weapon, WeaponAbility } from "$lib
 import { translatableString } from "$lib/utils/translatable-string";
 import ValuesText from "./ValuesText.svelte";
 import { configViewWeaponAbilities } from "$lib/state.svelte";
+import MinusIcon from "./icons/MinusIcon.svelte";
+import PlusIcon from "./icons/PlusIcon.svelte";
 
 interface Props {
     selected: BuildWeapon;
@@ -28,26 +30,32 @@ const toggleOpen = () => {
 {/snippet}
 
 {#if weaponData}
-    {#if weaponData.special || weaponData.passive || weaponData.active}
-        <div class="flex flex-row justify-between text-xl ml-2">
-            <div>Abilities</div>
-            <button class="btn btn-xs btn-ghost" onclick={toggleOpen}>
-                {#if $configViewWeaponAbilities}-{:else}+{/if}
-            </button>
-        </div>
-    {/if}
+    <div class="card bg-base-200/50 shadow">
+        <div class="card-body">
+            {#if weaponData.special || weaponData.passive || weaponData.active}
+                <div class="card-title flex flex-row justify-between">
+                    <div>Abilities</div>
+                    <button class="btn btn-xs btn-ghost" onclick={toggleOpen}>
+                        {#if $configViewWeaponAbilities}
+                            <MinusIcon />
+                        {:else}
+                            <PlusIcon />
+                        {/if}
+                    </button>
+                </div>
+            {/if}
 
-    {#if $configViewWeaponAbilities}
-        <div class="ml-4 mt-2">
-            {#if weaponData.special}
-                {@render weaponAbility(weaponData.special)}
-            {/if}
-            {#if weaponData.passive}
-                {@render weaponAbility(weaponData.passive)}
-            {/if}
-            {#if weaponData.active}
-                {@render weaponAbility(weaponData.active)}
+            {#if $configViewWeaponAbilities}
+                {#if weaponData.special}
+                    {@render weaponAbility(weaponData.special)}
+                {/if}
+                {#if weaponData.passive}
+                    {@render weaponAbility(weaponData.passive)}
+                {/if}
+                {#if weaponData.active}
+                    {@render weaponAbility(weaponData.active)}
+                {/if}
             {/if}
         </div>
-    {/if}
+    </div>
 {/if}
