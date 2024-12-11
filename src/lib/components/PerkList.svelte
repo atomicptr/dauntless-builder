@@ -55,7 +55,7 @@ const perkSet = $derived(
                             class:text-warning={amount > perk.threshold}
                         >
                             <div>
-                                <LazyImage class="w-6 h-6" src={`/icons/${perk.type}.png`} />
+                                <LazyImage class="w-6 h-6 light:invert" src={`/icons/${perk.type}.png`} />
                             </div>
                             <div class="grow text-left">
                                 {translatableString(perk.name)}
