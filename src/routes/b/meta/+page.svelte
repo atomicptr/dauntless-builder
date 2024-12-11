@@ -34,13 +34,17 @@ const builds = $derived(
             return b.lanternCore.id === filterData.lanternCore;
         }),
 );
+
+const updateFilter = (fd: FilterData) => {
+    filterData = { ...filterData, ...fd };
+};
 </script>
 
 <PageTitle title="Meta Builds" />
 
 <div class="flex flex-col gap-2">
-    <WeaponTypeFilter {filterData} updateFilter={fd => filterData = fd} />
-    <LanternCoreFilter {filterData} updateFilter={fd => filterData = fd} />
+    <WeaponTypeFilter {filterData} {updateFilter} />
+    <LanternCoreFilter {filterData} {updateFilter} />
 </div>
 
 <div class="flex flex-col gap-2 mt-2">
