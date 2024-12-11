@@ -363,7 +363,9 @@ const gotoFinderPageUsingCurrentPerks = () => {
                         {translatableString(item.name)}
                     </div>
                 </button>
-                <LanternCoreStats selected={{id: item.id}} />
+                <div class="flex flex-col gap-2">
+                    <LanternCoreStats selected={{id: item.id}} />
+                </div>
             </div>
         {/snippet}
     </PickerModal>
@@ -387,7 +389,11 @@ const gotoFinderPageUsingCurrentPerks = () => {
                     </div>
                 </button>
 
-                <ValuesText class="my-4" text={(item as Perk).effect} values={(item as Perk).values} classOverwrite={{p: ""}} />
+                <div class="card bg-base-200/50 mt-2">
+                    <div class="card-body">
+                        <ValuesText class="my-4" text={(item as Perk).effect} values={(item as Perk).values} classOverwrite={{p: ""}} />
+                    </div>
+                </div>
             </div>
         {/snippet}
 
