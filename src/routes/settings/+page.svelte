@@ -1,11 +1,6 @@
 <script lang="ts">
 import PageTitle from "$lib/components/PageTitle.svelte";
 import { configViewWeaponAbilities, configViewWeaponTalents, theme } from "$lib/state.svelte";
-
-const onThemeChanged = () => {
-    theme.set($theme === "dark" ? "light" : "dark");
-    localStorage.setItem("theme", $theme);
-};
 </script>
 
 <PageTitle title="Settings" />
@@ -14,7 +9,7 @@ const onThemeChanged = () => {
     <div class="form-control max-w-64">
         <label class="label cursor-pointer">
             <span class="label-text">Use Dark Mode</span>
-            <input type="checkbox" class="toggle toggle-primary" checked={$theme === "dark"} onchange={onThemeChanged} />
+            <input type="checkbox" class="toggle toggle-primary" checked={$theme === "dark"} onchange={() => theme.set($theme === "dark" ? "light" : "dark")} />
         </label>
     </div>
 

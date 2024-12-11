@@ -20,7 +20,6 @@ const determineThemePreference = () => {
 };
 
 export let drawerOpen = writable(false);
-export let theme = writable(determineThemePreference());
 
 const storagable = <T>(key: string, defaultValue: T): Writable<T> => {
     const value = browser
@@ -40,5 +39,6 @@ const storagable = <T>(key: string, defaultValue: T): Writable<T> => {
     return store;
 };
 
+export let theme = storagable<"light" | "dark">("theme", determineThemePreference());
 export let configViewWeaponAbilities = storagable<boolean>("config.builder.view-weapon-abilities", true);
 export let configViewWeaponTalents = storagable<boolean>("config.builder.view-weapon-talents", true);
