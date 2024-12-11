@@ -363,7 +363,7 @@ const gotoFinderPageUsingCurrentPerks = () => {
                         {translatableString(item.name)}
                     </div>
                 </button>
-                <div class="flex flex-col gap-2">
+                <div class="flex flex-col gap-2 mt-2">
                     <LanternCoreStats selected={{id: item.id}} />
                 </div>
             </div>
