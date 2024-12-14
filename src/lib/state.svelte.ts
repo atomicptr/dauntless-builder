@@ -1,5 +1,6 @@
 import { browser } from "$app/environment";
 import { writable, type Writable } from "svelte/store";
+import { languageValues, type Language } from "./i18n.svelte";
 
 const determineThemePreference = () => {
     if (!browser) {
@@ -17,6 +18,16 @@ const determineThemePreference = () => {
     }
 
     return "dark";
+};
+
+const determineBrowserLanguage = (): Language => {
+    const lang = navigator.language.substring(0, 2) as Language;
+
+    if (languageValues.indexOf(lang) > -1) {
+        return lang as Language;
+    }
+
+    return "en";
 };
 
 export let drawerOpen = writable(false);
@@ -47,5 +58,6 @@ const storagable = <T>(key: string, defaultValue: T): Writable<T> => {
 };
 
 export let theme = storagable<"light" | "dark">("theme", determineThemePreference());
+export let language = storagable<Language>("lang", determineBrowserLanguage());
 export let configViewWeaponAbilities = storagable<boolean>("config.builder.view-weapon-abilities", true);
 export let configViewWeaponTalents = storagable<boolean>("config.builder.view-weapon-talents", true);
