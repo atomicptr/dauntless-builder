@@ -9,6 +9,7 @@ import { drawerOpen, theme } from "$lib/state.svelte";
 import { afterNavigate } from "$app/navigation";
 import { onMount } from "svelte";
 import { browser } from "$app/environment";
+import ExclamationTriangle from "$lib/components/icons/ExclamationTriangle.svelte";
 
 const { children } = $props();
 
@@ -43,6 +44,13 @@ theme.subscribe((theme) => {
 
             <div class="p-2 mb-8">
                 <Container>
+                    <noscript>
+                        <div class="alert alert-error mb-4">
+                            <ExclamationTriangle />
+                            It looks like you have disabled JavaScript in your browser, this website requires JavaScript to run properly.
+                        </div>
+                    </noscript>
+                    
                     {@render children()}
                 </Container>
             </div>
