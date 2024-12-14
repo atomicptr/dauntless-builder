@@ -1,29 +1,6 @@
 import { get } from "svelte/store";
 import { language } from "./state.svelte";
-import { match } from "ts-pattern";
-
-export type Language = "en" | "de" | "es" | "fr" | "it" | "ja" | "pt" | "ru" | "tr" | "hu";
-export const languageValues: Language[] = ["en", "de", "es", "fr", "it", "ja", "pt", "ru", "tr", "hu"];
-
-export const nativeLanguageName = (lang: Language) =>
-    match(lang)
-        .with("en", () => "English")
-        .with("de", () => "Deutsch")
-        .with("es", () => "Español")
-        .with("fr", () => "Français")
-        .with("it", () => "Italiano")
-        .with("ja", () => "日本語")
-        .with("pt", () => "Português")
-        .with("ru", () => "русский")
-        .with("tr", () => "Türkçe")
-        .with("hu", () => "magyar nyelv")
-        .run();
-
-export type I18nData = {
-    [lang in Language]: {
-        [key: string]: string;
-    };
-};
+import type { I18nData, Language } from "./i18n";
 
 export const currentLanguage = (): Language => {
     return get(language);

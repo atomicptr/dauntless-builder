@@ -1,6 +1,6 @@
 import { browser } from "$app/environment";
 import { writable, type Writable } from "svelte/store";
-import { languageValues, type Language } from "./i18n.svelte";
+import { determineBrowserLanguage, type Language } from "./i18n";
 
 const determineThemePreference = () => {
     if (!browser) {
@@ -18,20 +18,6 @@ const determineThemePreference = () => {
     }
 
     return "dark";
-};
-
-const determineBrowserLanguage = (): Language => {
-    if (!browser) {
-        return "en";
-    }
-
-    const lang = navigator.language.substring(0, 2) as Language;
-
-    if (languageValues.indexOf(lang) > -1) {
-        return lang as Language;
-    }
-
-    return "en";
 };
 
 export let drawerOpen = writable(false);

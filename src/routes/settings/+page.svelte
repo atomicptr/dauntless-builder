@@ -1,6 +1,6 @@
 <script lang="ts">
 import PageTitle from "$lib/components/PageTitle.svelte";
-import { languageValues, nativeLanguageName, type Language } from "$lib/i18n.svelte";
+import { languageValues, nativeLanguageName, type Language } from "$lib/i18n";
 import { configViewWeaponAbilities, configViewWeaponTalents, language, theme } from "$lib/state.svelte";
 </script>
 
