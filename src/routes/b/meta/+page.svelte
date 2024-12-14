@@ -8,6 +8,7 @@ import type { FilterData } from "$lib/components/PickerModal.svelte";
 import type { Build } from "$lib/data/phalanx-types";
 import LanternCoreFilter from "$lib/components/filters/LanternCoreFilter.svelte";
 import ExclamationTriangle from "$lib/components/icons/ExclamationTriangle.svelte";
+import { translatableString } from "$lib/utils/translatable-string";
 
 let filterData = $state<FilterData>({
     weaponType: null,
@@ -49,7 +50,7 @@ const updateFilter = (fd: FilterData) => {
 
 <div class="flex flex-col gap-2 mt-2">
     {#each builds as {id, name, buildId}}
-        <MiniBuild title={name ?? undefined} build={deserialize(buildId).unwrapOr(empty())} link={`/b/meta/${id}`} />
+        <MiniBuild title={translatableString(name) === "" ? undefined : translatableString(name)} build={deserialize(buildId).unwrapOr(empty())} link={`/b/meta/${id}`} />
     {/each}
 
     {#if builds.length === 0}

@@ -161,9 +161,9 @@ export interface BuildsData {
 
 export interface Build {
     id: number;
-    name: string | null;
+    name: TranslatableString | null;
     buildId: string;
-    description: string | null;
+    description: TranslatableString | null;
     youtube: string | null;
 }
 

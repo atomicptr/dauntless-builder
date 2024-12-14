@@ -10,6 +10,7 @@ import PerkList from "$lib/components/PerkList.svelte";
 import ValuesText from "$lib/components/ValuesText.svelte";
 import WeaponPicker from "$lib/components/WeaponPicker.svelte";
 import YoutubeEmbed from "$lib/components/YoutubeEmbed.svelte";
+import { translatableString } from "$lib/utils/translatable-string";
 
 const { data } = $props();
 
@@ -18,11 +19,11 @@ const build = $derived(deserialize(data.build.buildId).unwrapOr(empty()));
 
 {#if data.build}
     <div class="flex flex-col gap-2">
-        <BuildTitle title={data.build?.name ?? undefined} buildId={data.build.buildId} />
+        <BuildTitle title={translatableString(data.build?.name) === "" ? undefined : translatableString(data.build?.name)} buildId={data.build.buildId} />
 
         {#if data.build.description}
             <div class="mb-8 grow">
-                <ValuesText text={{en: data.build.description}} values={[]} classOverwrite={{p: ""}} />
+                <ValuesText text={data.build.description} values={[]} classOverwrite={{p: ""}} />
             </div>
         {/if}
 
