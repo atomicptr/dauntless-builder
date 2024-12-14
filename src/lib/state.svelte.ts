@@ -21,6 +21,10 @@ const determineThemePreference = () => {
 };
 
 const determineBrowserLanguage = (): Language => {
+    if (!browser) {
+        return "en";
+    }
+
     const lang = navigator.language.substring(0, 2) as Language;
 
     if (languageValues.indexOf(lang) > -1) {
