@@ -22,11 +22,18 @@ const determineThemePreference = () => {
 export let drawerOpen = writable(false);
 
 const storagable = <T>(key: string, defaultValue: T): Writable<T> => {
-    const value = browser
-        ? key in localStorage
-            ? JSON.parse(localStorage.getItem(key) ?? JSON.stringify(defaultValue))
-            : defaultValue
-        : defaultValue;
+    let value = defaultValue;
+
+    try {
+        value = browser
+            ? key in localStorage
+                ? JSON.parse(localStorage.getItem(key) ?? JSON.stringify(defaultValue))
+                : defaultValue
+            : defaultValue;
+    } catch (err) {
+        console.error(`Could not read item "${key}" from local storage, because: `, err, "removing it...");
+        localStorage.removeItem(key);
+    }
 
     const store = writable<T>(value);
 
