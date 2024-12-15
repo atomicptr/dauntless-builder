@@ -12,19 +12,13 @@ export const __ = (key: string, vars: Vars = {}): string => {
     const data = get(page).data.i18nData;
     const curr = get(language);
 
-    const notFound = `{{${key}}}`;
-
-    if (!(curr in data)) {
-        if (!(key in data[curr as Language])) {
-            return notFound;
-        }
-
-        return renderSimpleVarsTemplate(data[curr as Language][key], vars);
+    if (curr in data && key in data[curr]) {
+        return renderSimpleVarsTemplate(data[curr][key], vars);
     }
 
     if (key in data["en"]) {
         return renderSimpleVarsTemplate(data["en"][key], vars);
     }
 
-    return notFound;
+    return `{{${key}}}`;
 };
