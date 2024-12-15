@@ -12,6 +12,7 @@ import { translatableString } from "$lib/utils/translatable-string";
 import { onMount, type Snippet } from "svelte";
 import LazyImage from "./LazyImage.svelte";
 import Search from "./Search.svelte";
+import { __ } from "$lib/i18n.svelte";
 
 export interface FilterData {
     [item: string]: string | number | null;
@@ -100,7 +101,7 @@ onMount(() => {
             {#if maxLevel !== undefined}
                 <div class="flex flex-row gap-2 items-center py-2 sm:py-0 w-full sm:w-[30%]">
                     <div>
-                        Level
+                        {__("term-level")}
                     </div>
                     <input type="range" min="1" max={maxLevel} class="range range-primary" step="1" bind:value={currentLevel} />
                     <div class="">
@@ -113,11 +114,11 @@ onMount(() => {
 
             <div class="flex flex-row gap-2">
                 <button class="btn grow" onclick={onSelected ? () => onSelected(0, { level: currentLevel }) : undefined}>
-                    Unselect item
+                    {__("term-unselect")}
                 </button>
 
                 <button class="btn grow" onclick={onClose}>
-                    Cancel
+                    {__("term-cancel")}
                 </button>
             </div>
         </div>

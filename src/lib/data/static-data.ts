@@ -138,11 +138,3 @@ export const oppositeElement = (element: Element) =>
         .with("umbral", () => "radiant")
         .with("radiant", () => "umbral")
         .run();
-
-export const perkNameMap: { [perkType in PerkType]: string } = {
-    alacrity: "Mobility",
-    brutality: "Power",
-    finesse: "Technique",
-    fortitude: "Defense",
-    insight: "Utility",
-};

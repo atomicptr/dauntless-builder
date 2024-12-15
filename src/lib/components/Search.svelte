@@ -1,4 +1,5 @@
 <script lang="ts">
+import { __ } from "$lib/i18n.svelte";
 import CloseIcon from "./icons/CloseIcon.svelte";
 
 interface Props {
@@ -12,7 +13,7 @@ const clear = () => (value = "");
 </script>
 
 <label class={"input input-bordered flex items-center gap-2 " + rest.class}>
-    <input type="text" class="grow" placeholder="Search" bind:value={value} />
+    <input type="text" class="grow" placeholder={__("term-search")} bind:value={value} />
     <button class="btn btn-xs btn-ghost" class:hidden={value?.length === 0} onclick={clear}>
         <CloseIcon />
     </button>

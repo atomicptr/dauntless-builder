@@ -1,8 +1,6 @@
 import { browser } from "$app/environment";
 import { match } from "ts-pattern";
-
-export type Language = "en" | "de" | "es" | "fr" | "it" | "ja" | "pt" | "ru" | "zh" | "zx" | "tr" | "hu";
-export const languageValues: Language[] = ["en", "de", "es", "fr", "it", "ja", "pt", "ru", "zh", "zx", "tr", "hu"];
+import { languageValues, type Language } from "./data/phalanx-types";
 
 export const nativeLanguageName = (lang: Language) =>
     match(lang)
@@ -20,15 +18,9 @@ export const nativeLanguageName = (lang: Language) =>
         .with("hu", () => "magyar nyelv")
         .run();
 
-export type I18nData = {
-    [lang in Language]: {
-        [key: string]: string;
-    };
-};
-
 export const determineBrowserLanguage = (): Language => {
     if (!browser) {
-        return "en";
+        return "en"; // TODO: read Accept-Language header?
     }
 
     const lang = navigator.language.substring(0, 2) as Language;

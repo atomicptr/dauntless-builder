@@ -3,6 +3,7 @@ import { page } from "$app/stores";
 import type { Build } from "$lib/build/Build";
 import { armourStatsForLevel, getCellPerks, mergePerksArray, sortPerkSetByName } from "$lib/data/levels";
 import { type Perk } from "$lib/data/phalanx-types";
+import { __ } from "$lib/i18n.svelte";
 import { translatableString } from "$lib/utils/translatable-string";
 import ExclamationTriangle from "./icons/ExclamationTriangle.svelte";
 import LazyImage from "./LazyImage.svelte";
@@ -44,7 +45,7 @@ const perkSet = $derived(
     <div class="card bg-base-200/50 shadow">
         <div class="card-body">
             <div class="card-title">
-                Perks
+                {__("page-build-perks")}
             </div>
 
             {#each Object.entries(perkSet) as [perkId, amount]}

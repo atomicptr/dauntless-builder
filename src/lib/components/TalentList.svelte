@@ -1,6 +1,7 @@
 <script lang="ts">
 import { page } from "$app/stores";
 import type { BuildWeapon } from "$lib/build/Build";
+import { __ } from "$lib/i18n.svelte";
 import { configViewWeaponTalents } from "$lib/state.svelte";
 import { translatableString } from "$lib/utils/translatable-string";
 import MinusIcon from "./icons/MinusIcon.svelte";
@@ -24,7 +25,7 @@ const toggleOpen = () => {
     <div class="card bg-base-200/50 shadow">
         <div class="card-body">
             <div class="card-title flex flex-row justify-between">
-                <div>Talents</div>
+                <div>{__("page-build-talents")}</div>
                 <button class="btn btn-xs btn-ghost" onclick={toggleOpen}>
                     {#if $configViewWeaponTalents}
                         <MinusIcon />
@@ -42,7 +43,7 @@ const toggleOpen = () => {
                                 {#if weaponData.talents[rowIndex].name}
                                     {translatableString(weaponData.talents[rowIndex].name)}
                                 {:else}
-                                    Talent #{rowIndex + 1}
+                                    {__("page-build-talent")} #{rowIndex + 1}
                                 {/if}
                             </li>
 
