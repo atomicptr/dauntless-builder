@@ -1,6 +1,7 @@
 import { browser } from "$app/environment";
 import { writable, type Writable } from "svelte/store";
-import { determineBrowserLanguage, type Language } from "./i18n";
+import { determineBrowserLanguage } from "./i18n";
+import type { Language } from "./data/phalanx-types";
 
 const determineThemePreference = () => {
     if (!browser) {
