@@ -4,6 +4,7 @@ import type { Build } from "$lib/build/Build";
 import { armourStatsForLevel, getCellPerks, mergePerksArray, sortPerkSetByName } from "$lib/data/levels";
 import { type Perk } from "$lib/data/phalanx-types";
 import { translatableString } from "$lib/utils/translatable-string";
+import ExclamationTriangle from "./icons/ExclamationTriangle.svelte";
 import LazyImage from "./LazyImage.svelte";
 import PerkItem from "./PerkItem.svelte";
 import ValuesText from "./ValuesText.svelte";
@@ -51,14 +52,16 @@ const perkSet = $derived(
                     {#snippet item(perk: Perk, amount: number)}
                         <div
                             class="flex flex-row gap-2 items-center py-2"
-                            class:text-error={amount < perk.threshold}
-                            class:text-warning={amount > perk.threshold}
+                            class:text-warning={amount < perk.threshold}
                         >
                             <div>
-                                <LazyImage class="w-6 h-6 light:invert" src={`/icons/${perk.type}.png`} />
+                                <LazyImage class="min-w-6 w-6 h-6 light:invert" src={`/icons/${perk.type}.png`} />
                             </div>
-                            <div class="grow text-left">
+                            <div class="grow text-left flex flex-row items-center flex-wrap gap-2">
                                 {translatableString(perk.name)}
+                                {#if amount > perk.threshold}
+                                    <ExclamationTriangle />
+                                {/if}
                             </div>
                             <div class="flex flex-row gap-1">
                                 <span class="font-bold">
