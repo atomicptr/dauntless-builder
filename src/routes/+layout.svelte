@@ -31,6 +31,8 @@ theme.subscribe((theme) => {
     if (!browser) return;
     document.documentElement.dataset["theme"] = theme;
 });
+
+// tailwind classes to keep in memory: underline
 </script>
 
 <svelte:head>
