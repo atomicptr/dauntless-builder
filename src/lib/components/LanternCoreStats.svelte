@@ -1,7 +1,7 @@
 <script lang="ts">
 import { page } from "$app/stores";
 import type { BuildLanternCore } from "$lib/build/Build";
-import { __ } from "$lib/i18n.svelte";
+import { t } from "$lib/i18n.svelte";
 import { translatableString } from "$lib/utils/translatable-string";
 import LazyImage from "./LazyImage.svelte";
 import ValuesText from "./ValuesText.svelte";
@@ -27,13 +27,13 @@ const lanternCore = $derived(selected.id !== 0 ? $page.data.lantern_cores[select
     <div class="card-body">
         <div class="card-title flex flex-row items-center gap-4 mb-4">
             {#if lanternCore.active_icon}
-                <LazyImage class="w-12 h-12" src={lanternCore.active_icon} alt={lanternCore.active.title ? translatableString(lanternCore.active.title) : __("term-active-ability")}/>
+                <LazyImage class="w-12 h-12" src={lanternCore.active_icon} alt={lanternCore.active.title ? translatableString(lanternCore.active.title) : $t("term-active-ability")}/>
             {/if}
-            <div>{lanternCore.active.title ? translatableString(lanternCore.active.title) : __("term-active-ability")}</div>
+            <div>{lanternCore.active.title ? translatableString(lanternCore.active.title) : $t("term-active-ability")}</div>
         </div>
         <ValuesText text={lanternCore.active.description} values={lanternCore.active.values} />
         <div>
-            <strong>{__("term-cooldown")}</strong>: {__("page-build-cooldown-string", {time: lanternCore.active_cooldown})}
+            <strong>{$t("term-cooldown")}</strong>: {$t("page-build-cooldown-string", {time: lanternCore.active_cooldown})}
         </div>
     </div>
 </div>

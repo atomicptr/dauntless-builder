@@ -2,7 +2,7 @@
 import { page } from "$app/stores";
 import type { BuildLanternCore } from "$lib/build/Build";
 import { itemIconSize } from "$lib/constants";
-import { __ } from "$lib/i18n.svelte";
+import { t } from "$lib/i18n.svelte";
 import { translatableString } from "$lib/utils/translatable-string";
 import LanternCoreStats from "./LanternCoreStats.svelte";
 import LazyImage from "./LazyImage.svelte";
@@ -32,9 +32,9 @@ const disabled = $derived(onClick === undefined);
 {:else if !disabled}
     <div class="flex flex-row gap-2 min-h-20">
         <button class="card-btn grow" onclick={onClick}>
-            <LazyImage class={`${itemIconSize} ml-2 light:invert`} src="/icons/lantern.png" alt={__("term-lantern-core")} />
+            <LazyImage class={`${itemIconSize} ml-2 light:invert`} src="/icons/lantern.png" alt={$t("term-lantern-core")} />
             <div class="grow">
-                { __("page-build-select-lantern-core") }
+                { $t("page-build-select-lantern-core") }
             </div>
         </button>
     </div>

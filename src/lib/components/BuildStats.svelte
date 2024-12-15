@@ -1,7 +1,7 @@
 <script lang="ts">
 import type { Build } from "$lib/build/Build";
 import { powerLevel, resistanceLevel } from "$lib/data/static-data";
-import { __ } from "$lib/i18n.svelte";
+import { t } from "$lib/i18n.svelte";
 
 interface PerkListProps {
     build: Build;
@@ -30,14 +30,14 @@ const armourResistance = $derived(
     {#if hasWeapon}
         <div class="stat">
             <div class="stat-value">{weaponPower}</div>
-            <div class="stat-desc">{__("term-power")}</div>
+            <div class="stat-desc">{$t("term-power")}</div>
         </div>
     {/if}
 
     {#if hasArmour}
         <div class="stat">
             <div class="stat-value">{armourResistance}</div>
-            <div class="stat-desc">{__("term-resistance")}</div>
+            <div class="stat-desc">{$t("term-resistance")}</div>
         </div>
     {/if}
 </div>

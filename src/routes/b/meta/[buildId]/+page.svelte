@@ -10,7 +10,7 @@ import PerkList from "$lib/components/PerkList.svelte";
 import ValuesText from "$lib/components/ValuesText.svelte";
 import WeaponPicker from "$lib/components/WeaponPicker.svelte";
 import YoutubeEmbed from "$lib/components/YoutubeEmbed.svelte";
-import { __ } from "$lib/i18n.svelte.js";
+import { t } from "$lib/i18n.svelte.js";
 import { translatableString } from "$lib/utils/translatable-string";
 
 const { data } = $props();
@@ -31,17 +31,17 @@ const build = $derived(deserialize(data.build.buildId).unwrapOr(empty()));
         {#if data.build.youtube}
             <div class="mb-8">
                 <h2 class="text-xl mb-4">
-                    {__("page-builds-video")}
+                    {$t("page-builds-video")}
                 </h2>
                 <div class="max-w-lg">
-                    <YoutubeEmbed id={data.build.youtube} title={__("page-builds-video")} />
+                    <YoutubeEmbed id={data.build.youtube} title={$t("page-builds-video")} />
                 </div>
             </div>
         {/if}
 
         <div class="mb-8">
             <h2 class="text-xl mb-4">
-                {__("term-build")}
+                {$t("term-build")}
             </h2>
 
             <div class="flex flex-col sm:flex-row">
@@ -83,7 +83,7 @@ const build = $derived(deserialize(data.build.buildId).unwrapOr(empty()));
         <div class="w-full flex flex-row justify-center">
             <a href={`/b/${data.build.buildId}`} class="btn btn-primary">
                 <LinkIcon />
-                {__("page-builds-open-in-builder")}
+                {$t("page-builds-open-in-builder")}
             </a>
         </div>
     </div>

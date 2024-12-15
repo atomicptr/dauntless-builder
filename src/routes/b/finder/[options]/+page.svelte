@@ -9,7 +9,7 @@ import PerkSelect from "$lib/components/PerkSelect.svelte";
 import type { Perk } from "$lib/data/phalanx-types";
 import { findBuilds, findAvailablePerks, type WhitelistedItems } from "$lib/finder/finder.svelte";
 import { finderPageDataSerialize, type FinderInitialData } from "$lib/finder/initial";
-import { __ } from "$lib/i18n.svelte.js";
+import { t } from "$lib/i18n.svelte.js";
 import { translatableString } from "$lib/utils/translatable-string.js";
 import { onMount } from "svelte";
 
@@ -88,7 +88,7 @@ afterNavigate(() => {
 });
 </script>
 
-<PageTitle title={__("menu-build-finder")} description={metaDescription.length === 0 ? undefined : metaDescription} hidden />
+<PageTitle title={$t("menu-build-finder")} description={metaDescription.length === 0 ? undefined : metaDescription} hidden />
 
 <div class="flex flex-col gap-2 mb-8 w-full">
     <FinderItemFilter heads={whitelist.heads} torsos={whitelist.torsos} arms={whitelist.arms} legs={whitelist.legs} onChange={onItemFilterChange} />
@@ -111,14 +111,14 @@ afterNavigate(() => {
     {#if selectedPerks.length === 0}
         <div class="alert alert-warning mt-4">
             <ExclamationTriangle />
-            {__("page-finder-no-perks-selected")}
+            {$t("page-finder-no-perks-selected")}
         </div>
     {/if}
 
     {#if selectedPerks.length > 0 && builds.length === 0}
         <div class="alert alert-warning mt-4">
             <ExclamationTriangle />
-            {__("page-finder-no-builds-found")}
+            {$t("page-finder-no-builds-found")}
         </div>
     {/if}
 </div>

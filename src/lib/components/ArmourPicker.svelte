@@ -3,7 +3,7 @@ import { page } from "$app/stores";
 import type { BuildArmourPiece } from "$lib/build/Build";
 import { itemIconSize } from "$lib/constants";
 import type { ArmourType } from "$lib/data/phalanx-types";
-import { __ } from "$lib/i18n.svelte";
+import { t } from "$lib/i18n.svelte";
 import { translatableString } from "$lib/utils/translatable-string";
 import ArmourPerks from "./ArmourPerks.svelte";
 import ArmourResistance from "./ArmourResistance.svelte";
@@ -43,9 +43,9 @@ const disabled = $derived(onArmourPieceClick === undefined);
 {:else if !disabled}
     <div class="flex flex-row gap-2 min-h-20">
         <button class="card-btn grow" onclick={onArmourPieceClick ? () => onArmourPieceClick(type) : undefined}>
-            <LazyImage src={`/icons/${type}.png`} alt={__(`term-${type}`)} class={`${itemIconSize} ml-2 light:invert`} />
+            <LazyImage src={`/icons/${type}.png`} alt={$t(`term-${type}`)} class={`${itemIconSize} ml-2 light:invert`} />
             <div class="grow">
-                { __("page-build-select-armour") }
+                { $t("page-build-select-armour") }
             </div>
         </button>
     </div>

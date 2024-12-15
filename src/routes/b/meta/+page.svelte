@@ -9,7 +9,7 @@ import type { Build } from "$lib/data/phalanx-types";
 import LanternCoreFilter from "$lib/components/filters/LanternCoreFilter.svelte";
 import ExclamationTriangle from "$lib/components/icons/ExclamationTriangle.svelte";
 import { translatableString } from "$lib/utils/translatable-string";
-import { __ } from "$lib/i18n.svelte";
+import { t } from "$lib/i18n.svelte";
 
 let filterData = $state<FilterData>({
     weaponType: null,
@@ -42,7 +42,7 @@ const updateFilter = (fd: FilterData) => {
 };
 </script>
 
-<PageTitle title={__("menu-meta-builds")} />
+<PageTitle title={$t("menu-meta-builds")} />
 
 <div class="flex flex-col gap-2">
     <WeaponTypeFilter {filterData} {updateFilter} />
@@ -57,7 +57,7 @@ const updateFilter = (fd: FilterData) => {
     {#if builds.length === 0}
         <div class="alert alert-warning mt-2">
             <ExclamationTriangle />
-            {__("page-builds-no-builds")}
+            {$t("page-builds-no-builds")}
         </div>
     {/if}
 </div>

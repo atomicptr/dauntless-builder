@@ -16,7 +16,7 @@ import SupportUsIcon from "$lib/components/icons/SupportUsIcon.svelte";
 import { discordLink, githubLink, supportUsLink, xcomLink } from "$lib/constants";
 import PatchIcon from "./icons/PatchIcon.svelte";
 import type { BuildsData, Patch } from "$lib/data/phalanx-types";
-import { __ } from "$lib/i18n.svelte";
+import { t } from "$lib/i18n.svelte";
 
 const { patch, buildsData }: { patch: Patch; buildsData: BuildsData } = $props();
 
@@ -29,27 +29,27 @@ const version = patch?.version;
     <li>
         <a href="/">
             <HomeIcon />
-            { __("menu-home") }
+            { $t("menu-home") }
         </a>
     </li>
 
     <li>
         <a href="/b/new">
             <NewIcon />
-            { __("menu-new-build") }
+            { $t("menu-new-build") }
         </a>
     </li>
     <li>
         <a href="/b/favorites" class="disabled">
             <MyBuildsIcon />
-            { __("menu-my-builds") }
+            { $t("menu-my-builds") }
             <span class="badge badge-ghost">soon&trade;</span>
         </a>
     </li>
     <li>
         <a href="/b/finder">
             <BuildFinderIcon />
-            { __("menu-build-finder") }
+            { $t("menu-build-finder") }
         </a>
     </li>
 
@@ -58,20 +58,20 @@ const version = patch?.version;
     <li>
         <a href="/b/meta" class:disabled={Object.keys(buildsData?.meta ?? {}).length === 0}>
             <MetaBuildsIcon />
-            { __("menu-meta-builds") }
+            { $t("menu-meta-builds") }
         </a>
     </li>
     <li>
         <a href="/b/progression" class="disabled">
             <ProgressionBuildsIcon />
-            { __("menu-progression-builds") }
+            { $t("menu-progression-builds") }
             <span class="badge badge-ghost">soon&trade;</span>
         </a>
     </li>
     <li>
         <a href="/b/trials" class="disabled">
             <TrialBuildsIcon />
-            { __("menu-trial-builds") }
+            { $t("menu-trial-builds") }
             <span class="badge badge-ghost">soon&trade;</span>
         </a>
     </li>
@@ -81,20 +81,20 @@ const version = patch?.version;
     <li>
         <a href="/settings">
             <SettingsIcon />
-            { __("menu-settings") }
+            { $t("menu-settings") }
         </a>
     </li>
     <li>
         <a href="/about" class="disabled">
             <AboutIcon />
-            { __("menu-about") }
+            { $t("menu-about") }
             <span class="badge badge-ghost">soon&trade;</span>
         </a>
     </li>
     <li>
         <a href="/privacy" class="disabled">
             <PrivacyIcon />
-            { __("menu-privacy") }
+            { $t("menu-privacy") }
             <span class="badge badge-ghost">soon&trade;</span>
         </a>
     </li>
@@ -104,25 +104,25 @@ const version = patch?.version;
     <li>
         <a href={supportUsLink} target="_blank">
             <SupportUsIcon />
-            { __("menu-support-us") }
+            { $t("menu-support-us") }
         </a>
     </li>
     <li>
         <a href={discordLink} target="_blank">
             <DiscordIcon />
-            { __("menu-discord") }
+            { $t("menu-discord") }
         </a>
     </li>
     <li>
         <a href={githubLink} target="_blank">
             <GithubIcon />
-            { __("menu-github") }
+            { $t("menu-github") }
         </a>
     </li>
     <li>
         <a href={xcomLink} target="_blank">
             <XIcon />
-            { __("menu-follow-on-x") }
+            { $t("menu-follow-on-x") }
         </a>
     </li>
 
@@ -132,7 +132,7 @@ const version = patch?.version;
         <li>
             <a href="https://playdauntless.com/patch-notes/{version.major}-{version.minor}-{version.patch}/" target="_blank">
                 <PatchIcon />
-                { __("menu-dauntless") } v{version.major}.{version.minor}.{version.patch}
+                { $t("menu-dauntless") } v{version.major}.{version.minor}.{version.patch}
             </a>
         </li>
     {/if}
