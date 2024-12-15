@@ -1,7 +1,7 @@
 <script lang="ts">
 import { page } from "$app/stores";
-import type { Perk, PerkType } from "$lib/data/phalanx-types";
-import { perkNameMap } from "$lib/data/static-data";
+import type { Perk } from "$lib/data/phalanx-types";
+import { t } from "$lib/i18n.svelte";
 import { searchInTranslatableStrings } from "$lib/utils/search";
 import { translatableString } from "$lib/utils/translatable-string";
 import CloseIcon from "./icons/CloseIcon.svelte";
@@ -25,17 +25,18 @@ const getPerksByCategoryName = (category: string) => perkGroups[category as keyo
 
 const inSearch = (perk: Perk) => searchInTranslatableStrings(search, [perk.name, perk.effect]);
 const sort = (a: Perk, b: Perk) => translatableString(a.name).localeCompare(translatableString(b.name));
+const perkTypeSort = (a: string, b: string) => $t(`perk-type-${a}`).localeCompare($t(`perk-type-${b}`));
 </script>
 
 <div class="flex flex-col w-full gap-2">
     <div class="flex flex-row justify-between items-center">
         <h2 class="text-2xl">
-            Perks
+            {$t("page-build-perks")}
         </h2>
         {#if onClear && perks.length > 0}
             <button class="btn btn-ghost" onclick={onClear}>
                 <CloseIcon />
-                Clear All
+                {$t("page-finder-clear-all")}
             </button>
         {/if}
     </div>
@@ -43,12 +44,12 @@ const sort = (a: Perk, b: Perk) => translatableString(a.name).localeCompare(tran
     <Search class="my-2" bind:value={search} />
 
     <div class="flex flex-col sm:flex-row gap-1 w-full">
-        {#each Object.keys(perkGroups).sort((a, b) => perkNameMap[a as PerkType].localeCompare(perkNameMap[b as PerkType])) as perkGroupName}
+        {#each Object.keys(perkGroups).sort(perkTypeSort) as perkGroupName}
             <div class="flex flex-col gap-2 grow basis-0">
                 {#if getPerksByCategoryName(perkGroupName).filter(inSearch).length > 0}
                     <div class="flex flex-col items-center gap-2">
                         <img class="w-8 h-8 light:invert" src={`/icons/${perkGroupName}.png`} alt={perkGroupName} />
-                        <div>{perkNameMap[perkGroupName as PerkType]}</div>
+                        <div>{$t(`perk-type-${perkGroupName}`)}</div>
                     </div>
                 {/if}
 

@@ -1,18 +1,22 @@
 <script lang="ts">
 import PageTitle from "$lib/components/PageTitle.svelte";
-import { discordLink, githubLink } from "$lib/constants";
+import { crowdinLink, discordLink, githubLink } from "$lib/constants";
+import { t } from "$lib/i18n.svelte";
+
+// this is to keep this in the project for tailwind
+// link-primary
 </script>
 
-<PageTitle title="Home" remove />
+<PageTitle title={ $t("menu-home") } remove />
 
-<h1 class="text-2xl mb-8 font-bold">Welcome to Dauntless Builder</h1>
+<h1 class="text-2xl mb-8 font-bold">{ $t("page-home-welcome") }</h1>
 
-<p>A free and open source web application for creating and sharing builds for the popular free to play monster hunting game Dauntless.</p>
+<p>{ $t("page-home-description") }</p>
 
-<h2 class="text-xl my-4 font-bold">Support</h2>
+<h2 class="text-xl my-4 font-bold">{ $t("page-home-support-title") }</h2>
 
-<p>If you have a problem and/or need help, just jump into our <a class="link-primary" href={discordLink} target="_blank">Discord</a> and ask :)</p>
+<p>{@html $t("page-home-support", {discordLink})}</p>
 
-<h2 class="text-xl my-4 font-bold">Contributing</h2>
+<h2 class="text-xl my-4 font-bold">{ $t("page-home-contributing") }</h2>
 
-<p>If you're interested in contributing code or especially localizations please head over to our <a class="link-primary" href={githubLink} target="_blank">Github</a>!</p>
+<p>{@html $t("page-home-contribute", {githubLink, crowdinLink})}</p>

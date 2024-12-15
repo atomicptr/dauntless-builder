@@ -192,3 +192,12 @@ export interface FinderBasicArmour {
     id: number;
     perks: PerkSet;
 }
+
+export type Language = "en" | "de" | "es" | "fr" | "it" | "ja" | "pt" | "ru" | "zh" | "zx" | "tr" | "hu";
+export const languageValues: Language[] = ["en", "de", "es", "fr", "it", "ja", "pt", "ru", "zh", "zx", "tr", "hu"];
+
+export type I18nData = {
+    [lang in Language]: {
+        [key: string]: string;
+    };
+};

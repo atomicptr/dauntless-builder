@@ -1,6 +1,7 @@
 import { browser } from "$app/environment";
 import { writable, type Writable } from "svelte/store";
-import { determineBrowserLanguage, type Language } from "./i18n";
+import { determineBrowserLanguage } from "./i18n";
+import type { Language } from "./data/phalanx-types";
 
 const determineThemePreference = () => {
     if (!browser) {
@@ -51,3 +52,4 @@ export let theme = storagable<"light" | "dark">("theme", determineThemePreferenc
 export let language = storagable<Language>("lang", determineBrowserLanguage());
 export let configViewWeaponAbilities = storagable<boolean>("config.builder.view-weapon-abilities", true);
 export let configViewWeaponTalents = storagable<boolean>("config.builder.view-weapon-talents", true);
+export let showLanguageWarning = storagable<boolean>("config.app.show-language-warning", true);

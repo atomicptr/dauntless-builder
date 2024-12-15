@@ -1,27 +1,27 @@
 import { get } from "svelte/store";
 import { language } from "./state.svelte";
-import type { I18nData, Language } from "./i18n";
+import type { Language } from "./data/phalanx-types";
+import { page } from "$app/stores";
+import { renderSimpleVarsTemplate, type Vars } from "./utils/template-renderer";
+import { derived } from "svelte/store";
 
 export const currentLanguage = (): Language => {
     return get(language);
 };
 
-export const t = (data: I18nData, key: string): string => {
+export const format = (key: string, vars: Vars = {}): string => {
+    const data = get(page).data.i18nData;
     const curr = get(language);
 
-    const notFound = `{{${key}}}`;
-
-    if (!(curr in data)) {
-        if (!(key in data[curr])) {
-            return notFound;
-        }
-
-        return data[curr][key];
+    if (curr in data && key in data[curr]) {
+        return renderSimpleVarsTemplate(data[curr][key], vars);
     }
 
     if (key in data["en"]) {
-        return data["en"][key];
+        return renderSimpleVarsTemplate(data["en"][key], vars);
     }
 
-    return notFound;
+    return `{{${key}}}`;
 };
+
+export const t = derived([page, language], () => format);

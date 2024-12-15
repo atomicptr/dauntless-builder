@@ -7,6 +7,7 @@ import ValuesText from "./ValuesText.svelte";
 import { configViewWeaponAbilities } from "$lib/state.svelte";
 import MinusIcon from "./icons/MinusIcon.svelte";
 import PlusIcon from "./icons/PlusIcon.svelte";
+import { t } from "$lib/i18n.svelte";
 
 interface Props {
     selected: BuildWeapon;
@@ -34,7 +35,7 @@ const toggleOpen = () => {
         <div class="card-body">
             {#if weaponData.special || weaponData.passive || weaponData.active}
                 <div class="card-title flex flex-row justify-between">
-                    <div>Abilities</div>
+                    <div>{$t("page-build-abilities")}</div>
                     <button class="btn btn-xs btn-ghost" onclick={toggleOpen}>
                         {#if $configViewWeaponAbilities}
                             <MinusIcon />

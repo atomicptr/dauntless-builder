@@ -11,6 +11,7 @@ import CheckCircle from "./icons/CheckCircle.svelte";
 import { filterItemCompare } from "$lib/build/filters";
 import type { WhitelistedItems } from "$lib/finder/finder.svelte";
 import { searchInTranslatableStrings } from "$lib/utils/search";
+import { t } from "$lib/i18n.svelte";
 
 interface Props {
     heads: number[];
@@ -140,16 +141,16 @@ onMount(() => {
 
 <div class="flex flex-row justify-end mb-4">
     <button class="btn max-w-96" onclick={() => filtersOpen = !filtersOpen}>
-        Item Filters
+        {$t("page-finder-item-filters")}
         {#if filtersCount > 0}
-            ({filtersCount} active)
+            {$t("page-finder-item-filters-active", {count: filtersCount.toString()})}
         {/if}
     </button>
 </div>
 
 {#if filtersOpen}
     <div class="text-2xl mb-4">
-        Filter
+        {$t("page-finder-filter")}
     </div>
 
     <div class="flex flex-col gap-2 mb-4">
@@ -160,11 +161,11 @@ onMount(() => {
         {#each armourTypeValues as armourType}
             <div class="flex flex-col gap-2 grow">
                 <div class="flex flex-row gap-2 items-center">
-                    <div class="text-xl">{armourType.slice(0, 1).toUpperCase() + armourType.slice(1)}</div>
-                    <button class="btn btn-ghost" title="Check all" onclick={() => selectAllByType(armourType)}>
+                    <div class="text-xl">{$t(`term-${armourType}`)}</div>
+                    <button class="btn btn-ghost" title={$t("page-finder-select-all")} onclick={() => selectAllByType(armourType)}>
                         <CheckCircle />
                     </button>
-                    <button class="btn btn-ghost" title="Unselect all" class:hidden={collectionByType(armourType).length === 0} onclick={() => unselectAllByType(armourType)}>
+                    <button class="btn btn-ghost" title={$t("page-finder-unselect-all")} class:hidden={collectionByType(armourType).length === 0} onclick={() => unselectAllByType(armourType)}>
                         <CloseIcon />
                     </button>
                 </div>

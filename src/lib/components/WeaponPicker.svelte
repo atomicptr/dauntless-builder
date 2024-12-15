@@ -2,6 +2,7 @@
 import { page } from "$app/stores";
 import type { BuildWeapon } from "$lib/build/Build";
 import { itemIconSize } from "$lib/constants";
+import { t } from "$lib/i18n.svelte";
 import { translatableString } from "$lib/utils/translatable-string";
 import LazyImage from "./LazyImage.svelte";
 import Level from "./Level.svelte";
@@ -42,9 +43,9 @@ const disabled = $derived(onWeaponClick === undefined);
 {:else if !disabled}
     <div class="flex flex-row gap-2 min-h-20">
         <button class="card-btn grow" onclick={onWeaponClick}>
-            <LazyImage class={`${itemIconSize} ml-2 light:invert`} src="/icons/weapons.png" alt="Weapon" />
+            <LazyImage class={`${itemIconSize} ml-2 light:invert`} src="/icons/weapons.png" alt={ $t("term-weapon") } />
             <div class="grow">
-                Select a weapon
+                { $t("page-build-select-weapon") }
             </div>
         </button>
     </div>

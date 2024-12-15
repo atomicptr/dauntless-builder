@@ -47,6 +47,7 @@ import {
 } from "$lib/data/phalanx-types.js";
 import { armourMaxLevel, weaponMaxLevel } from "$lib/data/static-data.js";
 import { finderDefaultData, finderPageDataSerialize } from "$lib/finder/initial";
+import { t } from "$lib/i18n.svelte.js";
 import { translatableString } from "$lib/utils/translatable-string.js";
 
 const { data } = $props();
@@ -219,7 +220,7 @@ const gotoFinderPageUsingCurrentPerks = () => {
 {#if !buildIsValid(data.build)}
     <div class="alert alert-error mb-4">
         <ExclamationTriangle />
-        This build contained invalid items which have been removed automatically.
+        {$t("page-build-invalid-message")}
     </div>
 {/if}
 
@@ -273,7 +274,7 @@ const gotoFinderPageUsingCurrentPerks = () => {
             <hr class="h-px my-4 bg-gray-200 border-0 dark:bg-gray-700">
             <button class="btn btn-primary btn-outline" onclick={gotoFinderPageUsingCurrentPerks}>
                 <BuildFinderIcon />
-                Copy perks to finder
+                {$t("page-build-copy-perks")}
             </button>
         {/if}
     </div>

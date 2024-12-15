@@ -1,6 +1,7 @@
 <script lang="ts">
 import { page } from "$app/stores";
 import { deserialize, empty } from "$lib/build/Build";
+import { t } from "$lib/i18n.svelte";
 import { translatableString } from "$lib/utils/translatable-string";
 
 interface Props {
@@ -20,21 +21,20 @@ const buildTitle = $derived.by(() => {
         return title;
     }
 
-    let res = "";
+    const ids = [build.weapon1.id, build.weapon2.id].filter((id) => id !== 0);
 
-    if (build.weapon1.id !== 0) {
-        res += translatableString($page.data.weapons[build.weapon1.id].name);
+    if (ids.length === 1) {
+        return $t("page-build-one-item-title", { weapon: translatableString($page.data.weapons[ids[0]].name) });
     }
 
-    if (build.weapon1.id !== 0 && build.weapon2.id !== 0) {
-        res += " / ";
+    if (ids.length === 2) {
+        return $t("page-build-two-items-title", {
+            weapon1: translatableString($page.data.weapons[ids[0]].name),
+            weapon2: translatableString($page.data.weapons[ids[1]].name),
+        });
     }
 
-    if (build.weapon2.id !== 0) {
-        res += translatableString($page.data.weapons[build.weapon2.id].name);
-    }
-
-    return res + " Build";
+    return $t("page-build-no-items-title");
 });
 
 const iconPath = $derived(

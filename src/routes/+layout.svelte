@@ -5,11 +5,13 @@ import DrawerMenu from "$lib/components/DrawerMenu.svelte";
 import Navbar from "$lib/components/Navbar.svelte";
 import Container from "$lib/components/Container.svelte";
 import { page } from "$app/stores";
-import { drawerOpen, theme } from "$lib/state.svelte";
+import { drawerOpen, language, showLanguageWarning, theme } from "$lib/state.svelte";
 import { afterNavigate } from "$app/navigation";
 import { onMount } from "svelte";
 import { browser } from "$app/environment";
 import ExclamationTriangle from "$lib/components/icons/ExclamationTriangle.svelte";
+import { t } from "$lib/i18n.svelte";
+import { crowdinLink } from "$lib/constants";
 
 const { children } = $props();
 
@@ -29,6 +31,8 @@ theme.subscribe((theme) => {
     if (!browser) return;
     document.documentElement.dataset["theme"] = theme;
 });
+
+// tailwind classes to keep in memory: underline
 </script>
 
 <svelte:head>
@@ -50,6 +54,20 @@ theme.subscribe((theme) => {
                             It looks like you have disabled JavaScript in your browser, this website requires JavaScript to run properly.
                         </div>
                     </noscript>
+
+                    {#if $showLanguageWarning && $language !== "en"}
+                        <div class="alert alert-warning mb-4">
+                            <ExclamationTriangle />
+                            <div>
+                                {@html $t("alert-translation-warning", {crowdinLink, language: $t(`page-settings-language-${$language}`)})}
+                            </div>
+                            <div>
+                                <button class="btn btn-sm" onclick={() => showLanguageWarning.set(false)}>
+                                    {$t("term-close")}
+                                </button>
+                            </div>
+                        </div>
+                    {/if}
                     
                     {@render children()}
                 </Container>
