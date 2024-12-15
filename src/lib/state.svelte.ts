@@ -52,3 +52,4 @@ export let theme = storagable<"light" | "dark">("theme", determineThemePreferenc
 export let language = storagable<Language>("lang", determineBrowserLanguage());
 export let configViewWeaponAbilities = storagable<boolean>("config.builder.view-weapon-abilities", true);
 export let configViewWeaponTalents = storagable<boolean>("config.builder.view-weapon-talents", true);
+export let showLanguageWarning = storagable<boolean>("config.app.show-language-warning", true);
