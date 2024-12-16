@@ -85,7 +85,6 @@ theme.subscribe((theme) => {
 
             <DrawerMenu
                 patch={$page.data.patch}
-                buildsData={$page.data.buildsData}
             />
         </div>
     </div>
