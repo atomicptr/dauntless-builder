@@ -145,10 +145,10 @@ test("limitedBuildTest", () => {
     const builderData = inject("builderData");
 
     const selectedPerks = [32, 57];
-    const requestedPerks = [8, 20, 26, 38, 41, 42, 46, 48, 81, 51, 55, 67];
+    const requestedPerks = [8, 20, 26, 38, 41, 42, 46, 48, 51, 55, 67, 80, 81];
     expect(
         findAvailablePerksImplementation(selectedPerks, requestedPerks, finderData, builderData.perks).toSorted(),
-    ).toStrictEqual([8, 20, 26, 38, 41, 42, 46, 48, 81, 51, 55, 67].toSorted());
+    ).toStrictEqual(requestedPerks.toSorted());
 });
 
 test("oppositeLimitedBuildTest", () => {
@@ -157,7 +157,7 @@ test("oppositeLimitedBuildTest", () => {
 
     const selectedPerks = [32, 57];
     let requestedPerks = Object.values(builderData.perks).map((perk) => perk.id);
-    const removePerks = [8, 20, 26, 32, 38, 41, 42, 46, 48, 81, 51, 55, 57, 67];
+    const removePerks = [8, 20, 26, 32, 38, 41, 42, 46, 48, 51, 55, 57, 67, 80, 81];
     requestedPerks = requestedPerks.filter((perk) => removePerks.indexOf(perk) === -1);
     expect(
         findAvailablePerksImplementation(selectedPerks, requestedPerks, finderData, builderData.perks).toSorted(),
