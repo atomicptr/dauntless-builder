@@ -15,10 +15,10 @@ import XIcon from "$lib/components/icons/XIcon.svelte";
 import SupportUsIcon from "$lib/components/icons/SupportUsIcon.svelte";
 import { discordLink, githubLink, supportUsLink, xcomLink } from "$lib/constants";
 import PatchIcon from "./icons/PatchIcon.svelte";
-import type { BuildsData, Patch } from "$lib/data/phalanx-types";
+import type { Patch } from "$lib/data/phalanx-types";
 import { t } from "$lib/i18n.svelte";
 
-const { patch, buildsData }: { patch: Patch; buildsData: BuildsData } = $props();
+const { patch }: { patch: Patch } = $props();
 
 const version = patch?.version;
 </script>
@@ -56,7 +56,7 @@ const version = patch?.version;
     <li></li>
 
     <li>
-        <a href="/b/meta" class:disabled={Object.keys(buildsData?.meta ?? {}).length === 0}>
+        <a href="/b/meta">
             <MetaBuildsIcon />
             { $t("menu-meta-builds") }
         </a>
