@@ -17,7 +17,7 @@ let filterData = $state<FilterData>({
 });
 
 const builds = $derived(
-    ($page.data.buildsData.meta as Build[])
+    (($page.data.metaBuilds ?? []) as Build[])
         .filter((build) => {
             if (!filterData.weaponType) {
                 return true;
