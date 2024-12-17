@@ -21,7 +21,7 @@ export const load: PageLoad = async ({ parent, params, setHeaders }) => {
     const data = await parent();
 
     setHeaders({
-        ETag: createETag(buildId + data.__meta.buildTime.toString()),
+        ETag: createETag(buildId + data.__meta?.buildTime.toString()),
         "Cache-Control": "max-age=3600, must-revalidate",
     });
 

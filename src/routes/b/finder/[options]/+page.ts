@@ -7,7 +7,7 @@ export const load: PageLoad = async ({ parent, params, data, setHeaders }) => {
     const { finderData } = data;
 
     setHeaders({
-        ETag: createETag(params.options + finderData.__meta.buildTime.toString()),
+        ETag: createETag(params.options + finderData.__meta?.buildTime.toString()),
         "Cache-Control": "max-age=3600, must-revalidate",
     });
 
