@@ -1,5 +1,5 @@
 export interface HasMetaData {
-    __meta: {
+    __meta?: {
         commit: string;
         buildTime: number;
     };
