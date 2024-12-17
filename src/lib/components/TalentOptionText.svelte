@@ -1,5 +1,6 @@
 <script lang="ts">
 import type { WeaponTalentOption } from "$lib/data/phalanx-types";
+import { t } from "$lib/i18n.svelte";
 import ValuesText from "./ValuesText.svelte";
 
 interface Props {
@@ -20,7 +21,7 @@ const { option, compact, ...rest }: Props = $props();
         />
     {:else if option.type === "stat"}
         <div>
-            You have {option.value} additional point of held {option.stat.toUpperCase()}.
+            {$t("page-build-talent-stat", {value: option.value.toString(), stat: $t(`stat-${option.stat}`).toUpperCase()})}
         </div>
     {/if}
 </div>
