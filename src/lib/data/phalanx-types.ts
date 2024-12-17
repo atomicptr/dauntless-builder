@@ -1,7 +1,11 @@
-export interface Data {
-    __meta: {
+export interface HasMetaData {
+    __meta?: {
+        commit: string;
         buildTime: number;
     };
+}
+
+export interface Data extends HasMetaData {
     patch: Patch;
     armours: {
         [id: string]: Armour;
@@ -155,7 +159,7 @@ export interface LanternCoreAbility {
     values: ValuesType;
 }
 
-export interface BuildsData {
+export interface BuildsData extends HasMetaData {
     meta: Build[];
 }
 
@@ -167,7 +171,7 @@ export interface Build {
     youtube: string | null;
 }
 
-export interface FinderData {
+export interface FinderData extends HasMetaData {
     head: FinderBasicArmour3LevelPerkMap;
     torso: FinderBasicArmour2LevelPerkMap;
     arms: FinderBasicArmour3LevelPerkMap;
@@ -200,4 +204,4 @@ export type I18nData = {
     [lang in Language]: {
         [key: string]: string;
     };
-};
+} & HasMetaData;
