@@ -1,9 +1,8 @@
 import { sha3_256 } from "@noble/hashes/sha3";
-import * as env from "$env/dynamic/public";
 import { bytesToHex } from "@noble/hashes/utils";
 
 export const createETag = (forContent: string): string => {
-    return bytesToHex(sha3_256((env.CF_PAGES_COMMIT_SHA ?? "dev") + ":" + forContent));
+    return bytesToHex(sha3_256(forContent));
 };
 
 export const makeJsonResponse = (data: object): Response => {
