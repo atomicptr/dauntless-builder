@@ -57,7 +57,4 @@ export default defineConfig(({ command }) => ({
         },
         sveltekit(),
     ],
-    test: {
-        globalSetup: ["./src/lib/test/data.ts"],
-    },
 }));
