@@ -36,6 +36,7 @@ export default defineConfig(({ command }) => ({
                 const fetchAndWrite = async (endpoint: string, filepath: string) => {
                     const data = await fetchEndpoint(endpoint);
                     await fs.writeFile(filepath, JSON.stringify(data, null, "    "), "utf8");
+                    console.log(`written to ${filepath}`);
                 };
 
                 const buildStaticData = async () => {
