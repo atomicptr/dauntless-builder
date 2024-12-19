@@ -1,6 +1,7 @@
 <script lang="ts">
 import { page } from "$app/stores";
 import { deserialize, empty } from "$lib/build/Build";
+import { phalanxData } from "$lib/data/phalanx-data";
 import { t } from "$lib/i18n.svelte";
 import { translatableString } from "$lib/utils/translatable-string";
 
@@ -24,13 +25,13 @@ const buildTitle = $derived.by(() => {
     const ids = [build.weapon1.id, build.weapon2.id].filter((id) => id !== 0);
 
     if (ids.length === 1) {
-        return $t("page-build-one-item-title", { weapon: translatableString($page.data.weapons[ids[0]].name) });
+        return $t("page-build-one-item-title", { weapon: translatableString(phalanxData.weapons[ids[0]].name) });
     }
 
     if (ids.length === 2) {
         return $t("page-build-two-items-title", {
-            weapon1: translatableString($page.data.weapons[ids[0]].name),
-            weapon2: translatableString($page.data.weapons[ids[1]].name),
+            weapon1: translatableString(phalanxData.weapons[ids[0]].name),
+            weapon2: translatableString(phalanxData.weapons[ids[1]].name),
         });
     }
 
@@ -39,20 +40,22 @@ const buildTitle = $derived.by(() => {
 
 const iconPath = $derived(
     build.weapon1.id !== 0
-        ? $page.data.weapons[build.weapon1.id].icon
+        ? phalanxData.weapons[build.weapon1.id].icon
         : build.weapon2.id !== 0
-          ? $page.data.weapons[build.weapon2.id].icon
+          ? phalanxData.weapons[build.weapon2.id].icon
           : defaultIconPath,
 );
 
 const metaDescription = $derived(
     "⚔️ " +
         [
-            build.head.id !== 0 ? translatableString($page.data.armours[build.head.id].name) : null,
-            build.torso.id !== 0 ? translatableString($page.data.armours[build.torso.id].name) : null,
-            build.arms.id !== 0 ? translatableString($page.data.armours[build.arms.id].name) : null,
-            build.legs.id !== 0 ? translatableString($page.data.armours[build.legs.id].name) : null,
-            build.lanternCore.id !== 0 ? translatableString($page.data.lantern_cores[build.lanternCore.id].name) : null,
+            build.head.id !== 0 ? translatableString(phalanxData.armours[build.head.id].name) : null,
+            build.torso.id !== 0 ? translatableString(phalanxData.armours[build.torso.id].name) : null,
+            build.arms.id !== 0 ? translatableString(phalanxData.armours[build.arms.id].name) : null,
+            build.legs.id !== 0 ? translatableString(phalanxData.armours[build.legs.id].name) : null,
+            build.lanternCore.id !== 0
+                ? translatableString(phalanxData.lantern_cores[build.lanternCore.id].name)
+                : null,
         ]
             .filter((p) => !!p)
             .join(", "),

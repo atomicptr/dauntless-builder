@@ -2,6 +2,7 @@
 import { page } from "$app/stores";
 import type { Build } from "$lib/build/Build";
 import { armourStatsForLevel, getCellPerks, mergePerksArray, sortPerkSetByName } from "$lib/data/levels";
+import { phalanxData } from "$lib/data/phalanx-data";
 import { type Perk } from "$lib/data/phalanx-types";
 import { t } from "$lib/i18n.svelte";
 import { translatableString } from "$lib/utils/translatable-string";
@@ -18,22 +19,22 @@ const { build }: PerkListProps = $props();
 
 const perkSet = $derived(
     sortPerkSetByName(
-        $page.data.perks,
+        phalanxData.perks,
         mergePerksArray([
-            $page.data.armours[build.head.id]
-                ? (armourStatsForLevel($page.data.armours[build.head.id], build.head.level) ?? {})
+            phalanxData.armours[build.head.id]
+                ? (armourStatsForLevel(phalanxData.armours[build.head.id], build.head.level) ?? {})
                 : {},
             getCellPerks(build.head.cells),
-            $page.data.armours[build.torso.id]
-                ? (armourStatsForLevel($page.data.armours[build.torso.id], build.torso.level) ?? {})
+            phalanxData.armours[build.torso.id]
+                ? (armourStatsForLevel(phalanxData.armours[build.torso.id], build.torso.level) ?? {})
                 : {},
             getCellPerks(build.torso.cells),
-            $page.data.armours[build.arms.id]
-                ? (armourStatsForLevel($page.data.armours[build.arms.id], build.arms.level) ?? {})
+            phalanxData.armours[build.arms.id]
+                ? (armourStatsForLevel(phalanxData.armours[build.arms.id], build.arms.level) ?? {})
                 : {},
             getCellPerks(build.arms.cells),
-            $page.data.armours[build.legs.id]
-                ? (armourStatsForLevel($page.data.armours[build.legs.id], build.legs.level) ?? {})
+            phalanxData.armours[build.legs.id]
+                ? (armourStatsForLevel(phalanxData.armours[build.legs.id], build.legs.level) ?? {})
                 : {},
             getCellPerks(build.legs.cells),
         ]),

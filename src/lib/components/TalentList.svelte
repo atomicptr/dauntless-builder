@@ -1,6 +1,7 @@
 <script lang="ts">
 import { page } from "$app/stores";
 import type { BuildWeapon } from "$lib/build/Build";
+import { phalanxData } from "$lib/data/phalanx-data";
 import { t } from "$lib/i18n.svelte";
 import { configViewWeaponTalents } from "$lib/state.svelte";
 import { translatableString } from "$lib/utils/translatable-string";
@@ -13,7 +14,7 @@ interface Props {
 }
 
 const { selected }: Props = $props();
-const weaponData = $derived(selected.id !== 0 ? $page.data.weapons[selected.id] : null);
+const weaponData = $derived(selected.id !== 0 ? phalanxData.weapons[selected.id] : null);
 const available = $derived(selected.talents.some((options) => options.some((v) => v)));
 
 const toggleOpen = () => {
@@ -21,7 +22,7 @@ const toggleOpen = () => {
 };
 </script>
 
-{#if available}
+{#if weaponData && available}
     <div class="card bg-base-200/50 shadow">
         <div class="card-body">
             <div class="card-title flex flex-row justify-between">
@@ -49,7 +50,7 @@ const toggleOpen = () => {
 
                             <ul class="list-disc pl-4">
                                 {#each row as col, colIndex}
-                                    {#if col}
+                                    {#if col && weaponData.talents[rowIndex].options[colIndex]}
                                         <li>
                                             <TalentOptionText option={weaponData.talents[rowIndex].options[colIndex]} compact />
                                         </li>

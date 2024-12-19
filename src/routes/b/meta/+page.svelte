@@ -1,6 +1,5 @@
 <script lang="ts">
 import PageTitle from "$lib/components/PageTitle.svelte";
-import { page } from "$app/stores";
 import { deserialize, empty } from "$lib/build/Build";
 import MiniBuild from "$lib/components/MiniBuild.svelte";
 import WeaponTypeFilter from "$lib/components/filters/WeaponTypeFilter.svelte";
@@ -10,6 +9,8 @@ import LanternCoreFilter from "$lib/components/filters/LanternCoreFilter.svelte"
 import ExclamationTriangle from "$lib/components/icons/ExclamationTriangle.svelte";
 import { translatableString } from "$lib/utils/translatable-string";
 import { t } from "$lib/i18n.svelte";
+import { phalanxData } from "$lib/data/phalanx-data";
+import { phalanxBuilds } from "$lib/data/phalanx-builds";
 
 let filterData = $state<FilterData>({
     weaponType: null,
@@ -17,15 +18,15 @@ let filterData = $state<FilterData>({
 });
 
 const builds = $derived(
-    (($page.data.metaBuilds ?? []) as Build[])
+    ((phalanxBuilds.meta ?? []) as Build[])
         .filter((build) => {
             if (!filterData.weaponType) {
                 return true;
             }
 
             const b = deserialize(build.buildId).unwrapOr(empty());
-            const w1 = b.weapon1.id in $page.data.weapons ? $page.data.weapons[b.weapon1.id] : null;
-            const w2 = b.weapon2.id in $page.data.weapons ? $page.data.weapons[b.weapon2.id] : null;
+            const w1 = b.weapon1.id in phalanxData.weapons ? phalanxData.weapons[b.weapon1.id] : null;
+            const w2 = b.weapon2.id in phalanxData.weapons ? phalanxData.weapons[b.weapon2.id] : null;
             return w1?.type === filterData.weaponType || w2?.type === filterData.weaponType;
         })
         .filter((build) => {

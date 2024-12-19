@@ -4,7 +4,6 @@ import AppIcon from "$lib/components/AppIcon.svelte";
 import DrawerMenu from "$lib/components/DrawerMenu.svelte";
 import Navbar from "$lib/components/Navbar.svelte";
 import Container from "$lib/components/Container.svelte";
-import { page } from "$app/stores";
 import { drawerOpen, language, showLanguageWarning, theme } from "$lib/state.svelte";
 import { afterNavigate } from "$app/navigation";
 import { onMount } from "svelte";
@@ -12,6 +11,7 @@ import { browser } from "$app/environment";
 import ExclamationTriangle from "$lib/components/icons/ExclamationTriangle.svelte";
 import { t } from "$lib/i18n.svelte";
 import { crowdinLink } from "$lib/constants";
+import { phalanxData } from "$lib/data/phalanx-data";
 
 const { children } = $props();
 
@@ -84,7 +84,7 @@ theme.subscribe((theme) => {
             <button class="drawer-overlay" onclick={() => drawerOpen.set(false)} aria-label="close drawer"></button>
 
             <DrawerMenu
-                patch={$page.data.patch}
+                patch={phalanxData.patch}
             />
         </div>
     </div>

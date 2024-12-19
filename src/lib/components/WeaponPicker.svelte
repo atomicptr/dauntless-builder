@@ -1,7 +1,7 @@
 <script lang="ts">
-import { page } from "$app/stores";
 import type { BuildWeapon } from "$lib/build/Build";
 import { itemIconSize } from "$lib/constants";
+import { phalanxData } from "$lib/data/phalanx-data";
 import { t } from "$lib/i18n.svelte";
 import { translatableString } from "$lib/utils/translatable-string";
 import LazyImage from "./LazyImage.svelte";
@@ -18,7 +18,7 @@ interface WeaponPickerProps {
 }
 
 const { selected, onWeaponClick, onTalentClick }: WeaponPickerProps = $props();
-const weapon = $derived(selected.id !== 0 ? $page.data.weapons[selected.id] : null);
+const weapon = $derived(selected.id !== 0 ? phalanxData.weapons[selected.id] : null);
 const icon = $derived(weapon?.icon ?? "/icon.png");
 const disabled = $derived(onWeaponClick === undefined);
 </script>

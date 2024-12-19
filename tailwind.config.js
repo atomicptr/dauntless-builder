@@ -1,3 +1,5 @@
+import daisyui from "daisyui";
+
 /** @type {import('tailwindcss').Config} */
 export default {
     darkMode: ["selector", '[data-theme="dark"]'],
@@ -6,7 +8,7 @@ export default {
         extend: {},
     },
     plugins: [
-        require("daisyui"),
+        daisyui,
         function ({ addVariant }) {
             addVariant("light", '[data-theme="light"] &');
         },

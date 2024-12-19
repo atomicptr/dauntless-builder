@@ -1,9 +1,8 @@
-import { fetchBuildsData } from "$lib/data/phalanx";
+import { phalanxBuilds } from "$lib/data/phalanx-builds";
 import { makeJsonResponse } from "$lib/json";
 
 export const prerender = true;
 
 export async function GET() {
-    const data = await fetchBuildsData();
-    return makeJsonResponse(data);
+    return makeJsonResponse(phalanxBuilds);
 }

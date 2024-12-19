@@ -12,6 +12,7 @@ import { filterItemCompare } from "$lib/build/filters";
 import type { WhitelistedItems } from "$lib/finder/finder.svelte";
 import { searchInTranslatableStrings } from "$lib/utils/search";
 import { t } from "$lib/i18n.svelte";
+import { phalanxData } from "$lib/data/phalanx-data";
 
 interface Props {
     heads: number[];
@@ -28,7 +29,7 @@ const filtersCount = $derived(heads.length + torsos.length + arms.length + legs.
 let filtersSearch = $state("");
 let filtersOpen = $state(false);
 
-const armours = Object.values<Armour>($page.data.armours);
+const armours = Object.values<Armour>(phalanxData.armours);
 const armoursByType = Object.groupBy(armours, (item) => item.type);
 
 const collectionByType = (type: ArmourType) =>

@@ -1,10 +1,9 @@
 import { error } from "@sveltejs/kit";
 import type { PageLoad } from "./$types";
+import { phalanxBuilds } from "$lib/data/phalanx-builds";
 
-export const load: PageLoad = async ({ params, parent }) => {
-    const { metaBuilds } = await parent();
-
-    const build = metaBuilds.filter((b) => b.id.toString() === params.buildId)[0];
+export const load: PageLoad = async ({ params }) => {
+    const build = phalanxBuilds.meta.filter((b) => b.id.toString() === params.buildId)[0];
 
     if (!build) {
         error(404);

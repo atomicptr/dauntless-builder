@@ -1,16 +1,16 @@
 import { get } from "svelte/store";
 import { language } from "./state.svelte";
 import type { Language } from "./data/phalanx-types";
-import { page } from "$app/stores";
 import { renderSimpleVarsTemplate, type Vars } from "./utils/template-renderer";
 import { derived } from "svelte/store";
+import { phalanxI18nData } from "./data/phalanx-i18n";
 
 export const currentLanguage = (): Language => {
     return get(language);
 };
 
 export const format = (key: string, vars: Vars = {}): string => {
-    const data = get(page).data.i18nData;
+    const data = phalanxI18nData;
     const curr = get(language);
 
     if (curr in data && key in data[curr]) {
@@ -24,4 +24,4 @@ export const format = (key: string, vars: Vars = {}): string => {
     return `{{${key}}}`;
 };
 
-export const t = derived([page, language], () => format);
+export const t = derived([language], () => format);
