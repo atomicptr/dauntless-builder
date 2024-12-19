@@ -1,6 +1,7 @@
 <script lang="ts">
 import { page } from "$app/stores";
 import type { BuildLanternCore } from "$lib/build/Build";
+import { phalanxData } from "$lib/data/phalanx-data";
 import { t } from "$lib/i18n.svelte";
 import { translatableString } from "$lib/utils/translatable-string";
 import LazyImage from "./LazyImage.svelte";
@@ -11,7 +12,7 @@ interface Props {
 }
 
 const { selected }: Props = $props();
-const lanternCore = $derived(selected.id !== 0 ? $page.data.lantern_cores[selected.id] : null);
+const lanternCore = $derived(selected.id !== 0 ? phalanxData.lantern_cores[selected.id] : null);
 </script>
 
 <div class="card bg-base-200/50 shadow">

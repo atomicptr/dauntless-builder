@@ -1,13 +1,8 @@
-import { fetchFinderData } from "$lib/data/phalanx";
+import { makeJsonResponse } from "$lib/json";
+import finderDataJson from "$lib/static/finder-data.json";
 
 export const prerender = true;
 
 export async function GET() {
-    const data = await fetchFinderData();
-    return new Response(JSON.stringify(data, null, "    "), {
-        headers: {
-            "Cache-Control": "max-age=0, s-maxage=3600",
-            "Content-Type": "application/json",
-        },
-    });
+    return makeJsonResponse(finderDataJson);
 }

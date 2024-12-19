@@ -6,6 +6,7 @@ import ExclamationTriangle from "$lib/components/icons/ExclamationTriangle.svelt
 import MiniBuild from "$lib/components/MiniBuild.svelte";
 import PageTitle from "$lib/components/PageTitle.svelte";
 import PerkSelect from "$lib/components/PerkSelect.svelte";
+import { phalanxData } from "$lib/data/phalanx-data.js";
 import type { Perk } from "$lib/data/phalanx-types";
 import { findBuilds, findAvailablePerks, type WhitelistedItems } from "$lib/finder/finder.svelte";
 import { finderPageDataSerialize, type FinderInitialData } from "$lib/finder/initial";
@@ -27,8 +28,8 @@ const whitelist: WhitelistedItems = $derived({
 
 const metaDescription = $derived(
     selectedPerks
-        .filter((perk) => perk in $page.data.perks)
-        .map((perk) => $page.data.perks[perk] as Perk)
+        .filter((perk) => perk in phalanxData.perks)
+        .map((perk) => phalanxData.perks[perk] as Perk)
         .map((perk) => translatableString(perk.name))
         .sort((a, b) => a.localeCompare(b))
         .join(", "),
@@ -46,7 +47,7 @@ const updateFinderState = (perks: number[], whitelist: WhitelistedItems) => {
 const builds = $derived(findBuilds(selectedPerks, whitelist));
 
 const calculateDisabledPerks = () => {
-    const allPerks = Object.values<Perk>($page.data.perks).map((perk) => perk.id);
+    const allPerks = Object.values<Perk>(phalanxData.perks).map((perk) => perk.id);
 
     const availablePerks = findAvailablePerks(
         selectedPerks.filter((a) => a),

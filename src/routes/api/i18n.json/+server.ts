@@ -1,9 +1,8 @@
-import { fetchI18nData } from "$lib/data/phalanx";
 import { makeJsonResponse } from "$lib/json";
+import i18nJson from "$lib/static/i18n.json";
 
 export const prerender = true;
 
 export async function GET() {
-    const data = await fetchI18nData();
-    return makeJsonResponse(data);
+    return makeJsonResponse(i18nJson);
 }

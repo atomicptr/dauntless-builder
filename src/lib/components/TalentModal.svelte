@@ -1,6 +1,7 @@
 <script lang="ts">
 import { page } from "$app/stores";
 import type { BuildWeapon } from "$lib/build/Build";
+import { phalanxData } from "$lib/data/phalanx-data";
 import { translatableString } from "$lib/utils/translatable-string";
 import LazyImage from "./LazyImage.svelte";
 import Shape from "./Shape.svelte";
@@ -13,7 +14,7 @@ interface TalentModalProps {
 }
 
 const { weapon, onSelected, onClose }: TalentModalProps = $props();
-const weaponData = $derived($page.data.weapons[weapon.id] ?? null);
+const weaponData = $derived(phalanxData.weapons[weapon.id] ?? null);
 const cellColor = (rowIndex: number, value: boolean): string =>
     value ? (rowIndex % 2 === 0 ? " btn-primary" : " btn-secondary") : "";
 const cellTextColor = (rowIndex: number, value: boolean): string =>

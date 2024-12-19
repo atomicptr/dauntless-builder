@@ -1,5 +1,5 @@
 <script lang="ts">
-import { page } from "$app/stores";
+import { phalanxData } from "$lib/data/phalanx-data";
 import type { ArmourType } from "$lib/data/phalanx-types";
 import { translatableString } from "$lib/utils/translatable-string";
 import LazyImage from "./LazyImage.svelte";
@@ -12,7 +12,7 @@ interface CellPickerProps {
 }
 
 const { type, selected, index, onClick }: CellPickerProps = $props();
-const perk = $derived(selected !== 0 ? $page.data.perks[selected] : null);
+const perk = $derived(selected !== 0 ? phalanxData.perks[selected] : null);
 const disabled = $derived(onClick === undefined);
 </script>
 

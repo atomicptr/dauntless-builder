@@ -1,5 +1,4 @@
 import { type Build } from "$lib/build/Build";
-import { page } from "$app/stores";
 import { get } from "svelte/store";
 import type {
     ArmourType,
@@ -12,6 +11,8 @@ import type {
 import { findAvailablePerksImplementation } from "./perk-checker";
 import { findBuildsImplementation } from "./build-finder";
 import { match } from "ts-pattern";
+import { phalanxData } from "$lib/data/phalanx-data";
+import { phalanxFinderData } from "$lib/data/phalanx-finder-data";
 
 export interface WhitelistedItems {
     heads: number[];
@@ -88,10 +89,9 @@ const filterWhitelistedItems = (finderData: FinderData, whitelist?: WhitelistedI
 };
 
 export const findBuilds = (selectedPerks: number[], whitelist?: WhitelistedItems): Build[] => {
-    const finderData: FinderData = get(page).data.finderData;
-    const allPerks: { [id: string]: Perk } = get(page).data.perks;
+    const allPerks = phalanxData.perks;
 
-    return findBuildsImplementation(selectedPerks, 50, filterWhitelistedItems(finderData, whitelist), allPerks);
+    return findBuildsImplementation(selectedPerks, 50, filterWhitelistedItems(phalanxFinderData, whitelist), allPerks);
 };
 
 export const findAvailablePerks = (
@@ -99,13 +99,12 @@ export const findAvailablePerks = (
     requestedPerks: number[],
     whitelist?: WhitelistedItems,
 ): number[] => {
-    const finderData: FinderData = get(page).data.finderData;
-    const allPerks: { [id: string]: Perk } = get(page).data.perks;
+    const allPerks = phalanxData.perks;
 
     return findAvailablePerksImplementation(
         selectedPerks,
         requestedPerks,
-        filterWhitelistedItems(finderData, whitelist),
+        filterWhitelistedItems(phalanxFinderData, whitelist),
         allPerks,
     );
 };

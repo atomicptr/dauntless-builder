@@ -1,7 +1,7 @@
 <script lang="ts">
-import { page } from "$app/stores";
 import type { BuildArmourPiece } from "$lib/build/Build";
 import { armourStatsForLevel, getCellPerks, mergePerks, sortPerkSetByName } from "$lib/data/levels";
+import { phalanxData } from "$lib/data/phalanx-data";
 import { type Perk } from "$lib/data/phalanx-types";
 import { translatableString } from "$lib/utils/translatable-string";
 import LazyImage from "./LazyImage.svelte";
@@ -13,9 +13,9 @@ interface Props {
 }
 
 const { selected }: Props = $props();
-const armour = $derived(selected.id !== 0 ? $page.data.armours[selected.id] : null);
+const armour = $derived(selected.id !== 0 ? phalanxData.armours[selected.id] : null);
 const perks = $derived(armourStatsForLevel(armour, selected.level) ?? {});
-const perkSet = $derived(sortPerkSetByName($page.data.perks, mergePerks(perks, getCellPerks(selected.cells))));
+const perkSet = $derived(sortPerkSetByName(phalanxData.perks, mergePerks(perks, getCellPerks(selected.cells))));
 </script>
 
 {#if Object.keys(perkSet).length > 0}

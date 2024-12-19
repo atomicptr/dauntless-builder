@@ -1,5 +1,6 @@
 <script lang="ts">
 import { page } from "$app/stores";
+import { phalanxData } from "$lib/data/phalanx-data";
 import { type LanternCore } from "$lib/data/phalanx-types";
 import { translatableString } from "$lib/utils/translatable-string";
 import LazyImage from "../LazyImage.svelte";
@@ -11,7 +12,7 @@ interface Props {
 }
 
 const { filterData, updateFilter }: Props = $props();
-const lanternCores = Object.values<LanternCore>($page.data.lantern_cores).sort((a, b) =>
+const lanternCores = Object.values<LanternCore>(phalanxData.lantern_cores).sort((a, b) =>
     translatableString(a.name).localeCompare(translatableString(b.name)),
 );
 </script>
