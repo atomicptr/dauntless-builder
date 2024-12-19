@@ -30,6 +30,7 @@ jobs:
           PHALANX_BASE_URL: https://dauntless-builder.com
           PHALANX_API_KEY: static
         run: |
+          npm run build
           npm run test
       # TODO: readd this
       # - name: Benchmarks
