@@ -76,7 +76,7 @@ const imgClasses = "w-12 h-12";
             <LazyImage class={imgClasses} src={phalanxData.armours[build.legs.id]?.icon ?? `/icons/${phalanxData.armours[build.legs.id].type}.png`} alt={translatableString(phalanxData.armours[build.legs.id].name)} />
         {/if}
         {#if build.lanternCore.id !== 0}
-            <LazyImage class={imgClasses} src={phalanxData.lantern_cores[build.lanternCore.id].icon ?? `/icons/${phalanxData.lantern_cores[build.lanternCore.id].type}.png`} alt={translatableString(phalanxData.lantern_cores[build.lanternCore.id].name)} />
+            <LazyImage class={imgClasses} src={phalanxData.lantern_cores[build.lanternCore.id].icon ?? `/icons/lantern.png`} alt={translatableString(phalanxData.lantern_cores[build.lanternCore.id].name)} />
         {/if}
     </div>
     <div class="flex flex-row flex-wrap gap-2 justify-center">

@@ -2,7 +2,11 @@ import { translatableString } from "$lib/utils/translatable-string";
 import type { Armour, Perk, PerkSet } from "./phalanx-types";
 import { armourMaxLevel } from "./static-data";
 
-export const armourStatsForLevel = (armourPiece: Armour, level: number): PerkSet | null => {
+export const armourStatsForLevel = (armourPiece: Armour | null, level: number): PerkSet | null => {
+    if (!armourPiece) {
+        return null;
+    }
+
     const lvl = Math.min(armourMaxLevel, Math.max(1, level));
 
     const biggest = armourPiece.stats

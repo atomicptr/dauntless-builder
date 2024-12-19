@@ -156,7 +156,7 @@ export interface LanternCore {
 export interface LanternCoreAbility {
     title: TranslatableString | null;
     description: TranslatableString | null;
-    values: ValuesType;
+    values: ValuesType[];
 }
 
 export interface BuildsData extends HasMetaData {
