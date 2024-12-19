@@ -19,6 +19,7 @@ jobs:
           node-version: 22
           cache: "npm"
       - run: npm install
+      - run: npm run build
       - name: Lint & Sanity Checks
         env:
           PHALANX_BASE_URL: https://dauntless-builder.com
@@ -30,7 +31,6 @@ jobs:
           PHALANX_BASE_URL: https://dauntless-builder.com
           PHALANX_API_KEY: static
         run: |
-          npm run build
           npm run test
       # TODO: readd this
       # - name: Benchmarks
