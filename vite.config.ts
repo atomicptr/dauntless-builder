@@ -46,10 +46,10 @@ export default defineConfig(({ command }) => ({
                         const baseDir = path.join(__dirname, "src", "lib", "static");
                         await fs.mkdir(baseDir, { recursive: true });
 
-                        fetchAndWrite("/api/data", path.join(baseDir, "data.json"));
-                        fetchAndWrite("/api/i18n", path.join(baseDir, "i18n.json"));
-                        fetchAndWrite("/api/finder-data", path.join(baseDir, "finder-data.json"));
-                        fetchAndWrite("/api/builds", path.join(baseDir, "builds.json"));
+                        await fetchAndWrite("/api/data", path.join(baseDir, "data.json"));
+                        await fetchAndWrite("/api/i18n", path.join(baseDir, "i18n.json"));
+                        await fetchAndWrite("/api/finder-data", path.join(baseDir, "finder-data.json"));
+                        await fetchAndWrite("/api/builds", path.join(baseDir, "builds.json"));
                     };
 
                     await buildStaticData();
