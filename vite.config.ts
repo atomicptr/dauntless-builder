@@ -2,8 +2,9 @@ import { sveltekit } from "@sveltejs/kit/vite";
 import { defineConfig } from "vitest/config";
 import path from "path";
 import fs from "fs/promises";
+import { loadEnv } from "vite";
 
-export default defineConfig(({ command }) => ({
+export default defineConfig(({ command, mode }) => ({
     plugins: [
         {
             name: "fetch-data",
@@ -11,9 +12,11 @@ export default defineConfig(({ command }) => ({
                 sequential: true,
                 order: "pre",
                 async handler() {
+                    const env = loadEnv(mode, __dirname, "");
+
                     const fetchEndpoint = async (endpoint: string): Promise<object> => {
-                        const baseUrl = process.env["PHALANX_BASE_URL"] ?? "https://dauntless-builder.com";
-                        const apiKey = process.env["PHALANX_API_KEY"] ?? "static";
+                        const baseUrl = env["PHALANX_BASE_URL"] ?? "https://dauntless-builder.com";
+                        const apiKey = env["PHALANX_API_KEY"] ?? "static";
 
                         const endpointExt = apiKey === "static" ? ".json" : "";
 
@@ -38,7 +41,9 @@ export default defineConfig(({ command }) => ({
 
                     const fetchAndWrite = async (endpoint: string, filepath: string) => {
                         const data = await fetchEndpoint(endpoint);
-                        await fs.writeFile(filepath, JSON.stringify(data, null, "    "), "utf8");
+                        await fs.writeFile(filepath, JSON.stringify(data, null, "    "), {
+                            encoding: "utf8",
+                        });
                     };
 
                     const buildStaticData = async () => {

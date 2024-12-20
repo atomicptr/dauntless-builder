@@ -12,8 +12,17 @@ import ExclamationTriangle from "$lib/components/icons/ExclamationTriangle.svelt
 import { t } from "$lib/i18n.svelte";
 import { crowdinLink } from "$lib/constants";
 import { phalanxData } from "$lib/data/phalanx-data";
+import { phalanxI18nData } from "$lib/data/phalanx-i18n";
 
 const { children } = $props();
+
+const hasSufficientLanguageProgress = $derived(
+    "__stats" in phalanxI18nData
+        ? $language in phalanxI18nData.__stats
+            ? phalanxI18nData.__stats[$language].progress >= 95
+            : false
+        : false,
+);
 
 afterNavigate(() => {
     if (!$drawerOpen) {
@@ -55,7 +64,7 @@ theme.subscribe((theme) => {
                         </div>
                     </noscript>
 
-                    {#if $showLanguageWarning && $language !== "en"}
+                    {#if $showLanguageWarning && $language !== "en" && !hasSufficientLanguageProgress}
                         <div class="alert alert-warning mb-4">
                             <ExclamationTriangle />
                             <div>

@@ -200,8 +200,20 @@ export interface FinderBasicArmour {
 export type Language = "en" | "de" | "es" | "fr" | "it" | "ja" | "pt" | "ru" | "zh" | "zx" | "tr" | "hu";
 export const languageValues: Language[] = ["en", "de", "es", "fr", "it", "ja", "pt", "ru", "zh", "zx", "tr", "hu"];
 
+interface HasI18nStats {
+    __stats: {
+        [lang in Language]: {
+            total: number;
+            translated: number;
+            approved: number;
+            progress: number;
+        };
+    };
+}
+
 export type I18nData = {
     [lang in Language]: {
         [key: string]: string;
     };
-} & HasMetaData;
+} & HasMetaData &
+    HasI18nStats;
