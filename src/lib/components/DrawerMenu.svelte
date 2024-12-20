@@ -43,7 +43,7 @@ const version = patch?.version;
         <a href="/b/favorites" class="disabled">
             <MyBuildsIcon />
             { $t("menu-my-builds") }
-            <span class="badge badge-ghost">soon&trade;</span>
+            <span class="badge badge-ghost">{$t("term-soon")}</span>
         </a>
     </li>
     <li>
@@ -65,14 +65,14 @@ const version = patch?.version;
         <a href="/b/progression" class="disabled">
             <ProgressionBuildsIcon />
             { $t("menu-progression-builds") }
-            <span class="badge badge-ghost">soon&trade;</span>
+            <span class="badge badge-ghost">{$t("term-soon")}</span>
         </a>
     </li>
     <li>
         <a href="/b/trials" class="disabled">
             <TrialBuildsIcon />
             { $t("menu-trial-builds") }
-            <span class="badge badge-ghost">soon&trade;</span>
+            <span class="badge badge-ghost">{$t("term-soon")}</span>
         </a>
     </li>
 
@@ -88,14 +88,14 @@ const version = patch?.version;
         <a href="/about" class="disabled">
             <AboutIcon />
             { $t("menu-about") }
-            <span class="badge badge-ghost">soon&trade;</span>
+            <span class="badge badge-ghost">{$t("term-soon")}</span>
         </a>
     </li>
     <li>
         <a href="/privacy" class="disabled">
             <PrivacyIcon />
             { $t("menu-privacy") }
-            <span class="badge badge-ghost">soon&trade;</span>
+            <span class="badge badge-ghost">{$t("term-soon")}</span>
         </a>
     </li>
 
