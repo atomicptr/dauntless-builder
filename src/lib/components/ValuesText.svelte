@@ -3,6 +3,7 @@ import type { TranslatableString, ValuesType } from "$lib/data/phalanx-types";
 import { renderTemplate } from "$lib/utils/template-renderer";
 import { translatableString } from "$lib/utils/translatable-string";
 import showdown from "showdown";
+import RawHtml from "./RawHtml.svelte";
 
 interface ValuesTextProps {
     class?: string;
@@ -30,5 +31,5 @@ const converter = new showdown.Converter({
 </script>
 
 <div class={"values-text " + (rest.class ?? "")}>
-    {@html converter.makeHtml(renderTemplate(translatableString(text), values))}
+    <RawHtml content={converter.makeHtml(renderTemplate(translatableString(text), values))} />
 </div>
