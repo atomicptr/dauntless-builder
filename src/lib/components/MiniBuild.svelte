@@ -1,5 +1,4 @@
 <script lang="ts">
-import { page } from "$app/stores";
 import { empty, serialize, type Build } from "$lib/build/Build";
 import { armourStatsForLevel, getCellPerks, mergePerksArray, sortPerkSetByName } from "$lib/data/levels";
 import { phalanxData } from "$lib/data/phalanx-data";
@@ -81,7 +80,10 @@ const imgClasses = "w-12 h-12";
     </div>
     <div class="flex flex-row flex-wrap gap-2 justify-center">
         {#each Object.entries(perkSet) as [perkId, amount]}
-            <div class="badge" class:badge-primary={amount == phalanxData.perks[perkId].threshold} class:badge-error={amount > phalanxData.perks[perkId].threshold}>
+            <div 
+                class="badge" 
+                class:badge-primary={amount >= phalanxData.perks[perkId].threshold}
+            >
                 {translatableString(phalanxData.perks[perkId].name)}
                 {amount}/{phalanxData.perks[perkId].threshold}
             </div>
