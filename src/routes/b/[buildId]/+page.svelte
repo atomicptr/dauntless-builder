@@ -114,7 +114,7 @@ const onItemSelected = (id: number, itemData: ListItemData) => {
             const other = dialog.filters.picker === 1 ? 2 : 1;
 
             // if the weapon we just selected is in the other slot
-            if (data.build[`weapon${other}`].id === id) {
+            if (data.build[`weapon${other}`].id === id && id !== 0) {
                 data.build[`weapon${other}`].id = data.build[`weapon${dialog.filters.picker as 1 | 2}`].id;
                 data.build[`weapon${other}`].talents = data.build[`weapon${dialog.filters.picker as 1 | 2}`].talents;
             }
