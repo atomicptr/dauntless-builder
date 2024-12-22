@@ -18,10 +18,10 @@ const hasArmour = $derived(build.head.id !== 0 || build.torso.id !== 0 || build.
 
 const armourResistance = $derived(
     [
-        resistanceLevel(build.head.level),
-        resistanceLevel(build.torso.level),
-        resistanceLevel(build.arms.level),
-        resistanceLevel(build.legs.level),
+        build.head.id !== 0 ? resistanceLevel(build.head.level) : 0,
+        build.torso.id !== 0 ? resistanceLevel(build.torso.level) : 0,
+        build.torso.id !== 0 ? resistanceLevel(build.arms.level) : 0,
+        build.torso.id !== 0 ? resistanceLevel(build.legs.level) : 0,
     ].reduce((acc, curr) => acc + curr, 0),
 );
 </script>
