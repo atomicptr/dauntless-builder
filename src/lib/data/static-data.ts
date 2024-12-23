@@ -129,12 +129,12 @@ export const elementResistanceLevel = (level: number): number =>
         .with(20, () => 25)
         .otherwise(unknownLevel("elementResistanceLevel", level));
 
-export const oppositeElement = (element: Element) =>
+export const oppositeElement = (element: Element): Element =>
     match(element)
-        .with("blaze", () => "frost")
-        .with("frost", () => "blaze")
-        .with("shock", () => "terra")
-        .with("terra", () => "shock")
-        .with("umbral", () => "radiant")
-        .with("radiant", () => "umbral")
+        .with("blaze", () => "frost" as Element)
+        .with("frost", () => "blaze" as Element)
+        .with("shock", () => "terra" as Element)
+        .with("terra", () => "shock" as Element)
+        .with("umbral", () => "radiant" as Element)
+        .with("radiant", () => "umbral" as Element)
         .run();
