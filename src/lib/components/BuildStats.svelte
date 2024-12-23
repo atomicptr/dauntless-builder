@@ -96,16 +96,18 @@ const elementalResSortFunc = ([a, aValue]: [Element, number], [b, bValue]: [Elem
     {/if}
 </div>
 
-<div class="flex flex-col gap-2 card bg-base-200/50 shadow">
-    <div class="card-body">
-        <div class="card-title">{$t("term-elemental-res")}</div>
+{#if hasArmour}
+    <div class="flex flex-col gap-2 card bg-base-200/50 shadow">
+        <div class="card-body">
+            <div class="card-title">{$t("term-elemental-res")}</div>
         
-        {#each (Object.entries(elementalResistances) as [Element, number][]).sort(elementalResSortFunc) as [element, value]}
-            <div class={`flex flex-row gap-2 justify-between element-text-${element}`}>
-                <div class="flex flex-row justify-center items-center"><LazyImage class="w-4 h-4" src={`/icons/${element}.png`} alt={`element-${element}`} /></div>
-                <div class="grow align-left">{$t(`element-${element}`)}</div>
-                <div class="font-bold">{value > 0 ? `+${value}` : value}</div>
-            </div>
-        {/each}
+            {#each (Object.entries(elementalResistances) as [Element, number][]).sort(elementalResSortFunc) as [element, value]}
+                <div class={`flex flex-row gap-2 justify-between element-text-${element}`}>
+                    <div class="flex flex-row justify-center items-center"><LazyImage class="w-4 h-4" src={`/icons/${element}.png`} alt={`element-${element}`} /></div>
+                    <div class="grow align-left">{$t(`element-${element}`)}</div>
+                    <div class="font-bold">{value > 0 ? `+${value}` : value}</div>
+                </div>
+            {/each}
+        </div>
     </div>
-</div>
+{/if}
