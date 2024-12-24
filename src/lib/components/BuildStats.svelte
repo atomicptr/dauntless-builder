@@ -78,6 +78,12 @@ const elementalResSortFunc = ([a, aValue]: [Element, number], [b, bValue]: [Elem
 
     return compare;
 };
+
+const elementalResistancesList = $derived(
+    (Object.entries(elementalResistances) as [Element, number][])
+        .filter(([_, value]) => value > 0)
+        .sort(elementalResSortFunc),
+);
 </script>
 
 <div class="stats stats-vertical sm:stats-horizontal bg-base-200/50 shadow !overflow-hidden">
@@ -96,12 +102,12 @@ const elementalResSortFunc = ([a, aValue]: [Element, number], [b, bValue]: [Elem
     {/if}
 </div>
 
-{#if hasArmour}
+{#if hasArmour && elementalResistancesList.length > 0}
     <div class="flex flex-col gap-2 card bg-base-200/50 shadow">
         <div class="card-body">
             <div class="card-title">{$t("term-elemental-res")}</div>
         
-            {#each (Object.entries(elementalResistances) as [Element, number][]).sort(elementalResSortFunc) as [element, value]}
+            {#each elementalResistancesList as [element, value]}
                 <div class={`flex flex-row gap-2 justify-between element-text-${element}`}>
                     <div class="flex flex-row justify-center items-center"><LazyImage class="w-4 h-4" src={`/icons/${element}.png`} alt={`element-${element}`} /></div>
                     <div class="grow align-left">{$t(`element-${element}`)}</div>
