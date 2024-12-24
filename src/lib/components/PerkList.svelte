@@ -4,6 +4,7 @@ import type { Build } from "$lib/build/Build";
 import { armourStatsForLevel, getCellPerks, mergePerksArray, sortPerkSetByName } from "$lib/data/levels";
 import { phalanxData } from "$lib/data/phalanx-data";
 import { type Perk } from "$lib/data/phalanx-types";
+import { perkIcon } from "$lib/data/static-data";
 import { t } from "$lib/i18n.svelte";
 import { translatableString } from "$lib/utils/translatable-string";
 import ExclamationTriangle from "./icons/ExclamationTriangle.svelte";
@@ -57,7 +58,7 @@ const perkSet = $derived(
                             class:text-warning={amount < perk.threshold}
                         >
                             <div>
-                                <LazyImage class="min-w-6 w-6 h-6 light:invert" src={`/icons/${perk.type}.png`} />
+                                <LazyImage class="min-w-6 w-6 h-6 light:invert" src={perkIcon(perk)} />
                             </div>
                             <div class="grow text-left flex flex-row items-center flex-wrap gap-2">
                                 {translatableString(perk.name)}

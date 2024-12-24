@@ -45,7 +45,7 @@ import {
     type WeaponType,
     type Element,
 } from "$lib/data/phalanx-types.js";
-import { armourMaxLevel, weaponMaxLevel } from "$lib/data/static-data.js";
+import { armourMaxLevel, perkIcon, weaponMaxLevel } from "$lib/data/static-data.js";
 import { finderDefaultData, finderPageDataSerialize } from "$lib/finder/initial";
 import { t } from "$lib/i18n.svelte.js";
 import { translatableString } from "$lib/utils/translatable-string.js";
@@ -384,7 +384,7 @@ const gotoFinderPageUsingCurrentPerks = () => {
         {#snippet listItem(item, _itemData, onclick)}
             <div class="flex flex-col w-full">
                 <button class={"card-btn grow"} {onclick}>
-                    <LazyImage class={`${itemIconSize} ml-2 light:invert`} src={`/icons/${(item as Perk).type}.png`} alt={translatableString(item.name)} />
+                    <LazyImage class={`${itemIconSize} p-2 ml-2 light:invert`} src={perkIcon(item as Perk)} alt={translatableString(item.name)} />
                     <div class="grow">
                         {translatableString(item.name)}
                     </div>

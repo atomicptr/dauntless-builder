@@ -1,6 +1,7 @@
 <script lang="ts">
 import { phalanxData } from "$lib/data/phalanx-data";
 import type { Perk } from "$lib/data/phalanx-types";
+import { perkIcon } from "$lib/data/static-data";
 import { t } from "$lib/i18n.svelte";
 import { searchInTranslatableStrings } from "$lib/utils/search";
 import { translatableString } from "$lib/utils/translatable-string";
@@ -48,7 +49,7 @@ const perkTypeSort = (a: string, b: string) => $t(`perk-type-${a}`).localeCompar
             <div class="flex flex-col gap-2 grow basis-0">
                 {#if getPerksByCategoryName(perkGroupName).filter(inSearch).length > 0}
                     <div class="flex flex-col items-center gap-2">
-                        <img class="w-8 h-8 light:invert" src={`/icons/${perkGroupName}.png`} alt={perkGroupName} />
+                        <img class="w-8 h-8 light:invert" src={perkIcon(perkGroupName)} alt={perkGroupName} />
                         <div>{$t(`perk-type-${perkGroupName}`)}</div>
                     </div>
                 {/if}

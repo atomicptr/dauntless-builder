@@ -1,5 +1,5 @@
 import { match } from "ts-pattern";
-import type { Element, PerkType } from "./phalanx-types";
+import type { Element, Perk, PerkType } from "./phalanx-types";
 
 export const weaponMaxLevel = 60;
 export const armourMaxLevel = 20;
@@ -137,4 +137,13 @@ export const oppositeElement = (element: Element): Element =>
         .with("terra", () => "shock" as Element)
         .with("umbral", () => "radiant" as Element)
         .with("radiant", () => "umbral" as Element)
+        .run();
+
+export const perkIcon = (perk: Perk | string): string =>
+    match(typeof perk === "string" ? perk : perk.type)
+        .with("alacrity", () => "/icons/mobility.svg")
+        .with("brutality", () => "/icons/power.svg")
+        .with("finesse", () => "/icons/technique.svg")
+        .with("fortitude", () => "/icons/defense.svg")
+        .with("insight", () => "/icons/utility.svg")
         .run();

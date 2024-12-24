@@ -1,4 +1,4 @@
-export const itemIconSize = "w-16";
+export const itemIconSize = "h-16";
 
 export const supportUsLink = "https://buymeacoffee.com/atomicptr";
 export const githubLink = "https://github.com/atomicptr/dauntless-builder";

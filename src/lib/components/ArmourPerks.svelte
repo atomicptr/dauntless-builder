@@ -3,6 +3,7 @@ import type { BuildArmourPiece } from "$lib/build/Build";
 import { armourStatsForLevel, getCellPerks, mergePerks, sortPerkSetByName } from "$lib/data/levels";
 import { phalanxData } from "$lib/data/phalanx-data";
 import { type Perk } from "$lib/data/phalanx-types";
+import { perkIcon } from "$lib/data/static-data";
 import { translatableString } from "$lib/utils/translatable-string";
 import LazyImage from "./LazyImage.svelte";
 import PerkItem from "./PerkItem.svelte";
@@ -29,7 +30,7 @@ const perkSet = $derived(sortPerkSetByName(phalanxData.perks, mergePerks(perks, 
                             class:text-secondary={perk.id in getCellPerks(selected.cells)}
                         >
                             <div>
-                                <LazyImage class="w-6 h-6 light:invert" src={`/icons/${perk.type}.png`} />
+                                <LazyImage class="w-6 h-6 light:invert" src={perkIcon(perk)} />
                             </div>
                             <div class="grow text-left">
                                 {translatableString(perk.name)}
