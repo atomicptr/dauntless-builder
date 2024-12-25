@@ -1,7 +1,6 @@
 <script lang="ts">
 import type { BuildWeapon } from "$lib/build/Build";
 import { itemIconSize } from "$lib/constants";
-import { phalanxData } from "$lib/data/phalanx-data";
 import { phalanxWeapons } from "$lib/data/phalanx-weapons";
 import { t } from "$lib/i18n.svelte";
 import { translatableString } from "$lib/utils/translatable-string";

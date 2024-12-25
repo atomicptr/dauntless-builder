@@ -1,3 +1,5 @@
 import weaponsJson from "$lib/static/weapons.json";
 import type { WeaponsData } from "./phalanx-types";
-export const phalanxWeapons = weaponsJson as unknown as WeaponsData;
+const weaponsData = weaponsJson as unknown as WeaponsData;
+export const phalanxWeaponsMeta = weaponsData.__meta;
+export const phalanxWeapons = weaponsData.items;

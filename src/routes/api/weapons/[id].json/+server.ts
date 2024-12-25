@@ -1,4 +1,4 @@
-import { phalanxWeapons } from "$lib/data/phalanx-weapons";
+import { phalanxWeapons, phalanxWeaponsMeta } from "$lib/data/phalanx-weapons";
 import { makeJsonResponse } from "$lib/json";
 import { error } from "@sveltejs/kit";
 import type { EntryGenerator, RequestHandler } from "./$types";
@@ -6,9 +6,7 @@ import type { EntryGenerator, RequestHandler } from "./$types";
 export const prerender = true;
 
 export const entries: EntryGenerator = () => {
-    return Object.keys(phalanxWeapons)
-        .filter((key) => !isNaN(parseInt(key)))
-        .map((id) => ({ id }));
+    return Object.keys(phalanxWeapons).map((id) => ({ id }));
 };
 
 export const GET: RequestHandler = ({ params }) => {
@@ -17,7 +15,7 @@ export const GET: RequestHandler = ({ params }) => {
     }
 
     return makeJsonResponse({
-        __meta: phalanxWeapons.__meta,
+        __meta: phalanxWeaponsMeta,
         ...phalanxWeapons[params.id],
     });
 };
