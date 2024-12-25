@@ -11,6 +11,7 @@ import { translatableString } from "$lib/utils/translatable-string";
 import { t } from "$lib/i18n.svelte";
 import { phalanxData } from "$lib/data/phalanx-data";
 import { phalanxBuilds } from "$lib/data/phalanx-builds";
+import { phalanxWeapons } from "$lib/data/phalanx-weapons";
 
 let filterData = $state<FilterData>({
     weaponType: null,
