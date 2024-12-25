@@ -2,6 +2,7 @@
 import { empty, serialize, type Build } from "$lib/build/Build";
 import { armourStatsForLevel, getCellPerks, mergePerksArray, sortPerkSetByName } from "$lib/data/levels";
 import { phalanxData } from "$lib/data/phalanx-data";
+import { phalanxWeapons } from "$lib/data/phalanx-weapons";
 import { translatableString } from "$lib/utils/translatable-string";
 import LazyImage from "./LazyImage.svelte";
 
@@ -48,19 +49,19 @@ const imgClasses = "w-12 h-12";
         {#if title}
             {title}
         {:else if build.weapon1.id !== 0 || build.weapon2.id !== 0}
-            {translatableString(phalanxData.weapons[build.weapon1.id].name)}
+            {translatableString(phalanxWeapons[build.weapon1.id].name)}
             {#if build.weapon1.id !== 0 && build.weapon2.id !== 0}
                 &nbsp;/&nbsp;
             {/if}
-            {translatableString(phalanxData.weapons[build.weapon2.id].name)}
+            {translatableString(phalanxWeapons[build.weapon2.id].name)}
         {/if}
     </div>
     <div class="flex flex-row flex-wrap gap-2 justify-center sm:justify-start max-w-64 sm:max-w-full mb-2">
         {#if build.weapon1.id !== 0}
-            <LazyImage class={imgClasses} src={phalanxData.weapons[build.weapon1.id]?.icon ?? `/icons/${phalanxData.weapons[build.weapon1.id].type}.png`} alt={translatableString(phalanxData.weapons[build.weapon1.id].name)} />
+            <LazyImage class={imgClasses} src={phalanxWeapons[build.weapon1.id]?.icon ?? `/icons/${phalanxWeapons[build.weapon1.id].type}.png`} alt={translatableString(phalanxWeapons[build.weapon1.id].name)} />
         {/if}
         {#if build.weapon2.id !== 0}
-            <LazyImage class={imgClasses} src={phalanxData.weapons[build.weapon2.id]?.icon ?? `/icons/${phalanxData.weapons[build.weapon2.id].type}.png`} alt={translatableString(phalanxData.weapons[build.weapon2.id].name)} />
+            <LazyImage class={imgClasses} src={phalanxWeapons[build.weapon2.id]?.icon ?? `/icons/${phalanxWeapons[build.weapon2.id].type}.png`} alt={translatableString(phalanxWeapons[build.weapon2.id].name)} />
         {/if}
         {#if build.head.id !== 0}
             <LazyImage class={imgClasses} src={phalanxData.armours[build.head.id]?.icon ?? `/icons/${phalanxData.armours[build.head.id].type}.png`} alt={translatableString(phalanxData.armours[build.head.id].name)} />

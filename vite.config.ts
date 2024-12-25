@@ -51,6 +51,7 @@ export default defineConfig(({ command, mode }) => ({
                         await fs.mkdir(baseDir, { recursive: true });
 
                         await fetchAndWrite("/api/data", path.join(baseDir, "data.json"));
+                        await fetchAndWrite("/api/weapons", path.join(baseDir, "weapons.json"));
                         await fetchAndWrite("/api/i18n", path.join(baseDir, "i18n.json"));
                         await fetchAndWrite("/api/finder-data", path.join(baseDir, "finder-data.json"));
                         await fetchAndWrite("/api/builds", path.join(baseDir, "builds.json"));

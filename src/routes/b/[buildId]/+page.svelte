@@ -282,7 +282,7 @@ const gotoFinderPageUsingCurrentPerks = () => {
 
 {#if dialog.open === "weapon"}
     <PickerModal
-        items={Object.values(phalanxData.weapons)}
+        items={Object.values(phalanxWeapons)}
         filters={[
             dialog.filters.weaponType ? filterWeaponType(dialog.filters.weaponType as WeaponType) : null,
             dialog.filters.element ? filterElementType(dialog.filters.element as Element) : null

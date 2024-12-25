@@ -2,17 +2,17 @@ import { BuildFlags, type Build } from "./Build";
 import { talentEmpty } from "./talents";
 import { armourMaxLevel, weaponMaxLevel } from "$lib/data/static-data";
 import type { ArmourType, Data } from "$lib/data/phalanx-types";
+import { phalanxWeapons } from "$lib/data/phalanx-weapons";
 
 export const validate = (build: Build, data: Data): Build => {
     const newBuild = structuredClone(build);
 
-    const weapons = data.weapons;
     const armours = data.armours;
     const lanternCores = data.lantern_cores;
     const perks = data.perks;
 
     const levelIsInRange = (level: number, maxLevel: number) => level >= 1 && level <= maxLevel;
-    const weaponExists = (id: number) => (id === 0 ? true : id in weapons);
+    const weaponExists = (id: number) => (id === 0 ? true : id in phalanxWeapons);
     const armourExists = (id: number) => (id === 0 ? true : id in armours);
     const armourIs = (id: number, type: ArmourType) => (id === 0 ? true : armours[id].type === type);
     const lanternCoreExists = (id: number) => (id === 0 ? true : id in lanternCores);

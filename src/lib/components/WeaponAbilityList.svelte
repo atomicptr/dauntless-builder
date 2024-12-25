@@ -9,13 +9,14 @@ import MinusIcon from "./icons/MinusIcon.svelte";
 import PlusIcon from "./icons/PlusIcon.svelte";
 import { t } from "$lib/i18n.svelte";
 import { phalanxData } from "$lib/data/phalanx-data";
+import { phalanxWeapons } from "$lib/data/phalanx-weapons";
 
 interface Props {
     selected: BuildWeapon;
 }
 
 const { selected }: Props = $props();
-const weaponData = $derived(selected.id !== 0 ? phalanxData.weapons[selected.id] : null) as Weapon | null;
+const weaponData = $derived(selected.id !== 0 ? phalanxWeapons[selected.id] : null) as Weapon | null;
 
 const toggleOpen = () => {
     configViewWeaponAbilities.set(!$configViewWeaponAbilities);

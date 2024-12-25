@@ -5,6 +5,10 @@ export interface HasMetaData {
     };
 }
 
+export type WeaponsData = HasMetaData & {
+    [id: string]: Weapon;
+};
+
 export interface Data extends HasMetaData {
     patch: Patch;
     armours: {

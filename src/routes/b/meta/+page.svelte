@@ -25,8 +25,8 @@ const builds = $derived(
             }
 
             const b = deserialize(build.buildId).unwrapOr(empty());
-            const w1 = b.weapon1.id in phalanxData.weapons ? phalanxData.weapons[b.weapon1.id] : null;
-            const w2 = b.weapon2.id in phalanxData.weapons ? phalanxData.weapons[b.weapon2.id] : null;
+            const w1 = b.weapon1.id in phalanxWeapons ? phalanxWeapons[b.weapon1.id] : null;
+            const w2 = b.weapon2.id in phalanxWeapons ? phalanxWeapons[b.weapon2.id] : null;
             return w1?.type === filterData.weaponType || w2?.type === filterData.weaponType;
         })
         .filter((build) => {

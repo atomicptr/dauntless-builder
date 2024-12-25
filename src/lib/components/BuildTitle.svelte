@@ -2,6 +2,7 @@
 import { page } from "$app/stores";
 import { deserialize, empty } from "$lib/build/Build";
 import { phalanxData } from "$lib/data/phalanx-data";
+import { phalanxWeapons } from "$lib/data/phalanx-weapons";
 import { t } from "$lib/i18n.svelte";
 import { translatableString } from "$lib/utils/translatable-string";
 
@@ -25,13 +26,13 @@ const buildTitle = $derived.by(() => {
     const ids = [build.weapon1.id, build.weapon2.id].filter((id) => id !== 0);
 
     if (ids.length === 1) {
-        return $t("page-build-one-item-title", { weapon: translatableString(phalanxData.weapons[ids[0]].name) });
+        return $t("page-build-one-item-title", { weapon: translatableString(phalanxWeapons[ids[0]].name) });
     }
 
     if (ids.length === 2) {
         return $t("page-build-two-items-title", {
-            weapon1: translatableString(phalanxData.weapons[ids[0]].name),
-            weapon2: translatableString(phalanxData.weapons[ids[1]].name),
+            weapon1: translatableString(phalanxWeapons[ids[0]].name),
+            weapon2: translatableString(phalanxWeapons[ids[1]].name),
         });
     }
 
@@ -40,9 +41,9 @@ const buildTitle = $derived.by(() => {
 
 const iconPath = $derived(
     build.weapon1.id !== 0
-        ? phalanxData.weapons[build.weapon1.id].icon
+        ? phalanxWeapons[build.weapon1.id].icon
         : build.weapon2.id !== 0
-          ? phalanxData.weapons[build.weapon2.id].icon
+          ? phalanxWeapons[build.weapon2.id].icon
           : defaultIconPath,
 );
 
