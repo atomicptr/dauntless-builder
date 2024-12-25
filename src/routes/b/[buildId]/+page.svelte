@@ -49,6 +49,7 @@ import { armourMaxLevel, perkIcon, weaponMaxLevel } from "$lib/data/static-data.
 import { finderDefaultData, finderPageDataSerialize } from "$lib/finder/initial";
 import { t } from "$lib/i18n.svelte.js";
 import { translatableString } from "$lib/utils/translatable-string.js";
+import { phalanxWeapons } from "$lib/data/phalanx-weapons";
 
 const { data } = $props();
 

@@ -12,6 +12,7 @@ import WeaponPicker from "$lib/components/WeaponPicker.svelte";
 import YoutubeEmbed from "$lib/components/YoutubeEmbed.svelte";
 import { t } from "$lib/i18n.svelte.js";
 import { translatableString } from "$lib/utils/translatable-string";
+import { phalanxWeapons } from "$lib/data/phalanx-weapons";
 
 const { data } = $props();
 
