@@ -1,0 +1,19 @@
+{
+    "version": 1,
+    "include": [
+        "/b/*"
+    ],
+    "exclude": [
+        "/api/*",
+        "/b/favorites",
+        "/b/meta",
+        "/b/meta/*",
+        "/b/new",
+        "/b/progression",
+        "/b/progression/*",
+        "/b/trials",
+        "/b/trials/*",
+        "/privacy",
+        "/settings"
+    ]
+}
