@@ -1,5 +1,5 @@
 <script lang="ts">
-import { phalanxData } from "$lib/data/phalanx-data";
+import { phalanxPerks } from "$lib/data/phalanx-perks";
 import type { Perk } from "$lib/data/phalanx-types";
 import { perkIcon } from "$lib/data/static-data";
 import { t } from "$lib/i18n.svelte";
@@ -20,7 +20,7 @@ interface Props {
 let search = $state("");
 
 const { perks, disabledPerks, onSelect, onClear }: Props = $props();
-const perkGroups = Object.groupBy(Object.values(phalanxData.perks) as Perk[], (perk) => perk.type);
+const perkGroups = Object.groupBy(Object.values(phalanxPerks) as Perk[], (perk) => perk.type);
 
 const getPerksByCategoryName = (category: string) => perkGroups[category as keyof typeof perkGroups] as Perk[];
 

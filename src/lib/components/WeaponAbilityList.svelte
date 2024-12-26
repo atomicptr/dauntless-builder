@@ -1,14 +1,12 @@
 <script lang="ts">
-import { page } from "$app/stores";
 import type { BuildWeapon } from "$lib/build/Build";
-import type { TranslatableString, ValuesType, Weapon, WeaponAbility } from "$lib/data/phalanx-types";
+import type { Weapon, WeaponAbility } from "$lib/data/phalanx-types";
 import { translatableString } from "$lib/utils/translatable-string";
 import ValuesText from "./ValuesText.svelte";
 import { configViewWeaponAbilities } from "$lib/state.svelte";
 import MinusIcon from "./icons/MinusIcon.svelte";
 import PlusIcon from "./icons/PlusIcon.svelte";
 import { t } from "$lib/i18n.svelte";
-import { phalanxData } from "$lib/data/phalanx-data";
 import { phalanxWeapons } from "$lib/data/phalanx-weapons";
 
 interface Props {

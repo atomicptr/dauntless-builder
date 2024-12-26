@@ -1,6 +1,6 @@
 <script lang="ts">
 import type { Build } from "$lib/build/Build";
-import { phalanxData } from "$lib/data/phalanx-data";
+import { phalanxArmours } from "$lib/data/phalanx-armours";
 import type { Element } from "$lib/data/phalanx-types";
 import { elementResistanceLevel, oppositeElement, powerLevel, resistanceLevel } from "$lib/data/static-data";
 import { t } from "$lib/i18n.svelte";
@@ -34,17 +34,17 @@ type ElementalResistanceMap = {
 
 const elementalResistances = $derived(
     [
-        build.head.id in phalanxData.armours
-            ? [phalanxData.armours[build.head.id].element, elementResistanceLevel(build.head.level)]
+        build.head.id in phalanxArmours
+            ? [phalanxArmours[build.head.id].element, elementResistanceLevel(build.head.level)]
             : null,
-        build.torso.id in phalanxData.armours
-            ? [phalanxData.armours[build.torso.id].element, elementResistanceLevel(build.torso.level)]
+        build.torso.id in phalanxArmours
+            ? [phalanxArmours[build.torso.id].element, elementResistanceLevel(build.torso.level)]
             : null,
-        build.arms.id in phalanxData.armours
-            ? [phalanxData.armours[build.arms.id].element, elementResistanceLevel(build.arms.level)]
+        build.arms.id in phalanxArmours
+            ? [phalanxArmours[build.arms.id].element, elementResistanceLevel(build.arms.level)]
             : null,
-        build.legs.id in phalanxData.armours
-            ? [phalanxData.armours[build.legs.id].element, elementResistanceLevel(build.legs.level)]
+        build.legs.id in phalanxArmours
+            ? [phalanxArmours[build.legs.id].element, elementResistanceLevel(build.legs.level)]
             : null,
     ]
         .filter((elem) => elem !== null)

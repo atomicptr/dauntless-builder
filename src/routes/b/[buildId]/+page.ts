@@ -3,7 +3,7 @@ import { redirect } from "@sveltejs/kit";
 import type { PageLoad } from "./$types";
 import { validate } from "$lib/build/validate";
 import { createETag } from "$lib/json";
-import { phalanxData } from "$lib/data/phalanx-data";
+import { phalanxPatchMeta } from "$lib/data/phalanx-patch";
 
 export const load: PageLoad = async ({ parent, params, setHeaders }) => {
     const buildId = params.buildId;
@@ -20,11 +20,11 @@ export const load: PageLoad = async ({ parent, params, setHeaders }) => {
     }
 
     setHeaders({
-        ETag: createETag(buildId + phalanxData.__meta?.buildTime.toString()),
+        ETag: createETag(buildId + phalanxPatchMeta?.buildTime.toString()),
         "Cache-Control": "max-age=3600, must-revalidate",
     });
 
     return {
-        build: validate(build.unwrapOr(empty()), phalanxData),
+        build: validate(build.unwrapOr(empty())),
     };
 };

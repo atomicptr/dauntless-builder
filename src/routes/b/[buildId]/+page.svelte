@@ -34,7 +34,6 @@ import WeaponPicker from "$lib/components/WeaponPicker.svelte";
 import WeaponPower from "$lib/components/WeaponPower.svelte";
 import { itemIconSize } from "$lib/constants";
 import { armourStatsForLevel, getCellPerks, mergePerksArray } from "$lib/data/levels";
-import { phalanxData } from "$lib/data/phalanx-data.js";
 import {
     type Armour,
     type ArmourType,
@@ -50,6 +49,9 @@ import { finderDefaultData, finderPageDataSerialize } from "$lib/finder/initial"
 import { t } from "$lib/i18n.svelte.js";
 import { translatableString } from "$lib/utils/translatable-string.js";
 import { phalanxWeapons } from "$lib/data/phalanx-weapons";
+import { phalanxArmours } from "$lib/data/phalanx-armours.js";
+import { phalanxPerks } from "$lib/data/phalanx-perks.js";
+import { phalanxLanternCores } from "$lib/data/phalanx-lantern-cores.js";
 
 const { data } = $props();
 
@@ -165,51 +167,51 @@ const elementClass = (item: FilterItem): string =>
 
 const isCopyButtonVisible = () => {
     const perks = mergePerksArray([
-        phalanxData.armours[data.build.head.id]
-            ? (armourStatsForLevel(phalanxData.armours[data.build.head.id], data.build.head.level) ?? {})
+        phalanxArmours[data.build.head.id]
+            ? (armourStatsForLevel(phalanxArmours[data.build.head.id], data.build.head.level) ?? {})
             : {},
         getCellPerks(data.build.head.cells),
-        phalanxData.armours[data.build.torso.id]
-            ? (armourStatsForLevel(phalanxData.armours[data.build.torso.id], data.build.torso.level) ?? {})
+        phalanxArmours[data.build.torso.id]
+            ? (armourStatsForLevel(phalanxArmours[data.build.torso.id], data.build.torso.level) ?? {})
             : {},
         getCellPerks(data.build.torso.cells),
-        phalanxData.armours[data.build.arms.id]
-            ? (armourStatsForLevel(phalanxData.armours[data.build.arms.id], data.build.arms.level) ?? {})
+        phalanxArmours[data.build.arms.id]
+            ? (armourStatsForLevel(phalanxArmours[data.build.arms.id], data.build.arms.level) ?? {})
             : {},
         getCellPerks(data.build.arms.cells),
-        phalanxData.armours[data.build.legs.id]
-            ? (armourStatsForLevel(phalanxData.armours[data.build.legs.id], data.build.legs.level) ?? {})
+        phalanxArmours[data.build.legs.id]
+            ? (armourStatsForLevel(phalanxArmours[data.build.legs.id], data.build.legs.level) ?? {})
             : {},
         getCellPerks(data.build.legs.cells),
     ]);
 
-    return Object.entries(perks).filter(([perkId, amount]) => phalanxData.perks[perkId].threshold <= amount).length > 0;
+    return Object.entries(perks).filter(([perkId, amount]) => phalanxPerks[perkId].threshold <= amount).length > 0;
 };
 
 const gotoFinderPageUsingCurrentPerks = () => {
     const finderData = finderDefaultData();
 
     const perks = mergePerksArray([
-        phalanxData.armours[data.build.head.id]
-            ? (armourStatsForLevel(phalanxData.armours[data.build.head.id], data.build.head.level) ?? {})
+        phalanxArmours[data.build.head.id]
+            ? (armourStatsForLevel(phalanxArmours[data.build.head.id], data.build.head.level) ?? {})
             : {},
         getCellPerks(data.build.head.cells),
-        phalanxData.armours[data.build.torso.id]
-            ? (armourStatsForLevel(phalanxData.armours[data.build.torso.id], data.build.torso.level) ?? {})
+        phalanxArmours[data.build.torso.id]
+            ? (armourStatsForLevel(phalanxArmours[data.build.torso.id], data.build.torso.level) ?? {})
             : {},
         getCellPerks(data.build.torso.cells),
-        phalanxData.armours[data.build.arms.id]
-            ? (armourStatsForLevel(phalanxData.armours[data.build.arms.id], data.build.arms.level) ?? {})
+        phalanxArmours[data.build.arms.id]
+            ? (armourStatsForLevel(phalanxArmours[data.build.arms.id], data.build.arms.level) ?? {})
             : {},
         getCellPerks(data.build.arms.cells),
-        phalanxData.armours[data.build.legs.id]
-            ? (armourStatsForLevel(phalanxData.armours[data.build.legs.id], data.build.legs.level) ?? {})
+        phalanxArmours[data.build.legs.id]
+            ? (armourStatsForLevel(phalanxArmours[data.build.legs.id], data.build.legs.level) ?? {})
             : {},
         getCellPerks(data.build.legs.cells),
     ]);
 
     finderData.perks = Object.entries(perks)
-        .filter(([perkId, amount]) => phalanxData.perks[perkId].threshold <= amount)
+        .filter(([perkId, amount]) => phalanxPerks[perkId].threshold <= amount)
         .map(([perkId, _]) => Number(perkId));
 
     goto(`/b/finder/${finderPageDataSerialize(finderData)}`);
@@ -320,7 +322,7 @@ const gotoFinderPageUsingCurrentPerks = () => {
     />
 {:else if dialog.open === "armour"}
     <PickerModal
-        items={Object.values(phalanxData.armours)}
+        items={Object.values(phalanxArmours)}
         filters={[
             filterArmourType(dialog.filters.type as ArmourType),
             dialog.filters.perkType ? filterArmourByPerk(dialog.filters.perkType as number) : null,
@@ -353,7 +355,7 @@ const gotoFinderPageUsingCurrentPerks = () => {
     </PickerModal>
 {:else if dialog.open === "lantern_core"}
     <PickerModal
-        items={Object.values(phalanxData.lantern_cores)}
+        items={Object.values(phalanxLanternCores)}
         onSelected={onItemSelected}
         onClose={onDialogClosed}
     >
@@ -373,7 +375,7 @@ const gotoFinderPageUsingCurrentPerks = () => {
     </PickerModal>
 {:else if dialog.open === "cells"}
     <PickerModal
-        items={Object.values(phalanxData.perks)}
+        items={Object.values(phalanxPerks)}
         filters={[
             dialog.filters.perkType ? filterPerkByPerkType(dialog.filters.perkType as PerkType) : null
         ]}

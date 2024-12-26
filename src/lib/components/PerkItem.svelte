@@ -1,10 +1,9 @@
 <script lang="ts">
-import { page } from "$app/stores";
 import { type Perk } from "$lib/data/phalanx-types";
 import { translatableString } from "$lib/utils/translatable-string";
 import type { Snippet } from "svelte";
 import PerkTooltip from "./PerkTooltip.svelte";
-import { phalanxData } from "$lib/data/phalanx-data";
+import { phalanxPerks } from "$lib/data/phalanx-perks";
 
 interface Props {
     perkId: string;
@@ -21,5 +20,5 @@ const { perkId, amount, item }: Props = $props();
 {/snippet}
 
 <PerkTooltip {perkId}>
-    {@render (item ?? genericItem)(phalanxData.perks[perkId], amount)}
+    {@render (item ?? genericItem)(phalanxPerks[perkId], amount)}
 </PerkTooltip>

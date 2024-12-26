@@ -1,7 +1,8 @@
 <script lang="ts">
 import type { BuildArmourPiece } from "$lib/build/Build";
 import { armourStatsForLevel, getCellPerks, mergePerks, sortPerkSetByName } from "$lib/data/levels";
-import { phalanxData } from "$lib/data/phalanx-data";
+import { phalanxArmours } from "$lib/data/phalanx-armours";
+import { phalanxPerks } from "$lib/data/phalanx-perks";
 import { type Perk } from "$lib/data/phalanx-types";
 import { perkIcon } from "$lib/data/static-data";
 import { translatableString } from "$lib/utils/translatable-string";
@@ -14,9 +15,9 @@ interface Props {
 }
 
 const { selected }: Props = $props();
-const armour = $derived(selected.id !== 0 ? phalanxData.armours[selected.id] : null);
+const armour = $derived(selected.id !== 0 ? phalanxArmours[selected.id] : null);
 const perks = $derived(armourStatsForLevel(armour, selected.level) ?? {});
-const perkSet = $derived(sortPerkSetByName(phalanxData.perks, mergePerks(perks, getCellPerks(selected.cells))));
+const perkSet = $derived(sortPerkSetByName(phalanxPerks, mergePerks(perks, getCellPerks(selected.cells))));
 </script>
 
 {#if Object.keys(perkSet).length > 0}

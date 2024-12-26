@@ -1,8 +1,7 @@
 <script lang="ts">
-import { page } from "$app/stores";
 import type { BuildArmourPiece } from "$lib/build/Build";
 import { itemIconSize } from "$lib/constants";
-import { phalanxData } from "$lib/data/phalanx-data";
+import { phalanxArmours } from "$lib/data/phalanx-armours";
 import type { ArmourType } from "$lib/data/phalanx-types";
 import { t } from "$lib/i18n.svelte";
 import { translatableString } from "$lib/utils/translatable-string";
@@ -20,7 +19,7 @@ interface ArmourPiecePickerProps {
 }
 
 const { type, selected, onArmourPieceClick, onCellClick }: ArmourPiecePickerProps = $props();
-const armour = $derived(selected.id !== 0 ? phalanxData.armours[selected.id] : null);
+const armour = $derived(selected.id !== 0 ? phalanxArmours[selected.id] : null);
 const icon = $derived(armour?.icon ?? `/icons/${type}.png`);
 const disabled = $derived(onArmourPieceClick === undefined);
 </script>

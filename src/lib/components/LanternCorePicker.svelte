@@ -1,7 +1,7 @@
 <script lang="ts">
 import type { BuildLanternCore } from "$lib/build/Build";
 import { itemIconSize } from "$lib/constants";
-import { phalanxData } from "$lib/data/phalanx-data";
+import { phalanxLanternCores } from "$lib/data/phalanx-lantern-cores";
 import { t } from "$lib/i18n.svelte";
 import { translatableString } from "$lib/utils/translatable-string";
 import LanternCoreStats from "./LanternCoreStats.svelte";
@@ -13,7 +13,7 @@ interface LanternCorePickerProps {
 }
 
 const { selected, onClick }: LanternCorePickerProps = $props();
-const lanternCore = $derived(selected.id !== 0 ? phalanxData.lantern_cores[selected.id] : null);
+const lanternCore = $derived(selected.id !== 0 ? phalanxLanternCores[selected.id] : null);
 const icon = $derived(lanternCore?.icon ?? "/icon.png");
 const disabled = $derived(onClick === undefined);
 </script>

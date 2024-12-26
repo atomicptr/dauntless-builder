@@ -11,8 +11,8 @@ import { browser } from "$app/environment";
 import ExclamationTriangle from "$lib/components/icons/ExclamationTriangle.svelte";
 import { t } from "$lib/i18n.svelte";
 import { crowdinLink } from "$lib/constants";
-import { phalanxData } from "$lib/data/phalanx-data";
 import { phalanxI18nData } from "$lib/data/phalanx-i18n";
+import { phalanxPatch } from "$lib/data/phalanx-patch";
 
 const { children } = $props();
 
@@ -92,9 +92,7 @@ theme.subscribe((theme) => {
 
             <button class="drawer-overlay" onclick={() => drawerOpen.set(false)} aria-label="close drawer"></button>
 
-            <DrawerMenu
-                patch={phalanxData.patch}
-            />
+            <DrawerMenu patch={phalanxPatch} />
         </div>
     </div>
 </main>

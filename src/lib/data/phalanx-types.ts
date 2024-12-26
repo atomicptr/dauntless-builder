@@ -9,21 +9,21 @@ export type WeaponsData = HasMetaData & {
     items: { [id: string]: Weapon };
 };
 
-export interface Data extends HasMetaData {
-    patch: Patch;
-    armours: {
-        [id: string]: Armour;
-    };
-    weapons: {
-        [id: string]: Weapon;
-    };
-    lantern_cores: {
-        [id: string]: LanternCore;
-    };
-    perks: {
-        [id: string]: Perk;
-    };
-}
+export type ArmoursData = HasMetaData & {
+    items: { [id: string]: Armour };
+};
+
+export type PerksData = HasMetaData & {
+    items: { [id: string]: Perk };
+};
+
+export type LanternCoresData = HasMetaData & {
+    items: { [id: string]: LanternCore };
+};
+
+export type PatchData = HasMetaData & {
+    item: Patch;
+};
 
 export interface Patch {
     name: string;

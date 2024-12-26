@@ -1,5 +1,4 @@
 <script lang="ts">
-import { page } from "$app/stores";
 import { armourTypeValues, type Armour, type ArmourType } from "$lib/data/phalanx-types";
 import { translatableString } from "$lib/utils/translatable-string";
 import { match } from "ts-pattern";
@@ -12,7 +11,7 @@ import { filterItemCompare } from "$lib/build/filters";
 import type { WhitelistedItems } from "$lib/finder/finder.svelte";
 import { searchInTranslatableStrings } from "$lib/utils/search";
 import { t } from "$lib/i18n.svelte";
-import { phalanxData } from "$lib/data/phalanx-data";
+import { phalanxArmours } from "$lib/data/phalanx-armours";
 
 interface Props {
     heads: number[];
@@ -29,7 +28,7 @@ const filtersCount = $derived(heads.length + torsos.length + arms.length + legs.
 let filtersSearch = $state("");
 let filtersOpen = $state(false);
 
-const armours = Object.values<Armour>(phalanxData.armours);
+const armours = Object.values<Armour>(phalanxArmours);
 const armoursByType = Object.groupBy(armours, (item) => item.type);
 
 const collectionByType = (type: ArmourType) =>

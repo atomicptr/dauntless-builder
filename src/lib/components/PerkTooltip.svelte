@@ -1,6 +1,5 @@
 <script lang="ts">
-import { page } from "$app/stores";
-import { phalanxData } from "$lib/data/phalanx-data";
+import { phalanxPerks } from "$lib/data/phalanx-perks";
 import { renderTemplate } from "$lib/utils/template-renderer";
 import { translatableString } from "$lib/utils/translatable-string";
 import type { Snippet } from "svelte";
@@ -13,7 +12,7 @@ interface Props {
 
 const { perkId, children, ...rest }: Props = $props();
 
-const perk = $derived(phalanxData.perks[perkId]);
+const perk = $derived(phalanxPerks[perkId]);
 </script>
 
 <div class={"sm:tooltip sm:tooltip-bottom " + rest.class} data-tip={renderTemplate(translatableString(perk.effect), perk.values)}>

@@ -1,6 +1,6 @@
 <script lang="ts">
-import { page } from "$app/stores";
-import { phalanxData } from "$lib/data/phalanx-data";
+import { phalanxArmours } from "$lib/data/phalanx-armours";
+import { phalanxPerks } from "$lib/data/phalanx-perks";
 import { type Armour, type Perk } from "$lib/data/phalanx-types";
 import { t } from "$lib/i18n.svelte";
 import { translatableString } from "$lib/utils/translatable-string";
@@ -13,9 +13,9 @@ interface Props {
 
 const { filterData, updateFilter }: Props = $props();
 
-const perks = Object.values<Perk>(phalanxData.perks)
+const perks = Object.values<Perk>(phalanxPerks)
     .filter((perk) =>
-        Object.values<Armour>(phalanxData.armours)
+        Object.values<Armour>(phalanxArmours)
             .filter((armour) => armour.type === filterData.type)
             .some((armour) => armour.stats.some((stats) => perk.id in stats.perks)),
     )

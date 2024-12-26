@@ -1,11 +1,11 @@
-import { phalanxWeapons, phalanxWeaponsMeta } from "$lib/data/phalanx-weapons";
+import { phalanxArmours, phalanxArmoursMeta } from "$lib/data/phalanx-armours";
 import { makeJsonResponse } from "$lib/json";
 
 export const prerender = true;
 
 export async function GET() {
     return makeJsonResponse({
-        __meta: phalanxWeaponsMeta,
-        items: phalanxWeapons,
+        __meta: phalanxArmoursMeta,
+        items: phalanxArmours,
     });
 }

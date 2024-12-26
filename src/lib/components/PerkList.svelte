@@ -1,8 +1,8 @@
 <script lang="ts">
-import { page } from "$app/stores";
 import type { Build } from "$lib/build/Build";
 import { armourStatsForLevel, getCellPerks, mergePerksArray, sortPerkSetByName } from "$lib/data/levels";
-import { phalanxData } from "$lib/data/phalanx-data";
+import { phalanxArmours } from "$lib/data/phalanx-armours";
+import { phalanxPerks } from "$lib/data/phalanx-perks";
 import { type Perk } from "$lib/data/phalanx-types";
 import { perkIcon } from "$lib/data/static-data";
 import { t } from "$lib/i18n.svelte";
@@ -20,22 +20,22 @@ const { build }: PerkListProps = $props();
 
 const perkSet = $derived(
     sortPerkSetByName(
-        phalanxData.perks,
+        phalanxPerks,
         mergePerksArray([
-            phalanxData.armours[build.head.id]
-                ? (armourStatsForLevel(phalanxData.armours[build.head.id], build.head.level) ?? {})
+            phalanxArmours[build.head.id]
+                ? (armourStatsForLevel(phalanxArmours[build.head.id], build.head.level) ?? {})
                 : {},
             getCellPerks(build.head.cells),
-            phalanxData.armours[build.torso.id]
-                ? (armourStatsForLevel(phalanxData.armours[build.torso.id], build.torso.level) ?? {})
+            phalanxArmours[build.torso.id]
+                ? (armourStatsForLevel(phalanxArmours[build.torso.id], build.torso.level) ?? {})
                 : {},
             getCellPerks(build.torso.cells),
-            phalanxData.armours[build.arms.id]
-                ? (armourStatsForLevel(phalanxData.armours[build.arms.id], build.arms.level) ?? {})
+            phalanxArmours[build.arms.id]
+                ? (armourStatsForLevel(phalanxArmours[build.arms.id], build.arms.level) ?? {})
                 : {},
             getCellPerks(build.arms.cells),
-            phalanxData.armours[build.legs.id]
-                ? (armourStatsForLevel(phalanxData.armours[build.legs.id], build.legs.level) ?? {})
+            phalanxArmours[build.legs.id]
+                ? (armourStatsForLevel(phalanxArmours[build.legs.id], build.legs.level) ?? {})
                 : {},
             getCellPerks(build.legs.cells),
         ]),

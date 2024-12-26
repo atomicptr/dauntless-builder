@@ -1,7 +1,5 @@
 <script lang="ts">
-import { page } from "$app/stores";
 import type { BuildWeapon } from "$lib/build/Build";
-import { phalanxData } from "$lib/data/phalanx-data";
 import { phalanxWeapons } from "$lib/data/phalanx-weapons";
 import { translatableString } from "$lib/utils/translatable-string";
 import LazyImage from "./LazyImage.svelte";

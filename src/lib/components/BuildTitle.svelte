@@ -1,7 +1,7 @@
 <script lang="ts">
-import { page } from "$app/stores";
 import { deserialize, empty } from "$lib/build/Build";
-import { phalanxData } from "$lib/data/phalanx-data";
+import { phalanxArmours } from "$lib/data/phalanx-armours";
+import { phalanxLanternCores } from "$lib/data/phalanx-lantern-cores";
 import { phalanxWeapons } from "$lib/data/phalanx-weapons";
 import { t } from "$lib/i18n.svelte";
 import { translatableString } from "$lib/utils/translatable-string";
@@ -50,13 +50,11 @@ const iconPath = $derived(
 const metaDescription = $derived(
     "⚔️ " +
         [
-            build.head.id !== 0 ? translatableString(phalanxData.armours[build.head.id].name) : null,
-            build.torso.id !== 0 ? translatableString(phalanxData.armours[build.torso.id].name) : null,
-            build.arms.id !== 0 ? translatableString(phalanxData.armours[build.arms.id].name) : null,
-            build.legs.id !== 0 ? translatableString(phalanxData.armours[build.legs.id].name) : null,
-            build.lanternCore.id !== 0
-                ? translatableString(phalanxData.lantern_cores[build.lanternCore.id].name)
-                : null,
+            build.head.id !== 0 ? translatableString(phalanxArmours[build.head.id].name) : null,
+            build.torso.id !== 0 ? translatableString(phalanxArmours[build.torso.id].name) : null,
+            build.arms.id !== 0 ? translatableString(phalanxArmours[build.arms.id].name) : null,
+            build.legs.id !== 0 ? translatableString(phalanxArmours[build.legs.id].name) : null,
+            build.lanternCore.id !== 0 ? translatableString(phalanxLanternCores[build.lanternCore.id].name) : null,
         ]
             .filter((p) => !!p)
             .join(", "),

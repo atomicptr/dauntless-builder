@@ -1,5 +1,5 @@
 <script lang="ts">
-import { phalanxData } from "$lib/data/phalanx-data";
+import { phalanxPerks } from "$lib/data/phalanx-perks";
 import type { ArmourType } from "$lib/data/phalanx-types";
 import { perkIcon } from "$lib/data/static-data";
 import { translatableString } from "$lib/utils/translatable-string";
@@ -13,7 +13,7 @@ interface CellPickerProps {
 }
 
 const { type, selected, index, onClick }: CellPickerProps = $props();
-const perk = $derived(selected !== 0 ? phalanxData.perks[selected] : null);
+const perk = $derived(selected !== 0 ? phalanxPerks[selected] : null);
 const disabled = $derived(onClick === undefined);
 </script>
 

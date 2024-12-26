@@ -1,7 +1,5 @@
 <script lang="ts">
-import { page } from "$app/stores";
 import type { BuildWeapon } from "$lib/build/Build";
-import { phalanxData } from "$lib/data/phalanx-data";
 import { phalanxWeapons } from "$lib/data/phalanx-weapons";
 import { t } from "$lib/i18n.svelte";
 import { configViewWeaponTalents } from "$lib/state.svelte";

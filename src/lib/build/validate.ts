@@ -1,22 +1,21 @@
 import { BuildFlags, type Build } from "./Build";
 import { talentEmpty } from "./talents";
 import { armourMaxLevel, weaponMaxLevel } from "$lib/data/static-data";
-import type { ArmourType, Data } from "$lib/data/phalanx-types";
+import type { ArmourType } from "$lib/data/phalanx-types";
 import { phalanxWeapons } from "$lib/data/phalanx-weapons";
+import { phalanxArmours } from "$lib/data/phalanx-armours";
+import { phalanxPerks } from "$lib/data/phalanx-perks";
+import { phalanxLanternCores } from "$lib/data/phalanx-lantern-cores";
 
-export const validate = (build: Build, data: Data): Build => {
+export const validate = (build: Build): Build => {
     const newBuild = structuredClone(build);
-
-    const armours = data.armours;
-    const lanternCores = data.lantern_cores;
-    const perks = data.perks;
 
     const levelIsInRange = (level: number, maxLevel: number) => level >= 1 && level <= maxLevel;
     const weaponExists = (id: number) => (id === 0 ? true : id in phalanxWeapons);
-    const armourExists = (id: number) => (id === 0 ? true : id in armours);
-    const armourIs = (id: number, type: ArmourType) => (id === 0 ? true : armours[id].type === type);
-    const lanternCoreExists = (id: number) => (id === 0 ? true : id in lanternCores);
-    const perkExists = (id: number) => (id === 0 ? true : id in perks);
+    const armourExists = (id: number) => (id === 0 ? true : id in phalanxArmours);
+    const armourIs = (id: number, type: ArmourType) => (id === 0 ? true : phalanxArmours[id].type === type);
+    const lanternCoreExists = (id: number) => (id === 0 ? true : id in phalanxLanternCores);
+    const perkExists = (id: number) => (id === 0 ? true : id in phalanxPerks);
     const hasInvalidCell = (cells: number[]) => !cells.some(perkExists);
 
     // weapon 1

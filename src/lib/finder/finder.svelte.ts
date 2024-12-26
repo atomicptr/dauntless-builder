@@ -1,18 +1,16 @@
 import { type Build } from "$lib/build/Build";
-import { get } from "svelte/store";
 import type {
     ArmourType,
     FinderBasicArmour,
     FinderBasicArmour2LevelPerkMap,
     FinderBasicArmour3LevelPerkMap,
     FinderData,
-    Perk,
 } from "$lib/data/phalanx-types";
 import { findAvailablePerksImplementation } from "./perk-checker";
 import { findBuildsImplementation } from "./build-finder";
 import { match } from "ts-pattern";
-import { phalanxData } from "$lib/data/phalanx-data";
 import { phalanxFinderData } from "$lib/data/phalanx-finder-data";
+import { phalanxPerks } from "$lib/data/phalanx-perks";
 
 export interface WhitelistedItems {
     heads: number[];
@@ -89,7 +87,7 @@ const filterWhitelistedItems = (finderData: FinderData, whitelist?: WhitelistedI
 };
 
 export const findBuilds = (selectedPerks: number[], whitelist?: WhitelistedItems): Build[] => {
-    const allPerks = phalanxData.perks;
+    const allPerks = phalanxPerks;
 
     return findBuildsImplementation(selectedPerks, 50, filterWhitelistedItems(phalanxFinderData, whitelist), allPerks);
 };
@@ -99,7 +97,7 @@ export const findAvailablePerks = (
     requestedPerks: number[],
     whitelist?: WhitelistedItems,
 ): number[] => {
-    const allPerks = phalanxData.perks;
+    const allPerks = phalanxPerks;
 
     return findAvailablePerksImplementation(
         selectedPerks,
