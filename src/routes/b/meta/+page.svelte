@@ -11,6 +11,7 @@ import { translatableString } from "$lib/utils/translatable-string";
 import { t } from "$lib/i18n.svelte";
 import { phalanxBuilds } from "$lib/data/phalanx-builds";
 import { phalanxWeapons } from "$lib/data/phalanx-weapons";
+import { phalanxLanternCores } from "$lib/data/phalanx-lantern-cores";
 
 let filterData = $state<FilterData>({
     weaponType: null,
@@ -27,13 +28,26 @@ const builds = $derived(
             const b = deserialize(build.buildId).unwrapOr(empty());
             const w1 = b.weapon1.id in phalanxWeapons ? phalanxWeapons[b.weapon1.id] : null;
             const w2 = b.weapon2.id in phalanxWeapons ? phalanxWeapons[b.weapon2.id] : null;
+
+            // if no weapon is set just assume this build is for every weapon
+            if (!w1 && !w2) {
+                return true;
+            }
+
             return w1?.type === filterData.weaponType || w2?.type === filterData.weaponType;
         })
         .filter((build) => {
             if (!filterData.lanternCore) {
                 return true;
             }
+
             const b = deserialize(build.buildId).unwrapOr(empty());
+
+            // if no lantern core is set just assume this build is for every lantern core
+            if (!(b.lanternCore.id in phalanxLanternCores)) {
+                return true;
+            }
+
             return b.lanternCore.id === filterData.lanternCore;
         }),
 );
