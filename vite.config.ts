@@ -5,6 +5,7 @@ import fs from "fs/promises";
 import { loadEnv } from "vite";
 
 export default defineConfig(({ command, mode }) => ({
+    envPrefix: "DB_",
     plugins: [
         {
             name: "fetch-data",
