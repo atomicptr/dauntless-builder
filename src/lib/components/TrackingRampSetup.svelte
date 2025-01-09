@@ -1,13 +1,14 @@
 <script lang="ts">
-import { env } from "$env/dynamic/public";
+import { env, envBool } from "$lib/utils/env";
 
 let displayAds = $state(true); // TODO: default this to false, check with "backend" and then load stuff
 
-const enableAds = env.PUBLIC_DB_ENABLE_ADS ?? null;
-const displayPlaceholders = env.PUBLIC_DB_DISPLAY_AD_PLACEHOLDERS ?? null;
-const publisherId = env.PUBLIC_DB_PW_PUBSLIHER_ID ?? null;
-const websiteId = env.PUBLIC_DB_PW_WEBSITE_ID ?? null;
-const ga4MeasurementId = env.PUBLIC_DB_GA4_MEASUREMENT_ID ?? null;
+const enableAds = envBool("DB_ENABLE_ADS");
+const displayPlaceholders = envBool("DB_DISPLAY_AD_PLACEHOLDERS");
+
+const publisherId = env("DB_PW_PUBSLIHER_ID");
+const websiteId = env("DB_PW_WEBSITE_ID");
+const ga4MeasurementId = env("DB_GA4_MEASUREMENT_ID");
 
 const init = async () => {
     // feature flag hasn't been enabled

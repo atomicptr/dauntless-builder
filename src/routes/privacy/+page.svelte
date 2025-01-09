@@ -114,13 +114,14 @@ import PageTitle from "$lib/components/PageTitle.svelte";
     presented with messaging from our Consent Management Platform (CMP) around your privacy choices as a user in regards
     to digital advertising, applicable vendors, cookie usage and more. If you’d like to revisit the choices you have
     made previously on this Website or App, please
-    <a
+    <button
+        type="button"
+        class="link-primary"
         style="cursor: pointer"
         onclick={() => window.ramp.showCmpModal()}
-        href="#clickme"
     >
         click here
-    </a>.
+    </button>.
 </p>
 
 <h2>Advertising Partners Privacy Policies</h2>
