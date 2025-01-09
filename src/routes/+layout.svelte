@@ -13,6 +13,7 @@ import { t } from "$lib/i18n.svelte";
 import { crowdinLink } from "$lib/constants";
 import { phalanxI18nData } from "$lib/data/phalanx-i18n";
 import { phalanxPatch } from "$lib/data/phalanx-patch";
+import TrackingRampSetup from "$lib/components/TrackingRampSetup.svelte";
 
 const { children } = $props();
 
@@ -47,6 +48,8 @@ theme.subscribe((theme) => {
 <svelte:head>
     <title>Dauntless Builder</title>
 </svelte:head>
+
+<TrackingRampSetup />
 
 <main data-theme={$theme}>
     <div class="drawer lg:drawer-open">

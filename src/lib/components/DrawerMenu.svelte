@@ -92,10 +92,9 @@ const version = patch?.version;
         </a>
     </li>
     <li>
-        <a href="/privacy" class="disabled">
+        <a href="/privacy">
             <PrivacyIcon />
             { $t("menu-privacy") }
-            <span class="badge badge-ghost">{$t("term-soon")}</span>
         </a>
     </li>
 
