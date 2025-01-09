@@ -1,5 +1,5 @@
 <script lang="ts">
-import { env, envBool } from "$lib/utils/env";
+import { env, envBool } from "$lib/utils/env-helper";
 
 let displayAds = $state(true); // TODO: default this to false, check with "backend" and then load stuff
 
