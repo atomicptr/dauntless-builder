@@ -1,23 +1,27 @@
 <script lang="ts">
 import { env, envBool } from "$lib/utils/env-helper";
 
-let displayAds = $state(true); // TODO: default this to false, check with "backend" and then load stuff
+let adsEnabledForUser = $state(true); // TODO: default this to false, check with "backend" and then load stuff
 
-const enableAds = envBool("DB_ENABLE_ADS");
+const adsEnabled = envBool("DB_ENABLE_ADS");
 const displayPlaceholders = envBool("DB_DISPLAY_AD_PLACEHOLDERS");
 
 const publisherId = env("DB_PW_PUBSLIHER_ID");
 const websiteId = env("DB_PW_WEBSITE_ID");
 const ga4MeasurementId = env("DB_GA4_MEASUREMENT_ID");
 
+console.log("debugging pw", adsEnabled, displayPlaceholders, publisherId, websiteId, ga4MeasurementId);
+
 const init = async () => {
+    console.log("init", window.gtag);
+
     // feature flag hasn't been enabled
-    if (!enableAds) {
+    if (!adsEnabled) {
         return;
     }
 
     // user doesnt have ads so stop here, might want to check here :)
-    if (!displayAds) {
+    if (!adsEnabledForUser) {
         return;
     }
 
