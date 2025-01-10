@@ -1,7 +1,7 @@
 <script lang="ts">
 import { afterNavigate } from "$app/navigation";
 import { env, envBool } from "$lib/utils/env-helper";
-import logger from "$lib/utils/logger";
+import log from "$lib/utils/logger";
 
 let initialized = $state(false);
 let adsEnabledForUser = $state(true); // TODO: default this to false, check with "backend" and then load stuff
@@ -17,29 +17,29 @@ const init = async () => {
     window.gtag("js", new Date());
     window.gtag("config", ga4MeasurementId);
 
-    logger.debug("ga4 initialized");
+    log.debug("ga4 initialized");
 
     // feature flag hasn't been enabled
     if (!adsEnabled) {
-        logger.debug("ads: disabled");
+        log.debug("ads: disabled");
         return;
     }
 
     // user doesnt have ads so stop here, might want to check here :)
     if (!adsEnabledForUser) {
-        logger.debug("ads: disabled for user");
+        log.debug("ads: disabled for user");
         return;
     }
 
     // if we are displaying placeholders instead, just stop here
     if (displayPlaceholders) {
-        logger.debug("ads: display placeholder");
+        log.debug("ads: display placeholder");
         return;
     }
 
     // not properly set up?
     if (!publisherId || !websiteId) {
-        logger.debug("ads: pw data not setup correctly");
+        log.debug("ads: pw data not setup correctly");
         return;
     }
 
@@ -65,7 +65,7 @@ const init = async () => {
     });
 
     window.ramp.que.push(() => {
-        logger.debug("playwire has been setup");
+        log.debug("playwire has been setup");
         initialized = true;
     });
 

@@ -52,7 +52,7 @@ import { phalanxWeapons } from "$lib/data/phalanx-weapons";
 import { phalanxArmours } from "$lib/data/phalanx-armours.js";
 import { phalanxPerks } from "$lib/data/phalanx-perks.js";
 import { phalanxLanternCores } from "$lib/data/phalanx-lantern-cores.js";
-import logger from "$lib/utils/logger.js";
+import log from "$lib/utils/logger.js";
 import AdSpace from "$lib/components/AdSpace.svelte";
 
 const { data } = $props();
@@ -68,7 +68,7 @@ let dialog: DialogProps = $state({ open: null, filters: {} });
 const updateBuild = () => {
     data.build.flags = 0; // reset flags when user changes something
     const buildId = serialize(data.build).unwrapOr(serialize(empty()).unwrapOr("this shouldnt happen"));
-    logger.info(buildId, { ...data.build });
+    log.info(buildId, { ...data.build });
     goto(`/b/${buildId}`, { noScroll: true });
 };
 
@@ -230,6 +230,8 @@ const gotoFinderPageUsingCurrentPerks = () => {
 {/if}
 
 <div class="flex flex-col sm:flex-row">
+    <AdSpace name="above-weapon" type="bottom_rail" wrapperClasses={"flex sm:hidden items-center justify-center"} />
+
     <div class="flex flex-col gap-2 sm:w-2/3">
         <WeaponPicker
             selected={data.build.weapon1}
@@ -275,7 +277,7 @@ const gotoFinderPageUsingCurrentPerks = () => {
 
         <PerkList build={data.build} />
 
-        <AdSpace name="test" type="med_rect_atf" wrapperClasses={"flex items-center justify-center"} />
+        <AdSpace name="below-perk-list" type="med_rect_atf" wrapperClasses={"hidden sm:flex items-center justify-center"} />
 
         {#if isCopyButtonVisible()}
             <hr class="h-px my-4 bg-gray-200 border-0 dark:bg-gray-700">

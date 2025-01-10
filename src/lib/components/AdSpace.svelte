@@ -2,8 +2,9 @@
 import { envBool } from "$lib/utils/env-helper";
 import { sha3_256 } from "@noble/hashes/sha3";
 import { bytesToHex } from "@noble/hashes/utils";
-import { onMount } from "svelte";
+import { onDestroy, onMount } from "svelte";
 import PrivacyIcon from "./icons/PrivacyIcon.svelte";
+import log from "$lib/utils/logger";
 
 type UnitType = "bottom_rail" | "sky_atf" | "med_rect_atf" | "right_rail";
 
@@ -33,22 +34,40 @@ const selectorName = $derived.by(() => {
 
 const size = $derived(unitSize[type]);
 
-onMount(() => {
+onMount(async () => {
     if (!adsEnabled || displayPlaceholders) {
         return;
     }
 
-    return () => {
-        const elem = document.getElementById(selectorName);
+    try {
+        await window.ramp.addUnits([
+            {
+                selectorId: selectorName,
+                type,
+            },
+        ]);
+        window.ramp.displayUnits();
+        log.debug(`ramp: initialized unit ${name} (${type})`);
+    } catch (error) {
+        log.error("ramp: could not add  unit", { error });
+        window.ramp.displayUnits();
+    }
+});
 
-        if (!elem) {
-            return;
-        }
-    
-        window.ramp.destroyUnits(selectorName).then(() => {
-            window.ramp.processPage(window.location.pathname);
-        });
-    };
+onDestroy(() => {
+    if (!adsEnabled || displayPlaceholders) {
+        return;
+    }
+
+    const elem = document.getElementById(selectorName);
+
+    if (!elem) {
+        return;
+    }
+
+    window.ramp.destroyUnits(selectorName).then(() => {
+        window.ramp.processPage(window.location.pathname);
+    });
 });
 </script>
 
