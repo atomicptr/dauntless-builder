@@ -10,28 +10,32 @@ const publisherId = env("DB_PW_PUBLISHER_ID");
 const websiteId = env("DB_PW_WEBSITE_ID");
 const ga4MeasurementId = env("DB_GA4_MEASUREMENT_ID");
 
-console.log("debugging pw", adsEnabled, displayPlaceholders, publisherId, websiteId, ga4MeasurementId);
+console.log("logging pw", adsEnabled, displayPlaceholders, publisherId, websiteId, ga4MeasurementId);
 
 const init = async () => {
     console.log("init", window.gtag);
 
     // feature flag hasn't been enabled
     if (!adsEnabled) {
+        console.log("ads: disabled");
         return;
     }
 
     // user doesnt have ads so stop here, might want to check here :)
     if (!adsEnabledForUser) {
+        console.log("ads: disabled for user");
         return;
     }
 
     // if we are displaying placeholders instead, just stop here
     if (displayPlaceholders) {
+        console.log("ads: display placeholder")
         return;
     }
 
     // not properly set up?
     if (!publisherId || !websiteId) {
+        console.log("ads: pw data not setup correctly")
         return;
     }
 
