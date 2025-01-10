@@ -52,6 +52,8 @@ import { phalanxWeapons } from "$lib/data/phalanx-weapons";
 import { phalanxArmours } from "$lib/data/phalanx-armours.js";
 import { phalanxPerks } from "$lib/data/phalanx-perks.js";
 import { phalanxLanternCores } from "$lib/data/phalanx-lantern-cores.js";
+import log from "$lib/utils/logger.js";
+import AdSpace from "$lib/components/AdSpace.svelte";
 
 const { data } = $props();
 
@@ -65,8 +67,8 @@ let dialog: DialogProps = $state({ open: null, filters: {} });
 
 const updateBuild = () => {
     data.build.flags = 0; // reset flags when user changes something
-    const buildId = serialize(data.build).unwrapOr(empty());
-    console.log(buildId, data.build);
+    const buildId = serialize(data.build).unwrapOr(serialize(empty()).unwrapOr("this shouldnt happen"));
+    log.info(buildId, { ...data.build });
     goto(`/b/${buildId}`, { noScroll: true });
 };
 
@@ -272,6 +274,8 @@ const gotoFinderPageUsingCurrentPerks = () => {
         <BuildStats build={data.build} />
 
         <PerkList build={data.build} />
+
+        <AdSpace name="below-perk-list" type="med_rect_atf" wrapperClasses={"hidden sm:flex items-center justify-center"} />
 
         {#if isCopyButtonVisible()}
             <hr class="h-px my-4 bg-gray-200 border-0 dark:bg-gray-700">

@@ -13,6 +13,8 @@ import { t } from "$lib/i18n.svelte";
 import { crowdinLink } from "$lib/constants";
 import { phalanxI18nData } from "$lib/data/phalanx-i18n";
 import { phalanxPatch } from "$lib/data/phalanx-patch";
+import TrackingRampSetup from "$lib/components/TrackingRampSetup.svelte";
+import AdSpace from "$lib/components/AdSpace.svelte";
 
 const { children } = $props();
 
@@ -47,6 +49,8 @@ theme.subscribe((theme) => {
 <svelte:head>
     <title>Dauntless Builder</title>
 </svelte:head>
+
+<TrackingRampSetup />
 
 <main data-theme={$theme}>
     <div class="drawer lg:drawer-open">
@@ -96,3 +100,5 @@ theme.subscribe((theme) => {
         </div>
     </div>
 </main>
+
+<AdSpace name="bottom-rail" type="bottom_rail" wrapperClasses={"fixed left-0 right-0 bottom-0 flex sm:hidden items-center justify-center"} />
