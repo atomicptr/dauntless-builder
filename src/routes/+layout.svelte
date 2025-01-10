@@ -14,6 +14,7 @@ import { crowdinLink } from "$lib/constants";
 import { phalanxI18nData } from "$lib/data/phalanx-i18n";
 import { phalanxPatch } from "$lib/data/phalanx-patch";
 import TrackingRampSetup from "$lib/components/TrackingRampSetup.svelte";
+import AdSpace from "$lib/components/AdSpace.svelte";
 
 const { children } = $props();
 
@@ -99,3 +100,5 @@ theme.subscribe((theme) => {
         </div>
     </div>
 </main>
+
+<AdSpace name="bottom-rail" type="bottom_rail" wrapperClasses={"fixed left-0 right-0 bottom-0 flex sm:hidden items-center justify-center"} />

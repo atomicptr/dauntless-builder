@@ -74,7 +74,7 @@ onDestroy(() => {
 {#if adsEnabled && displayPlaceholders}
     <div class={"ads " + (wrapperClasses ?? "")}>
         <div
-            class="flex justify-center items-center border-dashed border-4 border-primary m-2"
+            class="flex justify-center items-center border-dashed border-4 border-primary m-2 bg-base-100"
             style={`width: ${size.width}px; height: ${size.height}px`}
         >
             <div class="text-primary scale-[2.0]">

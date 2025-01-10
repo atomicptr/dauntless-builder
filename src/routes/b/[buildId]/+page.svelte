@@ -230,8 +230,6 @@ const gotoFinderPageUsingCurrentPerks = () => {
 {/if}
 
 <div class="flex flex-col sm:flex-row">
-    <AdSpace name="above-weapon" type="bottom_rail" wrapperClasses={"flex sm:hidden items-center justify-center"} />
-
     <div class="flex flex-col gap-2 sm:w-2/3">
         <WeaponPicker
             selected={data.build.weapon1}
