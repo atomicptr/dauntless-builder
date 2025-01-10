@@ -6,7 +6,7 @@ let adsEnabledForUser = $state(true); // TODO: default this to false, check with
 const adsEnabled = envBool("DB_ENABLE_ADS");
 const displayPlaceholders = envBool("DB_DISPLAY_AD_PLACEHOLDERS");
 
-const publisherId = env("DB_PW_PUBSLIHER_ID");
+const publisherId = env("DB_PW_PUBLISHER_ID");
 const websiteId = env("DB_PW_WEBSITE_ID");
 const ga4MeasurementId = env("DB_GA4_MEASUREMENT_ID");
 
