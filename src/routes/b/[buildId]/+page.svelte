@@ -53,6 +53,7 @@ import { phalanxArmours } from "$lib/data/phalanx-armours.js";
 import { phalanxPerks } from "$lib/data/phalanx-perks.js";
 import { phalanxLanternCores } from "$lib/data/phalanx-lantern-cores.js";
 import logger from "$lib/utils/logger.js";
+import AdSpace from "$lib/components/AdSpace.svelte";
 
 const { data } = $props();
 
@@ -273,6 +274,8 @@ const gotoFinderPageUsingCurrentPerks = () => {
         <BuildStats build={data.build} />
 
         <PerkList build={data.build} />
+
+        <AdSpace name="test" type="med_rect_atf" wrapperClasses={"flex items-center justify-center"} />
 
         {#if isCopyButtonVisible()}
             <hr class="h-px my-4 bg-gray-200 border-0 dark:bg-gray-700">
