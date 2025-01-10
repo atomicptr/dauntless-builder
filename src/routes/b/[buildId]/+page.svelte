@@ -52,6 +52,7 @@ import { phalanxWeapons } from "$lib/data/phalanx-weapons";
 import { phalanxArmours } from "$lib/data/phalanx-armours.js";
 import { phalanxPerks } from "$lib/data/phalanx-perks.js";
 import { phalanxLanternCores } from "$lib/data/phalanx-lantern-cores.js";
+import logger from "$lib/utils/logger.js";
 
 const { data } = $props();
 
@@ -65,8 +66,8 @@ let dialog: DialogProps = $state({ open: null, filters: {} });
 
 const updateBuild = () => {
     data.build.flags = 0; // reset flags when user changes something
-    const buildId = serialize(data.build).unwrapOr(empty());
-    console.log(buildId, data.build);
+    const buildId = serialize(data.build).unwrapOr(serialize(empty()).unwrapOr("this shouldnt happen"));
+    logger.info(buildId, { ...data.build });
     goto(`/b/${buildId}`, { noScroll: true });
 };
 
