@@ -28,13 +28,13 @@ const init = async () => {
 
     // if we are displaying placeholders instead, just stop here
     if (displayPlaceholders) {
-        logger.debug("ads: display placeholder")
+        logger.debug("ads: display placeholder");
         return;
     }
 
     // not properly set up?
     if (!publisherId || !websiteId) {
-        logger.debug("ads: pw data not setup correctly")
+        logger.debug("ads: pw data not setup correctly");
         return;
     }
 

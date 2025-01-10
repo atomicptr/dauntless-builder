@@ -1,3 +1,5 @@
+import { browser } from "$app/environment";
+
 export enum LogLevel {
     Trace,
     Debug,
@@ -8,7 +10,7 @@ export enum LogLevel {
 
 const MAX_LOCAL_STORAGE_LOGS = 500;
 const LOCAL_STORAGE_KEY = "db:logs";
-const isDevMode = localStorage.getItem("devmode") === "true";
+const isDevMode = browser ? localStorage.getItem("devmode") === "true" : false;
 
 export class Logger {
     private logLevel: LogLevel = isDevMode ? LogLevel.Debug : LogLevel.Info;
@@ -111,6 +113,10 @@ export class Logger {
     }
 
     private static storeLog(level: LogLevel, message: string, data: object) {
+        if (!browser) {
+            return;
+        }
+
         const logs = Logger.data();
 
         while (logs.length >= MAX_LOCAL_STORAGE_LOGS) {
@@ -130,6 +136,9 @@ export class Logger {
     }
 
     public static data() {
+        if (!browser) {
+            return [];
+        }
         return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) ?? "[]");
     }
 }
