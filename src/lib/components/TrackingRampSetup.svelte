@@ -1,9 +1,10 @@
 <script lang="ts">
 import { afterNavigate } from "$app/navigation";
+import { pwInitialized } from "$lib/state.svelte";
 import { env, envBool } from "$lib/utils/env-helper";
 import log from "$lib/utils/logger";
+import { onMount } from "svelte";
 
-let initialized = $state(false);
 let adsEnabledForUser = $state(true); // TODO: default this to false, check with "backend" and then load stuff
 
 const adsEnabled = envBool("DB_ENABLE_ADS");
@@ -66,7 +67,7 @@ const init = async () => {
 
     window.ramp.que.push(() => {
         log.debug("playwire has been setup");
-        initialized = true;
+        pwInitialized.set(true);
     });
 
     const rampScript = document.createElement("script");
@@ -76,11 +77,18 @@ const init = async () => {
 };
 
 afterNavigate(() => {
-    if (!initialized) {
+    if (!$pwInitialized) {
         return;
     }
 
     window.ramp.processPage(window.location.pathname);
+});
+
+onMount(() => {
+    // show placeholders even if ga4 is not enabled
+    if (adsEnabled && displayPlaceholders) {
+        pwInitialized.set(true);
+    }
 });
 </script>
 
