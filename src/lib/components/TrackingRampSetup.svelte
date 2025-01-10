@@ -1,5 +1,6 @@
 <script lang="ts">
 import { env, envBool } from "$lib/utils/env-helper";
+import logger from "$lib/utils/logger";
 
 let adsEnabledForUser = $state(true); // TODO: default this to false, check with "backend" and then load stuff
 
@@ -10,32 +11,30 @@ const publisherId = env("DB_PW_PUBLISHER_ID");
 const websiteId = env("DB_PW_WEBSITE_ID");
 const ga4MeasurementId = env("DB_GA4_MEASUREMENT_ID");
 
-console.log("logging pw", adsEnabled, displayPlaceholders, publisherId, websiteId, ga4MeasurementId);
-
 const init = async () => {
-    console.log("init", window.gtag);
+    logger.debug("ga4 initialized");
 
     // feature flag hasn't been enabled
     if (!adsEnabled) {
-        console.log("ads: disabled");
+        logger.debug("ads: disabled");
         return;
     }
 
     // user doesnt have ads so stop here, might want to check here :)
     if (!adsEnabledForUser) {
-        console.log("ads: disabled for user");
+        logger.debug("ads: disabled for user");
         return;
     }
 
     // if we are displaying placeholders instead, just stop here
     if (displayPlaceholders) {
-        console.log("ads: display placeholder")
+        logger.debug("ads: display placeholder")
         return;
     }
 
     // not properly set up?
     if (!publisherId || !websiteId) {
-        console.log("ads: pw data not setup correctly")
+        logger.debug("ads: pw data not setup correctly")
         return;
     }
 
@@ -62,7 +61,7 @@ const init = async () => {
 
     window.ramp.que.push(() => {
         // TODO: remove me
-        console.log("playwire has been setup");
+        logger.debug("playwire has been setup");
     });
 
     const rampScript = document.createElement("script");
@@ -74,6 +73,17 @@ const init = async () => {
 
 <svelte:head>
     {#if ga4MeasurementId}
-        <script async src={`https://www.googletagmanager.com/gtag/js?id=${ga4MeasurementId}`} onload={init}></script>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${ga4MeasurementId}`}></script>
+        <script async>
+            window.dataLayer = window.dataLayer || [];
+            window.gtag = window.gtag || () => {
+                dataLayer.push(arguments);
+            }
+            window.gtag('js', new Date());
+
+            window.gtag('config', ga4MeasurementId);
+
+            await init();
+        </script>
     {/if}
 </svelte:head>
