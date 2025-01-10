@@ -12,6 +12,9 @@ const websiteId = env("DB_PW_WEBSITE_ID");
 const ga4MeasurementId = env("DB_GA4_MEASUREMENT_ID");
 
 const init = async () => {
+    window.gtag("js", new Date());
+    window.gtag("config", ga4MeasurementId);
+
     logger.debug("ga4 initialized");
 
     // feature flag hasn't been enabled
@@ -73,17 +76,12 @@ const init = async () => {
 
 <svelte:head>
     {#if ga4MeasurementId}
-        <script async src={`https://www.googletagmanager.com/gtag/js?id=${ga4MeasurementId}`}></script>
-        <script async>
+        <script>
             window.dataLayer = window.dataLayer || [];
-            window.gtag = window.gtag || () => {
-                dataLayer.push(arguments);
-            }
-            window.gtag('js', new Date());
-
-            window.gtag('config', ga4MeasurementId);
-
-            await init();
+            window.gtag = window.gtag || (function () {
+                window.dataLayer.push(arguments);
+            });
         </script>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${ga4MeasurementId}`} onload={init}></script>
     {/if}
 </svelte:head>
