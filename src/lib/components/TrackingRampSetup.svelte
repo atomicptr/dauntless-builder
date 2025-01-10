@@ -1,7 +1,9 @@
 <script lang="ts">
+import { afterNavigate } from "$app/navigation";
 import { env, envBool } from "$lib/utils/env-helper";
 import logger from "$lib/utils/logger";
 
+let initialized = $state(false);
 let adsEnabledForUser = $state(true); // TODO: default this to false, check with "backend" and then load stuff
 
 const adsEnabled = envBool("DB_ENABLE_ADS");
@@ -63,8 +65,8 @@ const init = async () => {
     });
 
     window.ramp.que.push(() => {
-        // TODO: remove me
         logger.debug("playwire has been setup");
+        initialized = true;
     });
 
     const rampScript = document.createElement("script");
@@ -72,6 +74,14 @@ const init = async () => {
     rampScript.async = true;
     document.body.appendChild(rampScript);
 };
+
+afterNavigate(() => {
+    if (!initialized) {
+        return;
+    }
+
+    window.ramp.processPage(window.location.pathname);
+});
 </script>
 
 <svelte:head>
